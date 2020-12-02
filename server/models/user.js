@@ -1,15 +1,13 @@
-const mysql = require('mysql');
+const mysql = require("mysql");
+const dbConfig = require('../DB/db');
 
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root"
-});
+
+const con = mysql.createConnection(dbConfig);
+
 
 const User = function (user) {
     this.email = user.email,
-        this.password = user.password,
-        this.id = user.id
+        this.password = user.password
 }
 
 User.createNewUser = newUser => {
@@ -18,9 +16,11 @@ User.createNewUser = newUser => {
             throw error;
         }
 
-        const sql = `INSERT INTO food_tracker.test (id, email, password) VALUES (${newUser.id}, "${newUser.email}", "${newUser.password}")`;
+        // to do: check if this user exists
+        const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${newUser.email}", "${newUser.password}")`;
         con.query(sql, function (err, result) {
             if (err) throw err;
+
         });
 
     })

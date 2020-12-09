@@ -19,6 +19,7 @@ const app = express();
 
 const signUp = require("./routes/signUp");
 const login = require("./routes/login");
+const getItem = require("./routes/getItem");
 
 app.use(json({ extended: false }));
 app.use(json());
@@ -26,6 +27,7 @@ app.use(urlencoded({ extended: false }));
 //app.use(testRoute);
 app.use("/api", signUp);
 app.use("/api", login);
+app.use("/api", getItem);
 
 
 

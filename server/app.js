@@ -18,13 +18,14 @@ also add following,
 const app = express();
 
 const signUp = require("./routes/signUp");
-
+const login = require("./routes/login");
 
 app.use(json({ extended: false }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 //app.use(testRoute);
 app.use("/api", signUp);
+app.use("/api", login);
 
 
 

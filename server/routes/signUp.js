@@ -12,10 +12,8 @@ router.post("/signup", async (req, res) => {
     const { email, password } = req.body;
 
     if (email.length == 0 || password.length == 0) {
-        console.log('aa')
-        res.status(400).send("Please provide required information.");
+        return res.status(400).send("Please provide required information.");
     }
-    console.log("gbbbbbbbbbbbbb")
 
     const userExists = await createNewUser(email, password);
     if (userExists) {
@@ -44,8 +42,10 @@ const createNewUser = async (email, password) => {
 
     const encryptedPW = await bcrypt.hash(password, 10);
     const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${email}", "${encryptedPW}")`;
-    con.query(sql, function (e, result) {
-        if (e) throw e;
+    con.query(sql, function (err, result) {
+        if (err) {
+            console.log(`ERROR: ${err}`)
+        }
 
     });
 

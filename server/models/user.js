@@ -1,10 +1,10 @@
+
 const mysql = require("mysql");
 const bcrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
 
 
 const con = mysql.createConnection(dbConfig);
-
 
 const User = function (user) {
     this.email = user.email,

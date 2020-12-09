@@ -23,7 +23,9 @@ const signUp = require("./routes/signUp");
 app.use(json({ extended: false }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
+//app.use(testRoute);
 app.use("/api", signUp);
+
 
 
 

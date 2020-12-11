@@ -15,57 +15,59 @@ router.post("/signup", async (req, res) => {
         return res.status(400).send("Please provide required information.");
     }
 
-    const userExists = await createNewUser(email, password);
-    if (userExists) {
+    const creation = await createNewUser(email, password);
+    console.log(`creation: ${creation}`);
+    if (creation == 'CREATED') {
+        console.log("here!")
+        return res.status(201).send(`a new user: ${email} is created.`);
+    }
+
+    if (creation == 'FAILED') {
+        console.log('user exists')
         return res.status(400).send(`The user: ${email} already exists.`);
     }
-    return res.status(201).send(`a new user: ${email} is created.`);
+
 
 });
 
 
 
-const createNewUser = async (email, password) => {
-    const found = await findByEmail(email);
-    console.log(`found: ${found}`);
+createNewUser = async (email, password) => {
+    const result = await findByEmail(email);
 
-    if (undefined) {
-        console.log("amazing");
+    if (result == "FOUND") {
+        return 'FAILED';
     }
 
-    if (findByEmail(email)) {
-        console.log("user already exists")
-        return true;
-    }
-
-    console.log("new user will be created")
-
+    console.log(" hello");
     const encryptedPW = await bcrypt.hash(password, 10);
     const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${email}", "${encryptedPW}")`;
-    con.query(sql, function (err, result) {
-        if (err) {
-            console.log(`ERROR: ${err}`)
-        }
 
+    return new Promise((resolve, reject) => {
+        con.query(sql, function (err, result) {
+            if (err) {
+                return reject(`ERROR: ${err}`);
+            }
+            console.log("new user created")
+            return resolve("CREATED");
+        });
     });
-
 };
 
-const findByEmail = async (email) => {
-    //const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${email}", "${encryptedPW}")`;
+function findByEmail(email) {
     const sql = `SELECT * FROM food_tracker.test WHERE email="${email}"`;
-    let state = false;
-    con.query(sql, (err, result) => {
-        //console.log(result.length);
-        console.log(`resulting row count: ${result.length}`);
-        if (result.length > 0) {
-            state = true;
-            return state;
-        }
-    });
 
-    //console.log(`user ${email} found: ${state}`);
-    return state;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, result) => {
+            if (error) {
+                reject(error);
+            }
+            if (result.length > 0) {
+                console.log("found!")
+                resolve("FOUND");
+            }
+        });
+    });
 };
 
 

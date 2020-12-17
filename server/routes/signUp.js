@@ -7,6 +7,7 @@ const dbConfig = require('../DB/db');
 
 const con = mysql.createConnection(dbConfig);
 
+// to do: (signup) when a user doesn't exist, can't sign up (fix this)
 
 router.post("/signup", async (req, res) => {
     const { email, password } = req.body;

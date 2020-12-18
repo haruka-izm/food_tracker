@@ -3,13 +3,12 @@ const router = express.Router();
 const mysql = require('mysql');
 const bycrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
-const { resolve } = require('path');
-const e = require('express');
 
 
 const con = mysql.createConnection(dbConfig);
-const ERROR_MSG = "Item not found.";
+const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
+const DELETED_MSG = "Item was deleted from the database.";
 
 router.route("/items/:id")
     .get(async (req, res) => {
@@ -23,8 +22,8 @@ router.route("/items/:id")
         const { id } = req.params;
         const itemInfo = await findById(id);
 
-        if (itemInfo == ERROR_MSG) {
-            res.status(200).send({ "message": itemInfo });
+        if (itemInfo == ITEM_NOT_FOUND_MSG) {
+            res.status(400).send({ "message": itemInfo });
         } else {
             const { name, quantity, purchased_date, expiry_date } = req.body;
             const updatedItem = await updateItemData(id, name, quantity, purchased_date, expiry_date);
@@ -34,8 +33,18 @@ router.route("/items/:id")
             }
         }
     })
-    .delete((req, res) => {
-        res.json("delete route")
+    .delete(async (req, res) => {
+        const { id } = req.params;
+        const itemInfo = await findById(id);
+
+        if (itemInfo == ITEM_NOT_FOUND_MSG) {
+            res.status(400).send({ "message": itemInfo });
+        } else {
+            const deletedItem = await deleteItem(id);
+            if (deletedItem != undefined) {
+                res.status(200).send({ "message": DELETED_MSG });
+            }
+        }
     })
 
 
@@ -47,7 +56,7 @@ function findById(id) {
                 return reject(error);
             }
             if (row[0] == undefined) {
-                return resolve(ERROR_MSG);
+                return resolve(ITEM_NOT_FOUND_MSG);
             }
             return resolve(row[0]);
         });
@@ -66,6 +75,19 @@ function updateItemData(id, name, quantity, purchased_date, expiry_date) {
         });
     });
 };
+
+
+const deleteItem = (id) => {
+    const sql = `DELETE FROM food_tracker.items WHERE id=${id}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                return reject(error);
+            }
+            return resolve(DELETED_MSG);
+        });
+    });
+}
 
 
 module.exports = router;

@@ -7,8 +7,6 @@ const dbConfig = require('../DB/db');
 
 const con = mysql.createConnection(dbConfig);
 
-// to do: (signup) when a user doesn't exist, can't sign up (fix this)
-
 router.post("/signup", async (req, res) => {
     const { email, password } = req.body;
 
@@ -17,18 +15,13 @@ router.post("/signup", async (req, res) => {
     }
 
     const creation = await createNewUser(email, password);
-    console.log(`creation: ${creation}`);
     if (creation == 'CREATED') {
-        console.log("here!")
         return res.status(201).send(`a new user: ${email} is created.`);
     }
 
     if (creation == 'FAILED') {
-        console.log('user exists')
         return res.status(400).send(`The user: ${email} already exists.`);
     }
-
-
 });
 
 
@@ -40,7 +33,6 @@ createNewUser = async (email, password) => {
         return 'FAILED';
     }
 
-    console.log(" hello");
     const encryptedPW = await bcrypt.hash(password, 10);
     const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${email}", "${encryptedPW}")`;
 
@@ -49,7 +41,6 @@ createNewUser = async (email, password) => {
             if (err) {
                 return reject(`ERROR: ${err}`);
             }
-            console.log("new user created")
             return resolve("CREATED");
         });
     });
@@ -64,9 +55,9 @@ function findByEmail(email) {
                 reject(error);
             }
             if (result.length > 0) {
-                console.log("found!")
                 resolve("FOUND");
             }
+            resolve("NOT FOUND");
         });
     });
 };

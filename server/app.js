@@ -1,6 +1,7 @@
 const express = require('express');
-const port = 3000;
+const port = 8080;
 const { json, urlencoded } = express; // json: body-parser
+const cors = require('cors');
 /*
 req.body: undefined
 
@@ -24,7 +25,7 @@ const getItem = require("./routes/getItem");
 app.use(json({ extended: false }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-//app.use(testRoute);
+app.use(cors());
 app.use("/api", signUp);
 app.use("/api", login);
 app.use("/api", getItem);

@@ -11,16 +11,16 @@ router.post("/signup", async (req, res) => {
     const { email, password } = req.body;
 
     if (email.length == 0 || password.length == 0) {
-        return res.status(400).send("Please provide required information.");
+        return res.status(400).send({ message: "Please provide required information." });
     }
 
     const creation = await createNewUser(email, password);
     if (creation == 'CREATED') {
-        return res.status(201).send(`a new user: ${email} is created.`);
+        return res.status(201).send({ message: `a new user: ${email} is created.` });
     }
 
     if (creation == 'FAILED') {
-        return res.status(400).send(`The user: ${email} already exists.`);
+        return res.status(400).send({ message: `The user: ${email} already exists.` });
     }
 });
 

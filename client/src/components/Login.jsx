@@ -45,10 +45,10 @@ const Login = props => {
             <form>
                 <FormControl>
                     <FormLabel htmlFor='email'>Email: required</FormLabel>
-                    <TextField {...email} required></TextField>
+                    <TextField type="text" {...email} required></TextField>
                     <br />
                     <FormLabel htmlFor='password'>Password: required</FormLabel>
-                    <TextField {...password} required></TextField>
+                    <TextField type='password' {...password} required></TextField>
                 </FormControl>
             </form>
             {error}

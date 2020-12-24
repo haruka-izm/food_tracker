@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require('mysql');
 const bycrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
+const { generateToken } = require('../utils');
 
 
 const con = mysql.createConnection(dbConfig);
@@ -26,9 +27,21 @@ router.post("/login", (req, res) => {
 
         if (result.length > 0) {
             const passwordIsMatched = await bycrypt.compare(password, result[0].password);
-
             if (passwordIsMatched) {
-                res.status(200).send({ message: "Successfully loged in" });
+                const token = await generateToken(email);
+                console.log('token: ', token)
+                if (token == null) {
+                    return res.status(400).send({ message: "authentication failed." });
+                }
+                res.cookie('token', token, {
+                    expires: new Date(Date.now() + 60 * 60 * 24 * 30),  // 30 days
+                    secure: false,
+                    httpOnly: true,
+                });
+
+
+                return res.status(200).send({ message: "Successfully logged in" });
+
             } else {
                 return res.status(400).send({ message: "Your login information doesn't match." });
             }

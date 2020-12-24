@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require('mysql');
 const bycrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
+const jwt = require('jsonwebtoken');
 
 
 const con = mysql.createConnection(dbConfig);
@@ -12,6 +13,22 @@ const DELETED_MSG = "Item was deleted from the database.";
 
 router.route("/items/:id")
     .get(async (req, res) => {
+        /*
+               const token = req.cookies.token || '';
+       
+               if (!token) {
+                   console.log("there was no token");
+                   return res.status(401).json('You need to log in')
+               }
+               console.log('token: ', token)
+               console.log("attempting to decrypt the token");
+               const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
+               console.log("result: ", decrypt)
+       
+       */
+
+
+
         const { id } = req.params;
         const itemInfo = await findById(id);
 

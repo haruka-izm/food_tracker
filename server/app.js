@@ -1,7 +1,14 @@
+require('dotenv').config();
+
 const express = require('express');
 const port = 8080;
 const { json, urlencoded } = express; // json: body-parser
 const cors = require('cors');
+
+// need this
+const cookieParser = require('cookie-parser');
+
+
 /*
 req.body: undefined
 
@@ -26,9 +33,11 @@ app.use(json({ extended: false }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cors());
+app.use(cookieParser());
 app.use("/api", signUp);
 app.use("/api", login);
 app.use("/api", getItem);
+
 
 
 

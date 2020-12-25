@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const bycrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
 const jwt = require('jsonwebtoken');
+const utils = require('../utils');
 
 
 const con = mysql.createConnection(dbConfig);
@@ -13,27 +14,34 @@ const DELETED_MSG = "Item was deleted from the database.";
 
 router.route("/items/:id")
     .get(async (req, res) => {
+        console.log("items/id is called");
+        const id = req.params.id;
+        console.log('id: ', id)
         /*
-               const token = req.cookies.token || '';
-       
-               if (!token) {
-                   console.log("there was no token");
-                   return res.status(401).json('You need to log in')
-               }
-               console.log('token: ', token)
-               console.log("attempting to decrypt the token");
-               const decrypt = await jwt.verify(token, process.env.JWT_SECRET);
-               console.log("result: ", decrypt)
-       
-       */
+        const token = req.cookies.token || '';
 
+        if (!token) {
+            console.log("there was no token");
+            return res.status(401).json('You need to log in')
+        }
+        console.log('token: ', token)
+        console.log("attempting to decrypt the token");
+        const decrypt = await jwt.verify(token, 'hogehoge');
+        console.log("result: ", decrypt)
+*/
+        console.log("-1");
+        utils.verifyToken(req, res);
+        console.log("-2");
 
-
-        const { id } = req.params;
         const itemInfo = await findById(id);
-
         res.status(200).send({ "message": itemInfo });
-
+        /*
+        
+                const { id } = req.params;
+                const itemInfo = await findById(id);
+        
+                res.status(200).send({ "message": itemInfo });
+        */
     })
     .put(async (req, res) => {
         const { id } = req.params;

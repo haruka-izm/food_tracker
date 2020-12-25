@@ -18,7 +18,7 @@ const SignUp = props => {
 
         const res = await fetch('http://localhost:8080/api/signup', reqOptions);
         if (res.status === 201) {
-            props.history.push('/api/dashboard');
+            props.history.push('/dashboard');
             //return res.json();
         }
 

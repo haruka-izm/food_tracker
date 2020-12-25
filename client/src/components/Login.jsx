@@ -17,7 +17,7 @@ const Login = props => {
 
         const res = await fetch('http://localhost:8080/api/login', reqOptions);
         if (res.status === 200) {
-            props.history.push('/api/dashboard');
+            props.history.push('/dashboard');
             //return res.json();
         }
 

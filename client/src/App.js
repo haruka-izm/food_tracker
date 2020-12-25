@@ -20,9 +20,9 @@ function App() {
         <div className="content">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/api/login" component={Login} />
-            <Route path="/api/signup" component={SignUp} />
-            <Route path="/api/dashboard" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </div>
       </div>

@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
-const bycrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
-const jwt = require('jsonwebtoken');
 const utils = require('../utils');
 
 
@@ -14,44 +12,21 @@ const DELETED_MSG = "Item was deleted from the database.";
 
 router.route("/items/:id")
     .get(async (req, res) => {
-        console.log("items/id is called");
-        const id = req.params.id;
-        console.log('id: ', id)
-        /*
-        const token = req.cookies.token || '';
-
-        if (!token) {
-            console.log("there was no token");
-            return res.status(401).json('You need to log in')
-        }
-        console.log('token: ', token)
-        console.log("attempting to decrypt the token");
-        const decrypt = await jwt.verify(token, 'hogehoge');
-        console.log("result: ", decrypt)
-*/
-        console.log("-1");
         utils.verifyToken(req, res);
-        console.log("-2");
-
+        const { id } = req.params;
         const itemInfo = await findById(id);
         res.status(200).send({ "message": itemInfo });
-        /*
-        
-                const { id } = req.params;
-                const itemInfo = await findById(id);
-        
-                res.status(200).send({ "message": itemInfo });
-        */
     })
     .put(async (req, res) => {
+        utils.verifyToken(req, res);
         const { id } = req.params;
         const itemInfo = await findById(id);
 
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
             res.status(400).send({ "message": itemInfo });
         } else {
-            const { name, quantity, purchased_date, expiry_date } = req.body;
-            const updatedItem = await updateItemData(id, name, quantity, purchased_date, expiry_date);
+            const { name, quantity, purchased_date, expiry_date, category } = req.body;
+            const updatedItem = await updateItemData(id, name, quantity, purchased_date, expiry_date, category);
 
             if (updatedItem != undefined) {
                 res.status(200).send({ "message": UPDATED_MSG });
@@ -59,6 +34,7 @@ router.route("/items/:id")
         }
     })
     .delete(async (req, res) => {
+        utils.verifyToken(req, res);
         const { id } = req.params;
         const itemInfo = await findById(id);
 
@@ -89,8 +65,8 @@ function findById(id) {
 };
 
 
-function updateItemData(id, name, quantity, purchased_date, expiry_date) {
-    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${quantity}, purchased_date="${purchased_date}", expiry_date="${expiry_date}" WHERE id=${id}`;
+function updateItemData(id, name, quantity, purchased_date, expiry_date, category) {
+    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${quantity}, purchased_date="${purchased_date}", expiry_date="${expiry_date}" category="${category}"WHERE id=${id}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {

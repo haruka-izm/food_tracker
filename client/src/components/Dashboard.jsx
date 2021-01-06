@@ -1,12 +1,17 @@
 import React from 'react';
+import { getUser, removeUserSession } from '../utils/Common';
 
 function Dashboard(props) {
+    const user = props.email;
+    console.log("user passed?: ", user);
+
     const handleLogout = () => {
-        props.history.push('/api/login');
+        removeUserSession();
+        props.history.push('/login');
     }
 
     return (
-        <div>Welcome User
+        <div>Welcome {user}
             <br />
             <input type='button' onClick={handleLogout} value='Logout' />
         </div>

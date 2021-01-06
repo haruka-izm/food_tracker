@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { TextField, FormLabel, Button, FormControl } from "@material-ui/core";
+// import axios from 'axios';
+import { TextField, FormLabel, Button, FormControl, makeStyles } from "@material-ui/core";
+//import { makeStyles } from '@material-ui/core/styles';
+//import { setUserSession } from '../utils/Common';
+
 
 const Login = props => {
     const email = useFormInput('');
     const password = useFormInput('');
     const [error, setError] = useState(null);
-    //const [loading, setLoading] = useState(false);
 
     const handleLogin = async (event) => {
         event.preventDefault();
+        setError(null);
+
+        // fetch vs axios
+        // fetch: 2 steps to handle JSON data
+        //       1)make a http req, 2) call .json on the req
+
         const reqOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" },
@@ -22,37 +31,48 @@ const Login = props => {
         }
 
         if (res.status === 400) {
+            console.log('400 called')
             const json = await res.json();
-            setError(json.message);
+            // setError(json.message);
+            //setError(error.res.data.message)
         } else {
             console.error('API error /api/login ', res);
+            //setError("Something went wrong. Please try again later.")
         }
 
-        /*
-    }).then(data => {
-        console.log(`data is ${data}`)
-        //this.props.login(data.user);
-    })
-        .catch(error => {
-            console.log(error.message)
-        })
+    }
 
-        */
+    const handleCreateNewAccount = () => {
+        props.history.push('/signup');
     }
 
     return (
-        <div>
-            <form>
-                <FormControl>
-                    <FormLabel htmlFor='email'>Email: required</FormLabel>
-                    <TextField type="text" {...email} required></TextField>
-                    <br />
-                    <FormLabel htmlFor='password'>Password: required</FormLabel>
-                    <TextField type='password' {...password} required></TextField>
-                </FormControl>
-            </form>
-            {error}
-            <div><Button type='submit' onClick={handleLogin}>Log in</Button></div>
+        <div style={{ maxWidth: '300px', border: 'red solid 1px' }}>
+            <div >
+                <form>
+                    <FormControl>
+                        {/*
+                    
+                    {...email} : not React syntax, JS syntax
+                               : passing key/value pair to a component
+
+                    */}
+                        <TextField type="text" {...email} required placeholder="Email" variant='outlined' ></TextField>
+
+                        <TextField type='password' {...password} required placeholder='Password' variant='outlined' ></TextField>
+                    </FormControl>
+                </form>
+                {error}
+            </div>
+            <div>
+                <Button type='submit' onClick={handleLogin} variant='outlined' color="primary">Log In</Button>
+            </div>
+            <div style={{ borderBottom: '1px solid #dadde1', alignItems: 'center' }}>
+
+            </div>
+            <div>
+                <Button onClick={handleCreateNewAccount} variant='outlined'>Create New Account</Button>
+            </div>
         </div>
     );
 };
@@ -69,5 +89,12 @@ const useFormInput = initialValue => {
         onChange: handleChange
     };
 };
+
+const useStyles = makeStyles({
+
+})
+
+
+
 
 export default Login;

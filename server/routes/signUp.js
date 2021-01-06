@@ -45,7 +45,7 @@ createNewUser = async (email, password) => {
     }
 
     const encryptedPW = await bcrypt.hash(password, 10);
-    const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${email}", "${encryptedPW}")`;
+    const sql = `INSERT INTO food_tracker.users (email, password) VALUES ("${email}", "${encryptedPW}")`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, result) {
@@ -58,7 +58,7 @@ createNewUser = async (email, password) => {
 };
 
 function findByEmail(email) {
-    const sql = `SELECT * FROM food_tracker.test WHERE email="${email}"`;
+    const sql = `SELECT * FROM food_tracker.users WHERE email="${email}"`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, result) => {

@@ -9,14 +9,13 @@ const utils = require('../utils');
 const con = mysql.createConnection(dbConfig);
 
 router.post("/login", (req, res) => {
-    console.log("login is called")
     const { email, password } = req.body;
 
     if (email.length == 0 || password.length == 0) {
         return res.status(400).send({ message: "Please provide required information." });
     }
 
-    const sql = `SELECT * FROM food_tracker.test WHERE email ="${email}"`;
+    const sql = `SELECT * FROM food_tracker.users WHERE email ="${email}"`;
     con.query(sql, async (error, result) => {
         if (error) {
             return res.status(400).send({ message: "Invalid credentials. Please try again." });
@@ -36,7 +35,7 @@ router.post("/login", (req, res) => {
 
                 }
                 res.cookie('token', token, {
-                    expires: new Date(Date.now() + 60 * 60 * 24 * 30),  // 30 days
+                    expires: new Date(Date.now() + 60 * 60),  // 1h
                     secure: false,
                     httpOnly: true,
                 });

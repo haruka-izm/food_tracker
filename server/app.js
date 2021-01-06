@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const port = 8080;
+const port = 3001;
 const { json, urlencoded } = express; // json: body-parser
 const cors = require('cors');
 
@@ -28,6 +28,7 @@ const app = express();
 const signUp = require("./routes/signUp");
 const login = require("./routes/login");
 const getItem = require("./routes/getItem");
+const getAllItems = require("./routes/getAllItems");
 
 app.use(json({ extended: false }));
 app.use(json());
@@ -37,8 +38,7 @@ app.use(cookieParser());
 app.use("/api", signUp);
 app.use("/api", login);
 app.use("/api", getItem);
-
-
+app.use("/api", getAllItems);
 
 
 

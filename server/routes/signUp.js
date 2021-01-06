@@ -3,7 +3,7 @@ const router = express.Router();
 const mysql = require("mysql");
 const bcrypt = require('bcrypt');
 const dbConfig = require('../DB/db');
-const generateToken = require('../utils');
+const utils = require('../utils');
 
 
 const con = mysql.createConnection(dbConfig);
@@ -17,7 +17,7 @@ router.post("/signup", async (req, res) => {
 
     const creation = await createNewUser(email, password);
     if (creation == 'CREATED') {
-        const token = await generateToken(email);
+        const token = await utils.generateToken(email);
         if (token == null) {
             return res.status(400).send({ message: "authentication failed." });
         }

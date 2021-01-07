@@ -1,10 +1,11 @@
 import React from 'react';
 
 const Item = (props) => {
-    console.log("what's this", props.value);
+
+    const { name, quantity, purchased_date, expiry_date, category, id } = props.itemInfo;
     return (
         <div>
-            result: {props.value}
+            item: {name}
         </div>
     )
 

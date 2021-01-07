@@ -3,10 +3,10 @@ import Item from './Item';
 
 const Items = (props) => {
     const { items } = props;
-    console.log('items: ', items)
+    //console.log('items: ', items)
     return (
         <div>
-            {items.map(element => (<Item key={element} value={element} />))}
+            {items.map(element => (<Item key={element.id} itemInfo={element} />))}
         </div>
     )
 }

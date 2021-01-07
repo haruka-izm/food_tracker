@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const port = 3001;
+const port = 8080;
 const { json, urlencoded } = express; // json: body-parser
 const cors = require('cors');
 

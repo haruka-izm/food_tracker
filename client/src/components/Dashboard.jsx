@@ -62,7 +62,7 @@ function Dashboard(props) {
 
             <div id='content'>
                 <div>
-                    result here: <Items items={items} />
+                    <Items items={items} />
                 </div>
                 <div>
                     <input type='button' onClick={handleLogout} value='Logout' />

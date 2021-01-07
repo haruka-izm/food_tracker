@@ -31,6 +31,13 @@ function App() {
             <PrivateRoute path="/dashboard" component={Dashboard} />
       
              */}
+
+            {/* to do:
+            
+            for dev purpose: token validation is disabled
+    need to use `PublicRoute` & `PrivateRoute` to protect private pages
+
+*/}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route path="/dashboard" component={Dashboard} />

@@ -23,7 +23,7 @@ function Dashboard(props) {
                     headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
                 };
 
-                const res = await fetch('http://localhost:8080/api/all_items', reqOptions);
+                const res = await fetch('http://localhost:8080/api/items/query', reqOptions);
 
                 if (res.status === 200) {
                     const json = await res.json();

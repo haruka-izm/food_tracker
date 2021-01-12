@@ -19,7 +19,7 @@ const Items = (props) => {
             <DataGrid
                 rows={items}
                 columns={columns}
-                pageSize={5}
+                pageSize={1}
                 checkboxSelection>
             </DataGrid>
         </div>

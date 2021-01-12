@@ -1,3 +1,16 @@
+/*
+
+
+DELETE this file
+
+
+
+
+*/
+
+
+
+
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
@@ -10,14 +23,12 @@ const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
 const DELETED_MSG = "Item was deleted from the database.";
 
-router.route("/all_items")
+router.route("/items/query")
     .get(async (req, res) => {
         //utils.verifyToken(req, res);
         const itemInfo = await getAllItems();
         res.status(200).send({ "message": itemInfo });
     })
-
-
 
 
 function getAllItems() {

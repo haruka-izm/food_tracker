@@ -27,18 +27,21 @@ const app = express();
 
 const signUp = require("./routes/signUp");
 const login = require("./routes/login");
-const getItem = require("./routes/getItem");
-const getAllItems = require("./routes/getAllItems");
+const items = require("./routes/items");
+//const getQuery = require("./routes/getQuery");
 
 app.use(json({ extended: false }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
-app.use("/api", signUp);
-app.use("/api", login);
-app.use("/api", getItem);
-app.use("/api", getAllItems);
+
+// to do (if possible): add middleware
+//app.use("/api", getQuery);
+app.use("/api/signup", signUp);
+app.use("/api/login", login);
+app.use("/api/items", items);
+
 
 
 

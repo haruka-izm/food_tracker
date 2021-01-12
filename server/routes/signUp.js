@@ -8,7 +8,7 @@ const utils = require('../utils');
 
 const con = mysql.createConnection(dbConfig);
 
-router.post("/signup", async (req, res) => {
+router.post("/", async (req, res) => {
     const { email, password } = req.body;
 
     if (email.length == 0 || password.length == 0) {

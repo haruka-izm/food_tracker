@@ -10,7 +10,18 @@ const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
 const DELETED_MSG = "Item was deleted from the database.";
 
-router.route("/items/:id")
+
+// need to be declaired before /:id
+router.route("/query")
+    .get(async (req, res) => {
+        // disabled: for test purpose
+        //utils.verifyToken(req, res);
+        const itemInfo = await getAllItems();
+        res.status(200).send({ "message": itemInfo });
+    })
+
+
+router.route("/:id")
     .get(async (req, res) => {
         utils.verifyToken(req, res);
         const { id } = req.params;
@@ -18,15 +29,15 @@ router.route("/items/:id")
         res.status(200).send({ "message": itemInfo });
     })
     .put(async (req, res) => {
-        utils.verifyToken(req, res);
+        //utils.verifyToken(req, res);
         const { id } = req.params;
         const itemInfo = await findById(id);
 
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
             res.status(400).send({ "message": itemInfo });
         } else {
-            const { name, quantity, purchased_date, expiry_date, category } = req.body;
-            const updatedItem = await updateItemData(id, name, quantity, purchased_date, expiry_date, category);
+            const itemInfo = req.body;
+            const updatedItem = await updateItemData(id, itemInfo);
 
             if (updatedItem != undefined) {
                 res.status(200).send({ "message": UPDATED_MSG });
@@ -65,8 +76,9 @@ function findById(id) {
 };
 
 
-function updateItemData(id, name, quantity, purchased_date, expiry_date, category) {
-    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${quantity}, purchased_date="${purchased_date}", expiry_date="${expiry_date}" category="${category}"WHERE id=${id}`;
+function updateItemData(id, itemInfo) {
+    const { name, quantity, purchased_date, expiry_date, category } = itemInfo;
+    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${quantity}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -89,6 +101,25 @@ const deleteItem = (id) => {
         });
     });
 }
+
+
+
+
+function getAllItems() {
+    const sql = `SELECT * FROM food_tracker.items`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                return reject(error);
+            }
+            if (row[0] == undefined) {
+                return resolve(ITEM_NOT_FOUND_MSG);
+            }
+            return resolve(row);
+        });
+    });
+};
+
 
 
 module.exports = router;

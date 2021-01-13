@@ -1,14 +1,17 @@
 import React from 'react';
 // import Item from './Item';
 import { DataGrid } from '@material-ui/data-grid';
+import EditIcon from '@material-ui/icons/Edit';
+import MaterialTable from 'material-table';
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Name', width: 120 },
-    { field: 'quantity', headerName: 'Quantity', width: 120 },
-    { field: 'purchased_date', headerName: 'Purchased Date', width: 140 },
-    { field: 'expiry_date', headerName: 'Expiry Date', width: 140 },
-    { field: 'category', headerName: 'Category', width: 120 }
+    { title: 'ID', field: "id" },
+    { title: 'Name', field: 'name' },
+    { title: 'Quantity', field: 'quantity' },
+    { title: 'Purchased Date', field: 'purchased_date' },
+    { title: 'Expiry Date', field: 'expiry_date' },
+    { title: 'Category', field: 'category' },
+    { title: 'Edit' }
 ]
 
 const Items = (props) => {
@@ -16,12 +19,22 @@ const Items = (props) => {
     console.log('items: ', items)
     return (
         <div style={{ height: 400, width: '100%' }}>
+            {/*
             <DataGrid
                 rows={items}
                 columns={columns}
                 pageSize={1}
                 checkboxSelection>
             </DataGrid>
+            */}
+            <MaterialTable
+                columns={columns}
+                data={items} />
+
+
+
+
+
         </div>
     )
 }

@@ -2,7 +2,9 @@ import React from 'react';
 // import Item from './Item';
 import { DataGrid } from '@material-ui/data-grid';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MaterialTable from 'material-table';
+import { forwardRef } from 'react';
 
 const columns = [
     { title: 'ID', field: "id" },
@@ -10,9 +12,27 @@ const columns = [
     { title: 'Quantity', field: 'quantity' },
     { title: 'Purchased Date', field: 'purchased_date' },
     { title: 'Expiry Date', field: 'expiry_date' },
-    { title: 'Category', field: 'category' },
-    { title: 'Edit' }
+    { title: 'Category', field: 'category' }
 ]
+
+
+const tableOptions = {
+    search: false,  // search bar
+    actionsColumnIndex: -1
+}
+
+const actions = [
+    {
+        icon: () => <EditIcon />,
+        tooltip: 'edit data',
+        onClick: (event, row) => alert("row.name: ")
+    },
+    {
+        icon: () => <DeleteIcon />,
+        tooltip: 'delete item',
+        onClick: (event, row) => alert('bye')
+    }
+];
 
 const Items = (props) => {
     const items = props.items;
@@ -28,8 +48,12 @@ const Items = (props) => {
             </DataGrid>
             */}
             <MaterialTable
+                title='Stocks'
                 columns={columns}
-                data={items} />
+                data={items}
+                options={tableOptions}
+                actions={actions}
+            />
 
 
 

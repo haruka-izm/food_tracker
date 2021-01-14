@@ -1,19 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import Item from './Item';
 import { DataGrid } from '@material-ui/data-grid';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MaterialTable from 'material-table';
 import { forwardRef } from 'react';
-
-const columns = [
-    { title: 'ID', field: "id" },
-    { title: 'Name', field: 'name' },
-    { title: 'Quantity', field: 'quantity' },
-    { title: 'Purchased Date', field: 'purchased_date' },
-    { title: 'Expiry Date', field: 'expiry_date' },
-    { title: 'Category', field: 'category' }
-]
 
 
 const tableOptions = {
@@ -25,7 +16,7 @@ const actions = [
     {
         icon: () => <EditIcon />,
         tooltip: 'edit data',
-        onClick: (event, row) => alert("row.name: ")
+        onClick: (event, row) => console.log('row: ', row.name)
     },
     {
         icon: () => <DeleteIcon />,
@@ -34,9 +25,20 @@ const actions = [
     }
 ];
 
+const cellEditable = {};
+
 const Items = (props) => {
-    const items = props.items;
-    console.log('items: ', items)
+    const data = props.items;
+    const [columns, setColumns] = useState([
+        { title: 'ID', field: "id" },
+        { title: 'Name', field: 'name' },
+        { title: 'Quantity', field: 'quantity' },
+        { title: 'Purchased Date', field: 'purchased_date' },
+        { title: 'Expiry Date', field: 'expiry_date' },
+        { title: 'Category', field: 'category' }
+    ]);
+
+
     return (
         <div style={{ height: 400, width: '100%' }}>
             {/*
@@ -50,9 +52,10 @@ const Items = (props) => {
             <MaterialTable
                 title='Stocks'
                 columns={columns}
-                data={items}
+                data={data}
                 options={tableOptions}
                 actions={actions}
+                cellEditable={cellEditable}
             />
 
 

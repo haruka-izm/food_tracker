@@ -5,53 +5,53 @@ import Items from './Items';
 
 function Dashboard(props) {
     const user = props.email;
-    const [firstLoad, setFirstLoad] = useState(true);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-
-    const test = ['a', 'b', 'c'];
+    console.log("items: ", items)
 
     const handleLogout = () => {
         removeUserSession();
         props.history.push('/login');
     }
 
-    useEffect(() => {
-        if (firstLoad) {
-            async function fetchData() {
-                const reqOptions = {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
-                };
 
-                const res = await fetch('http://localhost:8080/api/items/query', reqOptions);
 
-                if (res.status === 200) {
-                    const json = await res.json();
-                    const message = json.message;
-                    setItems(message);
-                    console.log('msg:', message)
-                    console.log("how about items: ", items)
+    async function fetchData() {
+        console.log("fetch called")
+        const reqOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+        };
 
-                }
+        setIsLoaded(true);
+        const res = await fetch('http://localhost:8080/api/items/query', reqOptions);
 
-                if (res.status === 400) {
-                    console.log('400 called')
-                    const json = await res.json();
-                    // setError(json.message);
-                    //setError(error.res.data.message)
-                } else {
-                    console.error('API error /api/login ', res);
-
-                }
-
-            }
-            fetchData();
-            setFirstLoad(false);
-            return;
+        if (res.status === 200) {
+            const json = await res.json();
+            const message = json.message;
+            setItems(message);
+            console.log('msg:', message)
+            console.log("how about items: ", items)
         }
-        console.log('no effect')
-    })
 
+        if (res.status === 400) {
+            console.log('400 called')
+            const json = await res.json();
+            // setError(json.message);
+            //setError(error.res.data.message)
+        } else {
+            console.error('API error /api/login ', res);
+
+        }
+
+    }
+
+    useEffect(() => {
+        console.log('is loaded?', isLoaded)
+        if (!isLoaded) {
+            fetchData();
+        }
+    })
 
 
     return (
@@ -67,11 +67,7 @@ function Dashboard(props) {
                 <div>
                     <input type='button' onClick={handleLogout} value='Logout' />
                 </div>
-
             </div>
-
-
-
         </div >
     )
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getUser, removeUserSession } from '../utils/Common';
 import Navbar from './Navbar';
 import Items from './Items';
+import { connect } from 'react-redux';
 
 function Dashboard(props) {
     const user = props.email;
@@ -30,6 +31,7 @@ function Dashboard(props) {
             const json = await res.json();
             const message = json.message;
             setItems(message);
+            props.dispatch({ type: 'LOAD_ALL_DATA' })
             console.log('msg:', message)
             console.log("how about items: ", items)
         }
@@ -72,4 +74,9 @@ function Dashboard(props) {
     )
 };
 
-export default Dashboard;
+export default connect((state, props) => {
+
+    return {
+
+    }
+})(Dashboard);

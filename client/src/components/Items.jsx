@@ -5,29 +5,18 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MaterialTable from 'material-table';
 import { forwardRef } from 'react';
-
+import { connect } from 'react-redux';
 
 const tableOptions = {
     search: false,  // search bar
     actionsColumnIndex: -1
 }
 
-const actions = [
-    {
-        icon: () => <EditIcon />,
-        tooltip: 'edit data',
-        onClick: (event, row) => console.log('row: ', row.name)
-    },
-    {
-        icon: () => <DeleteIcon />,
-        tooltip: 'delete item',
-        onClick: (event, row) => alert('bye')
-    }
-];
 
 const cellEditable = {};
 
 const Items = (props) => {
+    console.log('store? ', props)
     const data = props.items;
     const [columns, setColumns] = useState([
         { title: 'ID', field: "id" },
@@ -37,6 +26,20 @@ const Items = (props) => {
         { title: 'Expiry Date', field: 'expiry_date' },
         { title: 'Category', field: 'category' }
     ]);
+
+
+    const actions = [
+        {
+            icon: () => <EditIcon />,
+            tooltip: 'edit data',
+            onClick: (event, row) => console.log('row: ', row.name)
+        },
+        {
+            icon: () => <DeleteIcon />,
+            tooltip: 'delete item',
+            onClick: (event, row) => dispatch({ type: "DELETE_ITEM" })
+        }
+    ];
 
 
     return (
@@ -57,10 +60,6 @@ const Items = (props) => {
                 actions={actions}
                 cellEditable={cellEditable}
             />
-
-
-
-
 
         </div>
     )
@@ -83,4 +82,10 @@ const Items = (props) => {
 
 */
 
-export default Items;
+export default connect((state, props) => {
+    console.log("connect called")
+    console.log("state: ", state)
+    return {
+        1: "test"
+    }
+})(Items);

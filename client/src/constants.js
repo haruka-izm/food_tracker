@@ -1,6 +1,6 @@
 import keyMirror from 'keymirror';
 
-export var ActionTypes = keyMirror({
+export var actionTypes = keyMirror({
     UPDATE_ALL_DATA: null,
 
 })

@@ -5,7 +5,8 @@ export function updateAllData(newValue) {
     let data = {};
     newValue.forEach(element => {
         const id = element.id.toString();
-        data.id = element;
+        data[id] = element;
+
     });
     console.log('data : ', data)
     return {

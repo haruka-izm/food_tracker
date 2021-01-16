@@ -16,8 +16,11 @@ const tableOptions = {
 const cellEditable = {};
 
 const Items = (props) => {
-    console.log('store? ', props)
-    const data = props.items;
+    console.log('props? ', props)
+    const info = props.items;
+    // data needs to be an array of  obj
+    const data = Object.values(info);
+    console.log('data looks like this: ', data)
     const [columns, setColumns] = useState([
         { title: 'ID', field: "id" },
         { title: 'Name', field: 'name' },
@@ -37,7 +40,7 @@ const Items = (props) => {
         {
             icon: () => <DeleteIcon />,
             tooltip: 'delete item',
-            onClick: (event, row) => dispatch({ type: "DELETE_ITEM" })
+            onClick: (event, row) => console.log("deleted")
         }
     ];
 
@@ -66,25 +69,7 @@ const Items = (props) => {
 }
 
 
-
-
-
-/*
-const Items = (props) => {
-    const { items } = props;
-    //console.log('items: ', items)
-    return (
-        <div>
-            {items.map(element => (<Item key={element.id} itemInfo={element} />))}
-        </div>
-    )
-}
-
-*/
-
 export default connect((state, props) => {
-    console.log("connect called")
-    console.log("state: ", state)
     return {
         items: state
     }

@@ -3,13 +3,13 @@ import { getUser, removeUserSession } from '../utils/Common';
 import Navbar from './Navbar';
 import Items from './Items';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../actions/actions';
 
 function Dashboard(props) {
     const user = props.email;
     const [isLoaded, setIsLoaded] = useState(false);
     //const [items, setItems] = useState([]);
-    console.log("items: ", items)
+
 
     const handleLogout = () => {
         removeUserSession();
@@ -32,9 +32,13 @@ function Dashboard(props) {
             const json = await res.json();
             const message = json.message;
             //setItems(message);
+
+            // action.type="target string"
+            console.log("props has dispatch?: ", props)
             props.dispatch(actions.updateAllData(message));
-            console.log('msg:', message)
-            console.log("how about items: ", items)
+            props.subscribe(() => console.log("awawawa"))
+            props.getState()
+            //console.log("how about items: ", items)
         }
 
         if (res.status === 400) {
@@ -51,7 +55,10 @@ function Dashboard(props) {
 
     useEffect(() => {
         console.log('is loaded?', isLoaded)
+        let counter = 0;
         if (!isLoaded) {
+            counter++
+            console.log("counter: ", counter);
             fetchData();
         }
     })
@@ -75,9 +82,4 @@ function Dashboard(props) {
     )
 };
 
-export default connect((state, props) => {
-
-    return {
-
-    }
-})(Dashboard);
+export default Dashboard;

@@ -16,11 +16,10 @@ const tableOptions = {
 const cellEditable = {};
 
 const Items = (props) => {
-    console.log('props? ', props)
     const info = props.items;
     // data needs to be an array of  obj
     const data = Object.values(info);
-    console.log('data looks like this: ', data)
+    //console.log('data looks like this: ', data)
     const [columns, setColumns] = useState([
         { title: 'ID', field: "id" },
         { title: 'Name', field: 'name' },

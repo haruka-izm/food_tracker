@@ -19,7 +19,6 @@ function Dashboard(props) {
 
 
     async function fetchData() {
-        console.log("fetch called")
         const reqOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
@@ -31,14 +30,7 @@ function Dashboard(props) {
         if (res.status === 200) {
             const json = await res.json();
             const message = json.message;
-            //setItems(message);
-
-            // action.type="target string"
-            console.log("props has dispatch?: ", props)
             props.dispatch(actions.updateAllData(message));
-            props.subscribe(() => console.log("awawawa"))
-            props.getState()
-            //console.log("how about items: ", items)
         }
 
         if (res.status === 400) {
@@ -54,11 +46,7 @@ function Dashboard(props) {
     }
 
     useEffect(() => {
-        console.log('is loaded?', isLoaded)
-        let counter = 0;
         if (!isLoaded) {
-            counter++
-            console.log("counter: ", counter);
             fetchData();
         }
     })
@@ -82,4 +70,5 @@ function Dashboard(props) {
     )
 };
 
-export default Dashboard;
+// connect(): meke props.dispatch() availeble
+export default connect()(Dashboard);

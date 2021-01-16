@@ -1,7 +1,6 @@
 import { actionTypes } from '../constants';
 
 export function updateAllData(newValue) {
-    console.log('dispatch called this func')
     let data = {};
     newValue.forEach(element => {
         const id = element.id.toString();

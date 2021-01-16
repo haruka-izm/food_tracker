@@ -1,15 +1,17 @@
-import { actionTypes } from '../actions/actions';
+//import { actionTypes } from '../actions/actions';
+import { actionTypes } from '../constants';
 
 const initialValue = {
-    0: {}
+    '0': {}
 }
 
 function reducer(state = initialValue, action) {
     switch (action.type) {
-        case ('LOAD_ALL_DATA'):
+        case (actionTypes.UPDATE_ALL_DATA):
 
             return {
-                id: {}
+                ...state,
+                ...action.payload
             };
         case ('ADD_ITEM'):
 

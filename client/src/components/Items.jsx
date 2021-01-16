@@ -86,6 +86,6 @@ export default connect((state, props) => {
     console.log("connect called")
     console.log("state: ", state)
     return {
-        1: "test"
+        items: state
     }
 })(Items);

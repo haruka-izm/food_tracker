@@ -3,11 +3,12 @@ import { getUser, removeUserSession } from '../utils/Common';
 import Navbar from './Navbar';
 import Items from './Items';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 function Dashboard(props) {
     const user = props.email;
     const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+    //const [items, setItems] = useState([]);
     console.log("items: ", items)
 
     const handleLogout = () => {
@@ -30,8 +31,8 @@ function Dashboard(props) {
         if (res.status === 200) {
             const json = await res.json();
             const message = json.message;
-            setItems(message);
-            props.dispatch({ type: 'LOAD_ALL_DATA' })
+            //setItems(message);
+            props.dispatch(actions.updateAllData(message));
             console.log('msg:', message)
             console.log("how about items: ", items)
         }
@@ -64,7 +65,7 @@ function Dashboard(props) {
 
             <div id='content'>
                 <div>
-                    <Items items={items} />
+                    <Items />
                 </div>
                 <div>
                     <input type='button' onClick={handleLogout} value='Logout' />

@@ -21,6 +21,9 @@ router.route("/query")
     })
 
 
+// to do: `:id` -> unpredictable word
+// but how to get id? from req body?
+// how to do so when it's GET
 router.route("/:id")
     .get(async (req, res) => {
         utils.verifyToken(req, res);

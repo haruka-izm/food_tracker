@@ -41,8 +41,8 @@ const Items = (props) => {
             icon: () => <DeleteIcon />,
             tooltip: 'delete item',
             onClick: async (event, row) => {
-                const id = row.id.toString();
-                props.dispatch(await actions.deleteItem());
+                //const id = row.id.toString();
+                props.dispatch(await actions.deleteItem(row.id));
 
             }
         }

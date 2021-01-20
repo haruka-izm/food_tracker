@@ -21,47 +21,42 @@ export function updateAllData(newValue) {
 export async function deleteItem(id) {
     // id: Int
     console.log("deleteItem called");
+    console.log('typeof id: ', typeof id);
 
-    const num = 23;
-    const reqOptions = {
+
+    const deleteRequestOptions = {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
     };
-    const res = await fetch(`http://localhost:8080/api/items/${num}`, reqOptions);
-    if (res.status === 200) {
+    const deleteResponse = await fetch(`http://localhost:8080/api/items/${id}`, deleteRequestOptions);
+    if (deleteResponse.status === 200) {
         //const json = await res.json();
         //const message = json.message;
 
         // to do: fetch all data
-        const reqOptionsForFetch = {
-            method: 'DELETE',
+        const getRequestOptions = {
+            method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
         };
-        const fetchResponse = await fetch('http://localhost:8080/api/items/query', reqOptionsForFetch)
+        const getResponse = await fetch('http://localhost:8080/api/items/query', getRequestOptions)
 
+        const json = await getResponse.json();
+        const data = json.message;
+        console.log('data looks: ', data);
         const test_data = { '22': {}, '33': {} }
         return {
             type: actionTypes.DELETE_ITEM,
-            payload: test_data
-        };
-
-
-    }
-
-    if (res.status === 400) {
-
-        console.log('400 called')
-        const json = await res.json();
-
-        const test_data = { '22': {}, '33': {} }
-        return {
-            type: actionTypes.DELETE_ITEM,
-            payload: test_data
+            payload: data
         };
 
 
     } else {
-        console.error('API error /api/login ', res);
+        const msg = getErrorMessage(deleteResponse.status);
+
+        return {
+            type: actionTypes.DELETE_ITEM_FAILED,
+            payload: { message: msg }
+        };
 
     }
 
@@ -74,6 +69,10 @@ export async function deleteItem(id) {
 
 }
 
+function _deleteQuery() {
+
+}
+
 function deleteItemAndFetchAllData(dispatch) {
     console.log('helper func called')
     // delete query
@@ -82,4 +81,14 @@ function deleteItemAndFetchAllData(dispatch) {
     // fetched data = newValue(list?)
 
     // data = obj of items
+}
+
+function getErrorMessage(resStatus) {
+    console.log("resStatus: ", resStatus);
+    if (resStatus === 400) {
+        console.log('400 called');
+        return "Item not exist"
+
+    }
+    return "Delete failed";
 }

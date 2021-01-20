@@ -3,7 +3,6 @@ import { actionTypes } from '../constants';
 
 const initialValue = {
     // id: {id:0, name: ''...}
-    '0': { id: 0 }
 }
 function reducer(state = initialValue, action) {
     switch (action.type) {
@@ -15,17 +14,15 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.DELETE_ITEM):
-            /*
-            console.log('case called')
-            const key = action.payload;
-            console.log('key to be deleted: ', key);
-            console.log('initialVal? : ', initialValue)
-            const { [key]: value, ...result } = initialValue;
-            console.log('...rest:', result)
-*/
-            console.log('delete statement called')
             return {
                 ...action.payload
+            }
+
+        case (actionTypes.DELETE_ITEM_FAILED):
+            console.log("delete failed");
+            return {
+                ...state,
+                errorMessage: action.payload
             }
 
         default:

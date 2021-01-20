@@ -7,10 +7,19 @@ export function updateAllData(newValue) {
         data[id] = element;
 
     });
-    console.log('data : ', data)
+
     return {
         type: actionTypes.UPDATE_ALL_DATA,
         payload: data
     }
 };
+
+export function deleteItem(id) {
+    console.log("deleteItem called")
+    return {
+        type: actionTypes.DELETE_ITEM,
+        payload: id
+    }
+
+}
 

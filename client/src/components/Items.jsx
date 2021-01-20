@@ -6,14 +6,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MaterialTable from 'material-table';
 import { forwardRef } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
-const tableOptions = {
-    search: false,  // search bar
-    actionsColumnIndex: -1
-}
-
-
-const cellEditable = {};
 
 const Items = (props) => {
     const info = props.items;
@@ -29,8 +23,18 @@ const Items = (props) => {
         { title: 'Category', field: 'category' }
     ]);
 
+    const tableOptions = {
+        search: false,  // search bar
+        actionsColumnIndex: -1
+    }
 
-    const actions = [
+
+    const editable = {
+
+    };
+
+
+    const tableActions = [
         {
             icon: () => <EditIcon />,
             tooltip: 'edit data',
@@ -39,7 +43,11 @@ const Items = (props) => {
         {
             icon: () => <DeleteIcon />,
             tooltip: 'delete item',
-            onClick: (event, row) => console.log("deleted")
+            onClick: (event, row) => {
+                const id = row.id.toString();
+                props.dispatch(actions.deleteItem(id));
+                console.log("dispatched")
+            }
         }
     ];
 
@@ -59,8 +67,8 @@ const Items = (props) => {
                 columns={columns}
                 data={data}
                 options={tableOptions}
-                actions={actions}
-                cellEditable={cellEditable}
+                actions={tableActions}
+                editable={editable}
             />
 
         </div>
@@ -69,6 +77,7 @@ const Items = (props) => {
 
 
 export default connect((state, props) => {
+    console.log("state? : ", state)
     return {
         items: state
     }

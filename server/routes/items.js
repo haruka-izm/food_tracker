@@ -48,7 +48,8 @@ router.route("/:id")
         }
     })
     .delete(async (req, res) => {
-        utils.verifyToken(req, res);
+        //utils.verifyToken(req, res);
+        console.log("delete endpoint called")
         const { id } = req.params;
         const itemInfo = await findById(id);
 

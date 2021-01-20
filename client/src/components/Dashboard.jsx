@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUser, removeUserSession } from '../utils/Common';
+import { removeUserSession } from '../utils/Common';
 import Navbar from './Navbar';
 import Items from './Items';
 import { connect } from 'react-redux';

@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-// import Item from './Item';
-import { DataGrid } from '@material-ui/data-grid';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MaterialTable from 'material-table';
-import { forwardRef } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
@@ -43,10 +40,10 @@ const Items = (props) => {
         {
             icon: () => <DeleteIcon />,
             tooltip: 'delete item',
-            onClick: (event, row) => {
+            onClick: async (event, row) => {
                 const id = row.id.toString();
-                props.dispatch(actions.deleteItem(id));
-                console.log("dispatched")
+                props.dispatch(await actions.deleteItem());
+
             }
         }
     ];

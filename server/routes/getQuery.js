@@ -32,6 +32,7 @@ router.route("/items/query")
 
 
 function getAllItems() {
+    console.log("getAllItems called")
     const sql = `SELECT * FROM food_tracker.items`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {

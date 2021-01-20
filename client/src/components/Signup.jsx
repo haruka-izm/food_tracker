@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, FormLabel, Button, FormControl } from "@material-ui/core";
+import { TextField, Button, FormControl } from "@material-ui/core";
 
 
 const SignUp = props => {

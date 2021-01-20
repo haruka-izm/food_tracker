@@ -15,17 +15,17 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.DELETE_ITEM):
+            /*
             console.log('case called')
             const key = action.payload;
             console.log('key to be deleted: ', key);
-
             console.log('initialVal? : ', initialValue)
             const { [key]: value, ...result } = initialValue;
-
             console.log('...rest:', result)
-
+*/
+            console.log('delete statement called')
             return {
-                ...result
+                ...action.payload
             }
 
         default:

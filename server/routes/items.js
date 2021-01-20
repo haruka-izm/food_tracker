@@ -21,12 +21,9 @@ router.route("/query")
     })
 
 
-// to do: `:id` -> unpredictable word
-// but how to get id? from req body?
-// how to do so when it's GET
 router.route("/:id")
     .get(async (req, res) => {
-        utils.verifyToken(req, res);
+        //utils.verifyToken(req, res);
         const { id } = req.params;
         const itemInfo = await findById(id);
         res.status(200).send({ "message": itemInfo });
@@ -112,14 +109,19 @@ const deleteItem = (id) => {
 function getAllItems() {
     const sql = `SELECT * FROM food_tracker.items`;
     return new Promise((resolve, reject) => {
-        con.query(sql, (error, row) => {
+        con.query(sql, (error, rows) => {
             if (error) {
                 return reject(error);
             }
-            if (row[0] == undefined) {
+            if (rows[0] == undefined) {
                 return resolve(ITEM_NOT_FOUND_MSG);
             }
-            return resolve(row);
+
+            rows.forEach(row => {
+                row.id = `http://localhost:8080/api/items/${row.id}`;
+            });
+
+            return resolve(rows);
         });
     });
 };

@@ -12,7 +12,6 @@ const Items = (props) => {
     const data = Object.values(info);
     //console.log('data looks like this: ', data)
     const [columns, setColumns] = useState([
-        { title: 'ID', field: "id" },
         { title: 'Name', field: 'name' },
         { title: 'Quantity', field: 'quantity' },
         { title: 'Purchased Date', field: 'purchased_date' },

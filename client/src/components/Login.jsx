@@ -4,6 +4,7 @@ import { TextField, Button, FormControl, makeStyles } from "@material-ui/core";
 //import { makeStyles } from '@material-ui/core/styles';
 //import { setUserSession } from '../utils/Common';
 
+const LOGIN_URL = 'http://localhost:8080/api/login';
 
 const Login = props => {
     const email = useFormInput('');
@@ -24,7 +25,7 @@ const Login = props => {
             body: JSON.stringify({ email: email.value, password: password.value })
         };
 
-        const res = await fetch('http://localhost:8080/api/login', reqOptions);
+        const res = await fetch(LOGIN_URL, reqOptions);
         if (res.status === 200) {
             props.history.push('/dashboard');
             //return res.json();

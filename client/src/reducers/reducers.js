@@ -1,4 +1,3 @@
-//import { actionTypes } from '../actions/actions';
 import { actionTypes } from '../constants';
 
 const initialValue = {

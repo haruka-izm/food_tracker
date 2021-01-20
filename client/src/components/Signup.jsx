@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl } from "@material-ui/core";
 
+const SIGNUP_URL = 'http://localhost:8080/api/signup';
 
 const SignUp = props => {
     const email = useFormInput('');
@@ -22,7 +23,7 @@ const SignUp = props => {
                 body: JSON.stringify({ email: email.value, password: password.value })
             };
 
-            const res = await fetch('http://localhost:8080/api/signup', reqOptions);
+            const res = await fetch(SIGNUP_URL, reqOptions);
             if (res.status === 201) {
                 props.history.push('/dashboard');
                 //return res.json();

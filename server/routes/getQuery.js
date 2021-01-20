@@ -35,14 +35,21 @@ function getAllItems() {
     console.log("getAllItems called")
     const sql = `SELECT * FROM food_tracker.items`;
     return new Promise((resolve, reject) => {
-        con.query(sql, (error, row) => {
+        con.query(sql, (error, rows) => {
             if (error) {
                 return reject(error);
             }
-            if (row[0] == undefined) {
+            if (rows[0] == undefined) {
                 return resolve(ITEM_NOT_FOUND_MSG);
             }
-            return resolve(row);
+
+            //rows.forEach;
+            console.log("rows: ", rows)
+            const result = rows.map(row => {
+                row.id = `http://localhost:8080/api/items/${row.id}`;
+            });
+
+            return resolve(null);
         });
     });
 };

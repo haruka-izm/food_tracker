@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -20,54 +21,64 @@ const Items = (props) => {
     ]);
 
     const tableOptions = {
-        search: false,  // search bar
+        search: false,  // search bar disabled
         actionsColumnIndex: -1
     }
 
 
     const editable = {
+        // newData: obj {name:"", quantity:''...} not 'id'
+        onRowAdd: newItem => new Promise((resolve, reject) => {
+            setTimeout(async () => {
+                props.dispatch(await actions.addItem(newItem));
+                resolve();
+            }, 1000);
+        }),
+        onRowUpdate: () => { },
+        onRowDelete: row =>
+            new Promise((resolve, reject) => {
+                setTimeout(async () => {
+                    props.dispatch(await actions.deleteItem(row.id));
+                    resolve();
+                }, 1000);
+            })
 
-    };
-
-
-    const tableActions = [
-        {
-            icon: () => <EditIcon />,
-            tooltip: 'edit data',
-            onClick: (event, row) => console.log('row: ', row.name)
-        },
-        {
-            icon: () => <DeleteIcon />,
-            tooltip: 'delete item',
-            onClick: async (event, row) => {
-                //const id = row.id.toString();
-                props.dispatch(await actions.deleteItem(row.id));
-
+    }
+    /*
+        const tableActions = [
+            {
+                icon: () => <EditIcon />,
+                tooltip: 'edit data',
+                //onClick: (event, row) => console.log('row: ', row.name)
+            },
+            {
+                icon: () => <DeleteIcon />,
+                tooltip: 'delete item',
+                onClick: async (event, row) => {
+                    //const id = row.id.toString();
+                    props.dispatch(await actions.deleteItem(row.id));
+                }
             }
-        }
-    ];
+        ];
+    */
+    const icons = {
+        Add: () => <AddBoxIcon />,
+        Edit: () => <EditIcon />,
+        Delete: () => <DeleteIcon />
+    }
 
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
-            {/*
-            <DataGrid
-                rows={items}
-                columns={columns}
-                pageSize={1}
-                checkboxSelection>
-            </DataGrid>
-            */}
+        <div style={{ height: 400, width: '100%' }} >
             <MaterialTable
                 title='Stocks'
                 columns={columns}
                 data={data}
                 options={tableOptions}
-                actions={tableActions}
                 editable={editable}
+                icons={icons}
             />
-
-        </div>
+        </div >
     )
 }
 

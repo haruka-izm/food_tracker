@@ -12,6 +12,20 @@ function reducer(state = initialValue, action) {
                 ...action.payload
             };
 
+        case (actionTypes.ADD_ITEM):
+            console.log("add item selected")
+            return {
+                ...state,
+                ...action.payload
+            };
+
+        case (actionTypes.ADD_ITEM_FAILED):
+            console.log("add item failed")
+            return {
+                ...state
+            };
+
+
         case (actionTypes.DELETE_ITEM):
             return {
                 ...action.payload

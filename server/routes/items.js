@@ -9,7 +9,26 @@ const con = mysql.createConnection(dbConfig);
 const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
 const DELETED_MSG = "Item was deleted from the database.";
+const ITEM_ADDED_MSG = "Item was added to the database."
 
+router.route("/")
+    .post(async (req, res) => {
+        const result = await addItem(req.body);
+        if (result.msg == ITEM_ADDED_MSG) {
+            const id = result.id;
+            const itemInfo = await findById(id);
+
+            itemInfo.id = `http://localhost:8080/api/items/${id}`;
+            res.status(201).send({ "message": itemInfo });
+        }
+        else {
+            // to do: confirm status code
+            console.log("DB error")
+            console.log('error: ', error)
+            res.status(400).send({ "message": error });
+        }
+
+    })
 
 // need to be declaired before /:id
 router.route("/query")
@@ -46,7 +65,6 @@ router.route("/:id")
     })
     .delete(async (req, res) => {
         //utils.verifyToken(req, res);
-        console.log("delete endpoint called")
         const { id } = req.params;
         const itemInfo = await findById(id);
 
@@ -60,18 +78,32 @@ router.route("/:id")
         }
     })
 
-
-function findById(id) {
-    const sql = `SELECT * FROM food_tracker.items WHERE id=${id}`;
+function addItem(newItem) {
+    const { name, quantity, purchased_date, expiry_date, category } = newItem;
+    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category) VALUES ('${name}', ${quantity}, '${purchased_date}', '${expiry_date}', '${category}')`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
                 return reject(error);
             }
-            if (row[0] == undefined) {
+            return resolve({ 'msg': ITEM_ADDED_MSG, 'id': row.insertId });
+        });
+    });
+}
+
+
+
+function findById(id) {
+    const sql = `SELECT * FROM food_tracker.items WHERE id=${id}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
                 return resolve(ITEM_NOT_FOUND_MSG);
             }
-            return resolve(row[0]);
+            return resolve(rows[0]);
         });
     });
 };

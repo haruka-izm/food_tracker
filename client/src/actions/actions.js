@@ -5,7 +5,6 @@ import { actionTypes } from '../constants';
 const QUERY_URL = 'http://localhost:8080/api/items/query';
 
 export function updateAllData(newValue) {
-    console.log("updateAllItem called");
     let data = {};
     newValue.forEach(element => {
         data[element.id] = element;
@@ -16,6 +15,20 @@ export function updateAllData(newValue) {
         payload: data
     }
 };
+
+export async function addItem(newItem) {
+    console.log('add item called')
+    const newItemName = newItem.name;
+    // check item in DB
+    // add the item to DB
+    // return obj with id=API endpoint
+
+    const data = { 'id': 'test' }
+    return {
+        type: actionTypes.ADD_ITEM,
+        payload: data
+    }
+}
 
 export async function deleteItem(id) {
     const deleteRequestOptions = {

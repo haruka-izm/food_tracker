@@ -9,9 +9,7 @@ import * as actions from '../actions/actions';
 
 const Items = (props) => {
     const info = props.items;
-    // data needs to be an array of  obj
     const data = Object.values(info);
-    //console.log('data looks like this: ', data)
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },
         { title: 'Quantity', field: 'quantity' },
@@ -25,16 +23,21 @@ const Items = (props) => {
         actionsColumnIndex: -1
     }
 
-
     const editable = {
-        // newData: obj {name:"", quantity:''...} not 'id'
         onRowAdd: newItem => new Promise((resolve, reject) => {
             setTimeout(async () => {
                 props.dispatch(await actions.addItem(newItem));
                 resolve();
             }, 1000);
         }),
-        onRowUpdate: () => { },
+        onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+                setTimeout(async () => {
+                    props.dispatch(await actions.updateItem(newData));
+                    resolve();
+                }, 1000);
+            })
+        ,
         onRowDelete: row =>
             new Promise((resolve, reject) => {
                 setTimeout(async () => {
@@ -42,31 +45,13 @@ const Items = (props) => {
                     resolve();
                 }, 1000);
             })
-
     }
-    /*
-        const tableActions = [
-            {
-                icon: () => <EditIcon />,
-                tooltip: 'edit data',
-                //onClick: (event, row) => console.log('row: ', row.name)
-            },
-            {
-                icon: () => <DeleteIcon />,
-                tooltip: 'delete item',
-                onClick: async (event, row) => {
-                    //const id = row.id.toString();
-                    props.dispatch(await actions.deleteItem(row.id));
-                }
-            }
-        ];
-    */
+
     const icons = {
         Add: () => <AddBoxIcon />,
         Edit: () => <EditIcon />,
         Delete: () => <DeleteIcon />
     }
-
 
     return (
         <div style={{ height: 400, width: '100%' }} >

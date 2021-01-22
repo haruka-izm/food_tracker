@@ -22,14 +22,13 @@ export async function addItem(newItem) {
     console.log('add item called')
     console.log('newItem: ', newItem)
     // check item in DB
-    // add the item to DB
+
     const postRequestOptions = {
         method: 'POST',
         headers: HEADERS,
         body: JSON.stringify(newItem)
     };
     const postResponse = await fetch(POST_URL, postRequestOptions);
-    // return obj with id=API endpoint
     if (postResponse.status === 201) {
         const json = await postResponse.json();
         const itemInfo = json.message;
@@ -40,15 +39,40 @@ export async function addItem(newItem) {
             payload: data
         }
     } else {
-
         const msg = getErrorMessage(postResponse.status);
         return {
             type: actionTypes.ADD_ITEM_FAILED,
             payload: { message: msg }
         }
     }
+}
 
+export async function updateItem(itemInfo) {
+    console.log("updateItem called");
+    console.log("itemInfo: ", itemInfo)
+    const id = itemInfo.id;
 
+    const putRequestOptions = {
+        method: 'PUT',
+        headers: HEADERS,
+        body: JSON.stringify(itemInfo)
+    };
+    const putResponse = await fetch(id, putRequestOptions);
+    if (putResponse.status === 201) {
+        let data = {};
+        data[id] = itemInfo;
+
+        return {
+            type: actionTypes.UPDATE_ITEM,
+            payload: data
+        }
+    } else {
+        const msg = getErrorMessage(putResponse.status);
+        return {
+            type: actionTypes.UPDATE_ITEM_FAILED,
+            payload: { message: msg }
+        }
+    }
 }
 
 export async function deleteItem(id) {

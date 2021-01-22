@@ -5,18 +5,17 @@ import Items from './Items';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
+const QUERY_URL = 'http://localhost:8080/api/items/query';
+
 function Dashboard(props) {
     const user = props.email;
     const [isLoaded, setIsLoaded] = useState(false);
     //const [items, setItems] = useState([]);
 
-
     const handleLogout = () => {
         removeUserSession();
         props.history.push('/login');
-    }
-
-
+    };
 
     async function fetchData() {
         const reqOptions = {
@@ -25,7 +24,7 @@ function Dashboard(props) {
         };
 
         setIsLoaded(true);
-        const res = await fetch('http://localhost:8080/api/items/query', reqOptions);
+        const res = await fetch(QUERY_URL, reqOptions);
 
         if (res.status === 200) {
             const json = await res.json();
@@ -40,16 +39,15 @@ function Dashboard(props) {
             //setError(error.res.data.message)
         } else {
             console.error('API error /api/login ', res);
-
         }
 
-    }
+    };
 
     useEffect(() => {
         if (!isLoaded) {
             fetchData();
         }
-    })
+    });
 
 
     return (

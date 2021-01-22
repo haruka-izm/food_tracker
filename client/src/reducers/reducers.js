@@ -1,7 +1,7 @@
 import { actionTypes } from '../constants';
 
 const initialValue = {
-    // id: {id:0, name: ''...}
+    // id: {id:"API_endpoint_address", name: ''...}
 }
 function reducer(state = initialValue, action) {
     switch (action.type) {
@@ -25,21 +25,32 @@ function reducer(state = initialValue, action) {
                 ...state
             };
 
+        case (actionTypes.UPDATE_ITEM):
+            console.log("update_item chosen")
+            return {
+                ...state,
+                ...action.payload
+            };
+
+        case (actionTypes.UPDATE_ITEM_FAILED):
+            console.log("update_item_failed called")
+            return {
+                ...state
+            };
 
         case (actionTypes.DELETE_ITEM):
             return {
                 ...action.payload
-            }
+            };
 
         case (actionTypes.DELETE_ITEM_FAILED):
-            console.log("delete failed");
             return {
                 ...state,
                 errorMessage: action.payload
-            }
+            };
 
         default:
-            return state
+            return state;
     };
 }
 

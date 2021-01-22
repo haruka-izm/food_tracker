@@ -55,13 +55,14 @@ router.route("/:id")
         const itemInfo = await findById(id);
 
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
+            // to do: confirm status code
             res.status(400).send({ "message": itemInfo });
         } else {
             const itemInfo = req.body;
             const updatedItem = await updateItemData(id, itemInfo);
 
             if (updatedItem != undefined) {
-                res.status(200).send({ "message": UPDATED_MSG });
+                res.status(201).send({ "message": UPDATED_MSG });
             }
         }
     })
@@ -77,8 +78,9 @@ router.route("/:id")
             if (deletedItem != undefined) {
                 res.status(200).send({ "message": DELETED_MSG });
             }
-        }
-    })
+        };
+    });
+
 
 function addItem(newItem) {
     const { name, quantity, purchased_date, expiry_date, category } = newItem;
@@ -92,7 +94,7 @@ function addItem(newItem) {
             return resolve({ 'msg': ITEM_ADDED_MSG, 'id': row.insertId });
         });
     });
-}
+};
 
 
 
@@ -114,7 +116,8 @@ function findById(id) {
 
 function updateItemData(id, itemInfo) {
     const { name, quantity, purchased_date, expiry_date, category } = itemInfo;
-    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${quantity}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
+    const num = parseInt(quantity);
+    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${num}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {

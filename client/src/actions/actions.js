@@ -3,6 +3,8 @@ import { actionTypes } from '../constants';
 //const axios = require('axios');
 
 const QUERY_URL = 'http://localhost:8080/api/items/query';
+const POST_URL = 'http://localhost:8080/api/items';
+const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" };
 
 export function updateAllData(newValue) {
     let data = {};
@@ -18,28 +20,47 @@ export function updateAllData(newValue) {
 
 export async function addItem(newItem) {
     console.log('add item called')
-    const newItemName = newItem.name;
+    console.log('newItem: ', newItem)
     // check item in DB
     // add the item to DB
+    const postRequestOptions = {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify(newItem)
+    };
+    const postResponse = await fetch(POST_URL, postRequestOptions);
     // return obj with id=API endpoint
+    if (postResponse.status === 201) {
+        const json = await postResponse.json();
+        const itemInfo = json.message;
+        let data = {};
+        data[itemInfo.id] = itemInfo;
+        return {
+            type: actionTypes.ADD_ITEM,
+            payload: data
+        }
+    } else {
 
-    const data = { 'id': 'test' }
-    return {
-        type: actionTypes.ADD_ITEM,
-        payload: data
+        const msg = getErrorMessage(postResponse.status);
+        return {
+            type: actionTypes.ADD_ITEM_FAILED,
+            payload: { message: msg }
+        }
     }
+
+
 }
 
 export async function deleteItem(id) {
     const deleteRequestOptions = {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+        headers: HEADERS
     };
     const deleteResponse = await fetch(id, deleteRequestOptions);
     if (deleteResponse.status === 200) {
         const getRequestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+            headers: HEADERS
         };
         const getResponse = await fetch(QUERY_URL, getRequestOptions);
         const json = await getResponse.json();
@@ -64,7 +85,7 @@ function getErrorMessage(resStatus) {
     console.log("resStatus: ", resStatus);
     if (resStatus === 400) {
         console.log('400 called');
-        return "Item not exist";
+        return "Bad request. Please try again";
     }
-    return "Delete failed";
+    return "Process failed";
 }

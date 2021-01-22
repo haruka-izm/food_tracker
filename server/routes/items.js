@@ -13,6 +13,8 @@ const ITEM_ADDED_MSG = "Item was added to the database."
 
 router.route("/")
     .post(async (req, res) => {
+        console.log('post called')
+        console.log('req.body', req.body)
         const result = await addItem(req.body);
         if (result.msg == ITEM_ADDED_MSG) {
             const id = result.id;
@@ -80,7 +82,8 @@ router.route("/:id")
 
 function addItem(newItem) {
     const { name, quantity, purchased_date, expiry_date, category } = newItem;
-    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category) VALUES ('${name}', ${quantity}, '${purchased_date}', '${expiry_date}', '${category}')`;
+    const num = parseInt(quantity);
+    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}')`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {

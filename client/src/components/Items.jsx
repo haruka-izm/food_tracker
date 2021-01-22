@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import LastPageIcon from '@material-ui/icons/LastPage';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
 
 
 const Items = (props) => {
@@ -20,7 +25,9 @@ const Items = (props) => {
 
     const tableOptions = {
         search: false,  // search bar disabled
-        actionsColumnIndex: -1
+        actionsColumnIndex: -1,
+
+
     }
 
     const editable = {
@@ -50,7 +57,11 @@ const Items = (props) => {
     const icons = {
         Add: () => <AddBoxIcon />,
         Edit: () => <EditIcon />,
-        Delete: () => <DeleteIcon />
+        Delete: () => <DeleteIcon />,
+        FirstPage: () => <FirstPageIcon />,
+        LastPage: () => <LastPageIcon />,
+        NextPage: () => <NavigateNextIcon />,
+        PreviousPage: () => <NavigateBeforeIcon />
     }
 
     return (

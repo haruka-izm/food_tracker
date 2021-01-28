@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
 import { TextField, Button, FormControl, makeStyles } from "@material-ui/core";
+import Paper from '@material-ui/core/Paper';
 //import { makeStyles } from '@material-ui/core/styles';
 //import { setUserSession } from '../utils/Common';
+import { withStyles } from "@material-ui/core/styles";
+import style from '../styles/styleLogin';
+
 
 const LOGIN_URL = 'http://localhost:8080/api/login';
 
@@ -10,6 +14,7 @@ const Login = props => {
     const email = useFormInput('');
     const password = useFormInput('');
     const [error, setError] = useState(null);
+    const { classes } = props;
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -48,33 +53,38 @@ const Login = props => {
     }
 
     return (
-        <div style={{ maxWidth: '300px', border: 'red solid 1px' }}>
-            <div >
-                <form>
-                    <FormControl>
-                        {/*
+        <Paper>
+            <div style={{ maxWidth: '300px', border: 'red solid 1px' }}>
+                <div >
+                    <form>
+                        <FormControl>
+                            {/*
                     
                     {...email} : not React syntax, JS syntax
                                : passing key/value pair to a component
 
                     */}
-                        <TextField type="text" {...email} required placeholder="Email" variant='outlined' ></TextField>
+                            <div>
+                                <TextField type="text" {...email} required placeholder="Email" variant='outlined' ></TextField>
+                            </div>
+                            <div>
+                                <TextField type='password' {...password} required placeholder='Password' variant='outlined' ></TextField>
+                            </div>
+                        </FormControl>
+                    </form>
+                    {error}
+                </div>
+                <div>
+                    <Button type='submit' onClick={handleLogin} variant='outlined' color="primary">Log In</Button>
+                </div>
+                <div style={{ borderBottom: '1px solid #dadde1', alignItems: 'center' }}>
 
-                        <TextField type='password' {...password} required placeholder='Password' variant='outlined' ></TextField>
-                    </FormControl>
-                </form>
-                {error}
+                </div>
+                <div>
+                    <Button onClick={handleCreateNewAccount} variant='outlined'>Create New Account</Button>
+                </div>
             </div>
-            <div>
-                <Button type='submit' onClick={handleLogin} variant='outlined' color="primary">Log In</Button>
-            </div>
-            <div style={{ borderBottom: '1px solid #dadde1', alignItems: 'center' }}>
-
-            </div>
-            <div>
-                <Button onClick={handleCreateNewAccount} variant='outlined'>Create New Account</Button>
-            </div>
-        </div>
+        </Paper>
     );
 };
 
@@ -91,11 +101,11 @@ const useFormInput = initialValue => {
     };
 };
 
+/*
 const useStyles = makeStyles({
 
 })
 
+*/
 
-
-
-export default Login;
+export default withStyles(style)(Login);

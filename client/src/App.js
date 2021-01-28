@@ -12,41 +12,42 @@ import store from './store';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
 
-//import './App.css';
-
-
+import { MuiThemeProvider } from '@material-ui/core';
+import { theme } from './theme/theme';
 // want to pass prop on <Route /> => use `render`prop
 // render={props => <Destination_component {...props} prop_name=value />}
 
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <div>
-          <div className="content">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              {/*
+      <MuiThemeProvider theme={theme}>
+        <BrowserRouter>
+          <div>
+            <div className="content">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                {/*
              <PublicRoute path="/login" component={Login} />
             <PublicRoute path="/signup" component={SignUp} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
       
              */}
 
-              {/* to do:
+                {/* to do:
             
             for dev purpose: token validation is disabled
     need to use `PublicRoute` & `PrivateRoute` to protect private pages
 
 */}
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/dashboard" component={Dashboard} />
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/dashboard" component={Dashboard} />
 
-            </Switch>
+              </Switch>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </MuiThemeProvider>
     </Provider>
   );
 }

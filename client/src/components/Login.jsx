@@ -56,26 +56,33 @@ const Login = props => {
         <Paper>
             <div className={classes.container}>
                 <div>
-                    <form >
-                        <FormControl>
-                            {/*
+                    {/*
+                       <form >
+                       
+                       */}
+
+                    <FormControl>
+                        {/*
                     
                     {...email} : not React syntax, JS syntax
                                : passing key/value pair to a component
 
                     */}
-                            <div >
-                                <TextField type="text" {...email} required placeholder="Email" variant='outlined' className={classes.emailAndPassword} ></TextField>
-                            </div>
-                            <div>
-                                <TextField type='password' {...password} required placeholder='Password' variant='outlined' className={classes.emailAndPassword}></TextField>
-                            </div>
-                        </FormControl>
-                    </form>
+                        <div >
+                            <TextField type="text" {...email} required placeholder="Email" variant='outlined' className={classes.emailAndPassword} ></TextField>
+                        </div>
+                        <div>
+                            <TextField type='password' {...password} required placeholder='Password' variant='outlined' className={classes.emailAndPassword}></TextField>
+                        </div>
+                    </FormControl>
+                    {/*
+                       </form>
+                       
+                       */}
                     {error}
                 </div>
-                <div className={classes.login}>
-                    <Button type='submit' onClick={handleLogin} variant='contained' color="primary" >Log In</Button>
+                <div >
+                    <Button type='submit' onClick={handleLogin} variant='contained' color="primary" className={classes.login}>Log In</Button>
                 </div>
                 <div className={classes.borderLine}>
 

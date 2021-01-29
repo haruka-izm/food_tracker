@@ -2,9 +2,9 @@ export default () => ({
     container: {
         //flexDirection: 'column',
         width: '350px',
-        border: 'red solid 1px',
         textAlign: 'center',
         display: 'block',
+        padding: '10px'
     },
     formWarning: {
         color: "#ff0000"
@@ -15,7 +15,8 @@ export default () => ({
         margin: 'auto'
     },
     login: {
-        padding: '10px'
+        padding: '7px',
+        width: '300px'
     },
     createNewAccount: {
         padding: '10px'

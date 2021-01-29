@@ -1,8 +1,17 @@
 import { createMuiTheme } from "@material-ui/core";
 
-const primary = "#32be72"
 
 export const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'Arial',
+    h1: {
+      fontSize: 30,
+      fontWeight: 200
+    }
+  }
+});
+
+const sample = createMuiTheme({
   typography: {
     fontFamily:
       'Roboto',
@@ -11,7 +20,7 @@ export const theme = createMuiTheme({
       textAlign: "center",
       "&:after": {
         content: "close-quote",
-        borderBottom: `2px solid ${primary}`,
+        borderBottom: `2px solid `,
         maxWidth: "80px",
         display: "block",
         margin: "0.5em auto"
@@ -30,10 +39,7 @@ export const theme = createMuiTheme({
       gray: "#efeeee",
       darkGray: "#5d5d5d"
     },
-    primary: {
-      main: primary,
-      contrastText: "#fff",
-    },
+
     secondary: { main: "#DF1B1B" }
   },
   shape: {

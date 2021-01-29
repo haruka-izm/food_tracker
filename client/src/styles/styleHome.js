@@ -9,7 +9,7 @@ export default (theme) => ({
 
     },
     title: {
-        marginRight: '100px',
+        marginRight: '60px',
         marginTop: '90px'
     },
     form: {

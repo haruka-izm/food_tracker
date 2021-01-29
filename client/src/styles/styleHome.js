@@ -12,9 +12,6 @@ export default (theme) => ({
         marginRight: '60px',
         marginTop: '90px'
     },
-    form: {
-
-    },
     formWarning: {
         color: "#ff0000"
     }

@@ -7,6 +7,15 @@ export const theme = createMuiTheme({
     h1: {
       fontSize: 30,
       fontWeight: 200
+    },
+    button: {
+      textTransform: 'none'
+    },
+  },
+  palette: {
+    secondary: {
+      main: '#4caf50', // light green
+      contrastText: '#fff'
     }
   }
 });

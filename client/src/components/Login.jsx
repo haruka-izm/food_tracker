@@ -54,9 +54,9 @@ const Login = props => {
 
     return (
         <Paper>
-            <div style={{ maxWidth: '300px', border: 'red solid 1px' }}>
-                <div >
-                    <form>
+            <div className={classes.container}>
+                <div>
+                    <form >
                         <FormControl>
                             {/*
                     
@@ -64,24 +64,24 @@ const Login = props => {
                                : passing key/value pair to a component
 
                     */}
-                            <div>
-                                <TextField type="text" {...email} required placeholder="Email" variant='outlined' ></TextField>
+                            <div >
+                                <TextField type="text" {...email} required placeholder="Email" variant='outlined' className={classes.emailAndPassword} ></TextField>
                             </div>
                             <div>
-                                <TextField type='password' {...password} required placeholder='Password' variant='outlined' ></TextField>
+                                <TextField type='password' {...password} required placeholder='Password' variant='outlined' className={classes.emailAndPassword}></TextField>
                             </div>
                         </FormControl>
                     </form>
                     {error}
                 </div>
-                <div>
-                    <Button type='submit' onClick={handleLogin} variant='outlined' color="primary">Log In</Button>
+                <div className={classes.login}>
+                    <Button type='submit' onClick={handleLogin} variant='contained' color="primary" >Log In</Button>
                 </div>
-                <div style={{ borderBottom: '1px solid #dadde1', alignItems: 'center' }}>
+                <div className={classes.borderLine}>
 
                 </div>
-                <div>
-                    <Button onClick={handleCreateNewAccount} variant='outlined'>Create New Account</Button>
+                <div className={classes.createNewAccount}>
+                    <Button onClick={handleCreateNewAccount} variant='contained' color="secondary">Create New Account</Button>
                 </div>
             </div>
         </Paper>
@@ -101,11 +101,6 @@ const useFormInput = initialValue => {
     };
 };
 
-/*
-const useStyles = makeStyles({
 
-})
-
-*/
 
 export default withStyles(style)(Login);

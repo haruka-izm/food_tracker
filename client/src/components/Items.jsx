@@ -79,7 +79,7 @@ const Items = (props) => {
 }
 
 
-export default connect((state, props) => {
+export default connect((state) => {
     console.log("state? : ", state)
     return {
         items: state

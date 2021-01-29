@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl } from "@material-ui/core";
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from "@material-ui/core/styles";
+import style from '../styles/styleSignup';
 
 const SIGNUP_URL = 'http://localhost:8080/api/signup';
 
@@ -9,7 +12,7 @@ const SignUp = props => {
     const confirmedPassword = useFormInput('');
     const [error, setError] = useState(null);
     //const [loading, setLoading] = useState(false);
-
+    const { classes } = props;
 
 
     const handleSignup = async (event) => {
@@ -39,21 +42,31 @@ const SignUp = props => {
     }
 
     return (
-        <div>
-            <div>
-                <form >
-                    <FormControl>
-                        <TextField type="text" {...email} required placeholder="Email" variant="outlined"></TextField>
-                        <TextField type='password' {...password} required placeholder="password" variant="outlined"></TextField>
-                        <TextField type='password' {...confirmedPassword} required placeholder="re-enter password" variant="outlined"></TextField>
+        <Paper className={classes.container}>
+            <div >
+                <div>
+                    {/**
+                 * <form >
+                 * 
+                 */}
+
+                    <FormControl >
+                        <TextField type="text" {...email} required placeholder="Email" variant="outlined" className={classes.emailAndPassword}></TextField>
+                        <TextField type='password' {...password} required placeholder="password" variant="outlined" className={classes.emailAndPassword}></TextField>
+                        <TextField type='password' {...confirmedPassword} required placeholder="re-enter password" variant="outlined" className={classes.emailAndPassword}></TextField>
                     </FormControl>
-                </form>
-                {error}
+
+                    {/**
+                     *  </form>
+                     */}
+
+                    {error}
+                </div>
+                <div >
+                    <Button type='submit' onClick={handleSignup} variant="contained" color="secondary" className={classes.signup}>Sign up</Button>
+                </div>
             </div>
-            <div>
-                <Button type='submit' onClick={handleSignup} variant="outlined">Sign up</Button>
-            </div>
-        </div>
+        </Paper>
     );
 };
 
@@ -71,4 +84,4 @@ const useFormInput = initialValue => {
 };
 
 
-export default SignUp;
+export default withStyles(style)(SignUp);

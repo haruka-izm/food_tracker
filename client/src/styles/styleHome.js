@@ -1,17 +1,15 @@
 export default (theme) => ({
     // container: arbitrary word
     container: {
-        display: 'flex',
-        //flexDirection: 'column',
-        maxWidth: '500px',
-        margin: '0px auto',
-        marginTop: '50px'
+        marginTop: '100px'
 
     },
     title: {
         fontFamily: 'Permanent Marker',
-        marginRight: '60px',
-        marginTop: '90px'
+        marginRight: '80px',
+        //marginTop: '90px'
+        margin: 'auto',
+
     },
     formWarning: {
         color: "#ff0000"

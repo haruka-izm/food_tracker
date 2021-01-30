@@ -1,5 +1,6 @@
 export default () => ({
     title: {
+        fontFamily: 'Permanent Marker',
         fontSize: '25px',
         textAlign: 'center',
         padding: '10px',

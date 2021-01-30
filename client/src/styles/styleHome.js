@@ -9,6 +9,7 @@ export default (theme) => ({
 
     },
     title: {
+        fontFamily: 'Permanent Marker',
         marginRight: '60px',
         marginTop: '90px'
     },

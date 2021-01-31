@@ -1,13 +1,19 @@
 export default () => ({
+    paper: {
+        width: '400px',
+        margin: 'auto',
+        marginTop: '40px'
+    },
     container: {
         //flexDirection: 'column',
         width: '350px',
         textAlign: 'center',
         display: 'block',
-        padding: '10px'
+        padding: '10px',
+
     },
-    formWarning: {
-        color: "#ff0000"
+    warning: {
+        color: "#ff0000",
     },
     emailAndPassword: {
         padding: '6px 0',

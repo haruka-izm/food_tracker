@@ -6,10 +6,10 @@ export default () => ({
         display: 'block',
         padding: '10px',
         margin: 'auto',
-        marginTop: '20px',
+        marginTop: '40px',
         marginBottom: '20px'
     },
-    formWarning: {
+    warning: {
         color: "#ff0000"
     },
     emailAndPassword: {

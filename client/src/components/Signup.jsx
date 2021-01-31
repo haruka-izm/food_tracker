@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, FormControl } from "@material-ui/core";
+import { TextField, Button, FormControl, Typography } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleSignup';
@@ -60,7 +60,10 @@ const SignUp = props => {
                      *  </form>
                      */}
 
-                    {error}
+                    <Typography className={classes.warning}>
+                        {error}
+                    </Typography>
+
                 </div>
                 <div >
                     <Button type='submit' onClick={handleSignup} variant="contained" color="secondary" className={classes.signup}>Sign up</Button>

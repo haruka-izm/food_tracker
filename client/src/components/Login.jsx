@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
-import { TextField, Button, FormControl, makeStyles } from "@material-ui/core";
+import { TextField, Button, FormControl, makeStyles, Typography } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 //import { makeStyles } from '@material-ui/core/styles';
 //import { setUserSession } from '../utils/Common';
@@ -39,8 +39,7 @@ const Login = props => {
         if (res.status === 400) {
             console.log('400 called')
             const json = await res.json();
-            // setError(json.message);
-            //setError(error.res.data.message)
+            setError(json.message);
         } else {
             console.error('API error /api/login ', res);
             //setError("Something went wrong. Please try again later.")
@@ -53,7 +52,7 @@ const Login = props => {
     }
 
     return (
-        <Paper>
+        <Paper className={classes.paper}>
             <div className={classes.container}>
                 <div>
                     {/*
@@ -79,7 +78,10 @@ const Login = props => {
                        </form>
                        
                        */}
-                    {error}
+                    <Typography className={classes.warning}>
+                        {error}
+                    </Typography>
+
                 </div>
                 <div >
                     <Button type='submit' onClick={handleLogin} variant='contained' color="primary" className={classes.login}>Log In</Button>

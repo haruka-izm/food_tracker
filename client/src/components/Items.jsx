@@ -8,6 +8,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import ClearIcon from '@material-ui/icons/Clear';
 import DoneIcon from '@material-ui/icons/Done';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -71,7 +72,8 @@ const Items = (props) => {
         NextPage: () => <NavigateNextIcon />,
         PreviousPage: () => <NavigateBeforeIcon />,
         Clear: () => <ClearIcon style={{ color: 'red' }} />,
-        Check: () => <DoneIcon color='secondary' />
+        Check: () => <DoneIcon color='secondary' />,
+        SortArrow: () => <ArrowDropDownIcon />
     }
 
     const checkExpiryDate = (rowData) => {

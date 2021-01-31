@@ -7,7 +7,6 @@ export default (theme) => ({
     title: {
         fontFamily: 'Permanent Marker',
         marginRight: '80px',
-        //marginTop: '90px'
         margin: 'auto',
 
     },

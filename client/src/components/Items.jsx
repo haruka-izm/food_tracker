@@ -11,7 +11,6 @@ import DoneIcon from '@material-ui/icons/Done';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
-import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleItems';
 
@@ -35,7 +34,6 @@ const Items = (props) => {
         rowStyle: rowData => ({
             color: checkExpiryDate(rowData),
             fontFamily: 'Arial'
-            //(rowData.expiry_date < today ? 'red' : 'yellow')
         })
     }
 

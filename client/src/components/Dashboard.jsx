@@ -12,10 +12,13 @@ function Dashboard(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     //const [items, setItems] = useState([]);
 
+    /*
     const handleLogout = () => {
         removeUserSession();
         props.history.push('/login');
     };
+
+    */
 
     async function fetchData() {
         const reqOptions = {
@@ -57,12 +60,16 @@ function Dashboard(props) {
             </div>
 
             <div id='content'>
-                <div>
-                    <Items />
-                </div>
-                <div>
+
+                <Items />
+
+                {/**
+                 * 
+                 <div>
                     <input type='button' onClick={handleLogout} value='Logout' />
                 </div>
+                 */}
+
             </div>
         </div >
     )

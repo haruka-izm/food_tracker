@@ -10,7 +10,8 @@ import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
-
+import { withStyles } from "@material-ui/core/styles";
+import style from '../styles/styleItems';
 
 const Items = (props) => {
     const info = props.items;
@@ -22,12 +23,17 @@ const Items = (props) => {
         { title: 'Expiry Date', field: 'expiry_date' },
         { title: 'Category', field: 'category' }
     ]);
+    const { classes } = props;
+    const today = (new Date()).toISOString().split('T')[0];
+
 
     const tableOptions = {
         search: false,  // search bar disabled
         actionsColumnIndex: -1,
-
-
+        rowStyle: rowData => ({
+            color: checkExpiryDate(rowData)
+            //(rowData.expiry_date < today ? 'red' : 'yellow')
+        })
     }
 
     const editable = {
@@ -51,8 +57,9 @@ const Items = (props) => {
                     props.dispatch(await actions.deleteItem(row.id));
                     resolve();
                 }, 1000);
-            })
+            }),
     }
+
 
     const icons = {
         Add: () => <AddBoxIcon />,
@@ -64,8 +71,16 @@ const Items = (props) => {
         PreviousPage: () => <NavigateBeforeIcon />
     }
 
+    const checkExpiryDate = (rowData) => {
+        if (rowData.expiry_date < today) {
+            return 'red';
+        }
+    }
+
+
+
     return (
-        <div style={{ height: 400, width: '100%' }} >
+        <div className={classes.table} >
             <MaterialTable
                 title='Stocks'
                 columns={columns}
@@ -79,9 +94,9 @@ const Items = (props) => {
 }
 
 
-export default connect((state) => {
+export default withStyles(style)(connect((state) => {
     console.log("state? : ", state)
     return {
         items: state
     }
-})(Items);
+})(Items));

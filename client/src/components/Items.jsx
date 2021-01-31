@@ -72,8 +72,15 @@ const Items = (props) => {
     }
 
     const checkExpiryDate = (rowData) => {
+        const expiring = new Date(rowData.expiry_date);
+        expiring.setDate(expiring.getDate() - 14);
+        const warning14DaysBeforeExpiration = expiring.toISOString().split('T')[0];
+
         if (rowData.expiry_date < today) {
             return 'red';
+        }
+        if (today >= warning14DaysBeforeExpiration) {
+            return 'blue';
         }
     }
 

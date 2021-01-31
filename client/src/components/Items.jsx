@@ -6,6 +6,8 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import ClearIcon from '@material-ui/icons/Clear';
+import DoneIcon from '@material-ui/icons/Done';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -31,7 +33,8 @@ const Items = (props) => {
         search: false,  // search bar disabled
         actionsColumnIndex: -1,
         rowStyle: rowData => ({
-            color: checkExpiryDate(rowData)
+            color: checkExpiryDate(rowData),
+            fontFamily: 'Arial'
             //(rowData.expiry_date < today ? 'red' : 'yellow')
         })
     }
@@ -68,7 +71,9 @@ const Items = (props) => {
         FirstPage: () => <FirstPageIcon />,
         LastPage: () => <LastPageIcon />,
         NextPage: () => <NavigateNextIcon />,
-        PreviousPage: () => <NavigateBeforeIcon />
+        PreviousPage: () => <NavigateBeforeIcon />,
+        Clear: () => <ClearIcon style={{ color: 'red' }} />,
+        Check: () => <DoneIcon color='secondary' />
     }
 
     const checkExpiryDate = (rowData) => {

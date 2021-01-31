@@ -16,7 +16,7 @@ export const theme = createMuiTheme({
     secondary: {
       main: '#4caf50', // light green
       contrastText: '#fff'
-    }
+    },
   }
 });
 

@@ -43,18 +43,20 @@ router.route("/query")
         // disabled: for test purpose
         //utils.verifyToken(req, res);
         const itemInfo = await getItems(limit, offset);
+        let totalCount;
         if (offset == 0) {
-            const totalCount = await getNumOfAllItems();
-
-            if (typeof totalCount == "number") {
-                res.status(200).send({
-                    "message": itemInfo,
-                    "totalCount": totalCount
-                });
-            } else {
-                res.status(200).send({ "message": itemInfo });
-            }
+            totalCount = await getNumOfAllItems();
         }
+
+        if (typeof totalCount == "number") {
+            res.status(200).send({
+                "message": itemInfo,
+                "totalCount": totalCount
+            });
+        } else {
+            res.status(200).send({ "message": itemInfo });
+        }
+
     })
 
 

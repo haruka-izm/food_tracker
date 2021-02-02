@@ -14,12 +14,10 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleItems';
-import { StaticRouter } from 'react-router-dom';
+
 
 const Items = (props) => {
-
     const [isLoaded, setIsLoaded] = useState(false);
-
 
     async function fetchData() {
         const reqOptions = {
@@ -27,22 +25,32 @@ const Items = (props) => {
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
         };
 
-        setIsLoaded(true);
-        const pageSize = props.pageSize;
-        const offset = props.page;
+        //setIsLoaded(true);
+        let pageSize = props.pageSize;
+        let offset = props.page;
         console.log("offset? : ", offset)
         let QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
-        const res = await fetch(QUERY_URL, reqOptions);
+        let res = await fetch(QUERY_URL, reqOptions);
 
         if (res.status === 200) {
-            const json = await res.json();
+            let json = await res.json();
             //const message = json.message;
             props.dispatch(actions.getItems(json));
+
+            // couse: values are not updated
+            console.log("returning promise");
+
+            console.log("returning totalCount: ", props.totalCount)
+            return {
+                data: Object.values(props.items),
+                page: props.page,
+                totalCount: props.totalCount
+            }
         }
 
         if (res.status === 400) {
             console.log('400 called')
-            const json = await res.json();
+            let json = await res.json();
             // setError(json.message);
             //setError(error.res.data.message)
         } else {
@@ -50,15 +58,18 @@ const Items = (props) => {
         }
 
     };
+    /*
+        useEffect(() => {
+            if (!isLoaded) {
+                fetchData();
+            }
+        });
+     
+    */
 
-    useEffect(() => {
-        if (!isLoaded) {
-            fetchData();
-        }
-    });
 
-    const info = props.items;
-    const data = Object.values(info);
+    //const info = props.items;
+    //const data = Object.values(info);
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },
         { title: 'Quantity', field: 'quantity' },
@@ -131,13 +142,34 @@ const Items = (props) => {
     }
 
 
-
     return (
         <div className={classes.table} >
             <MaterialTable
                 title='Stocks'
                 columns={columns}
-                data={data}
+                data={fetchData
+                    /*
+                                        query =>
+                    
+                                            new Promise((resolve, reject) => {
+                                                const pageSize = props.pageSize;
+                                                const offset = props.page;
+                                                const QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
+                                                fetch(QUERY_URL)
+                                                    .then(response => response.json())
+                                                    .then(result => props.dispatch(actions.getItems(result)))
+                                                    .then(result => {
+                                                        console.log("totalCount in pro: ", props.totalCount);
+                                                        resolve({
+                                                            data: Object.values(props.items),
+                                                            page: props.page,
+                                                            totalCount: props.totalCount,
+                                                        })
+                                                    })
+                                            })
+                    */
+
+                }
                 options={tableOptions}
                 editable={editable}
                 icons={icons}
@@ -148,11 +180,12 @@ const Items = (props) => {
 
 
 export default withStyles(style)(connect((state) => {
-    console.log("state? : ", state)
+    console.log("state? : ", state);
+    console.log("totalCount: ", state.totalCount)
     return {
-        // items: state.items
         items: state.data,
         page: state.page,
-        pageSize: state.pageSize
+        pageSize: state.pageSize,
+        totalCount: state.totalCount
     }
 })(Items));

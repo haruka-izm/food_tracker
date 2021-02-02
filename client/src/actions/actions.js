@@ -7,7 +7,8 @@ const POST_URL = 'http://localhost:8080/api/items';
 const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" };
 
 export function getItems(itemsInfo) {
-    console.log('dispatch called')
+    console.log('dispatch called');
+    console.log("itemsInfo.message: ", itemsInfo.message)
     let data = {};
     itemsInfo.message.forEach(element => {
         data[element.id] = element;

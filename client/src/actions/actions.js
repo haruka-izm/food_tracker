@@ -6,15 +6,16 @@ const QUERY_URL = 'http://localhost:8080/api/items/query';
 const POST_URL = 'http://localhost:8080/api/items';
 const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" };
 
-export function updateAllData(newValue) {
+export function getItems(itemsInfo) {
+    console.log('dispatch called')
     let data = {};
-    newValue.forEach(element => {
+    itemsInfo.message.forEach(element => {
         data[element.id] = element;
     });
 
     return {
-        type: actionTypes.UPDATE_ALL_DATA,
-        payload: data
+        type: actionTypes.GET_ITEMS,
+        payload: { data: data, totalCount: itemsInfo.totalCount }
     }
 };
 

@@ -1,7 +1,7 @@
 import keyMirror from 'keymirror';
 
 export var actionTypes = keyMirror({
-    UPDATE_ALL_DATA: null,
+    GET_ITEMS: null,
     ADD_ITEM: null,
     ADD_ITEM_FAILED: null,
     DELETE_ITEM: null,

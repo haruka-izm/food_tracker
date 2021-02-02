@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -14,8 +14,49 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleItems';
+import { StaticRouter } from 'react-router-dom';
 
 const Items = (props) => {
+
+    const [isLoaded, setIsLoaded] = useState(false);
+
+
+    async function fetchData() {
+        const reqOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+        };
+
+        setIsLoaded(true);
+        const pageSize = props.pageSize;
+        const offset = props.page;
+        console.log("offset? : ", offset)
+        let QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
+        const res = await fetch(QUERY_URL, reqOptions);
+
+        if (res.status === 200) {
+            const json = await res.json();
+            //const message = json.message;
+            props.dispatch(actions.getItems(json));
+        }
+
+        if (res.status === 400) {
+            console.log('400 called')
+            const json = await res.json();
+            // setError(json.message);
+            //setError(error.res.data.message)
+        } else {
+            console.error('API error /api/login ', res);
+        }
+
+    };
+
+    useEffect(() => {
+        if (!isLoaded) {
+            fetchData();
+        }
+    });
+
     const info = props.items;
     const data = Object.values(info);
     const [columns, setColumns] = useState([
@@ -109,6 +150,9 @@ const Items = (props) => {
 export default withStyles(style)(connect((state) => {
     console.log("state? : ", state)
     return {
-        items: state
+        // items: state.items
+        items: state.data,
+        page: state.page,
+        pageSize: state.pageSize
     }
 })(Items));

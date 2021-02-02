@@ -35,10 +35,26 @@ router.route("/")
 // need to be declaired before /:id
 router.route("/query")
     .get(async (req, res) => {
+        console.log("query called")
+        const limit = parseInt(req.query.limit);
+        const offset = parseInt(req.query.offset);
+
+
         // disabled: for test purpose
         //utils.verifyToken(req, res);
-        const itemInfo = await getAllItems();
-        res.status(200).send({ "message": itemInfo });
+        const itemInfo = await getItems(limit, offset);
+        if (offset == 0) {
+            const totalCount = await getNumOfAllItems();
+
+            if (typeof totalCount == "number") {
+                res.status(200).send({
+                    "message": itemInfo,
+                    "totalCount": totalCount
+                });
+            } else {
+                res.status(200).send({ "message": itemInfo });
+            }
+        }
     })
 
 
@@ -143,9 +159,8 @@ const deleteItem = (id) => {
 
 
 
-
-function getAllItems() {
-    const sql = `SELECT * FROM food_tracker.items`;
+function getItems(limit, offset) {
+    const sql = `SELECT * FROM food_tracker.items LIMIT ${limit} OFFSET ${offset}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
@@ -163,6 +178,24 @@ function getAllItems() {
         });
     });
 };
+
+function getNumOfAllItems() {
+    const sql = "SELECT COUNT(*) as TotalCount from food_tracker.items";
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
+                return resolve(ITEM_NOT_FOUND_MSG);
+            }
+
+            const numberOfRows = rows[0].TotalCount;
+            return resolve(numberOfRows);
+        });
+    });
+}
 
 
 

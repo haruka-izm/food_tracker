@@ -1,15 +1,21 @@
 import { actionTypes } from '../constants';
 
 const initialValue = {
-    // id: {id:"API_endpoint_address", name: ''...}
+    // { {},{},{} }
+    data: {},
+    page: 0,
+    totalCount: 0,
+    pageSize: 5
 }
 function reducer(state = initialValue, action) {
     switch (action.type) {
-        case (actionTypes.UPDATE_ALL_DATA):
+        case (actionTypes.GET_ITEMS):
             console.log('state updated')
             return {
                 ...state,
-                ...action.payload
+                data: action.payload.data,
+                page: state.page + 1,
+                totalCount: action.payload.totalCount
             };
 
         case (actionTypes.ADD_ITEM):

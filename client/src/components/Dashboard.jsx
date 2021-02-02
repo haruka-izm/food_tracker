@@ -5,10 +5,10 @@ import Items from './Items';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
-const QUERY_URL = 'http://localhost:8080/api/items/query';
 
 function Dashboard(props) {
     const user = props.email;
+    /*
     const [isLoaded, setIsLoaded] = useState(false);
     //const [items, setItems] = useState([]);
 
@@ -18,7 +18,7 @@ function Dashboard(props) {
         props.history.push('/login');
     };
 
-    */
+    
 
     async function fetchData() {
         const reqOptions = {
@@ -27,12 +27,19 @@ function Dashboard(props) {
         };
 
         setIsLoaded(true);
+        const pageSize = 5;
+        //const offset = props.offset;
+        const offset = 0;
+        console.log("offset? : ", offset)
+        let QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
         const res = await fetch(QUERY_URL, reqOptions);
 
         if (res.status === 200) {
+            console.log("res: ", res);
             const json = await res.json();
             const message = json.message;
-            props.dispatch(actions.updateAllData(message));
+            console.log("msg: ", message)
+            props.dispatch(actions.getItems(message));
         }
 
         if (res.status === 400) {
@@ -52,7 +59,7 @@ function Dashboard(props) {
         }
     });
 
-
+*/
     return (
         <div>
             <div id="navbar">
@@ -76,4 +83,4 @@ function Dashboard(props) {
 };
 
 // connect(): meke props.dispatch() availeble
-export default connect()(Dashboard);
+export default Dashboard;

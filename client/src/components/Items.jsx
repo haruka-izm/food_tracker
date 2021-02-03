@@ -18,56 +18,6 @@ import style from '../styles/styleItems';
 
 const Items = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
-
-    async function fetchData() {
-        const reqOptions = {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
-        };
-
-        //setIsLoaded(true);
-        let pageSize = props.pageSize;
-        let offset = props.page;
-        console.log("offset? : ", offset)
-        let QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
-        let res = await fetch(QUERY_URL, reqOptions);
-
-        if (res.status === 200) {
-            let json = await res.json();
-            //const message = json.message;
-            props.dispatch(actions.getItems(json));
-
-            // couse: values are not updated
-            console.log("returning promise");
-
-            console.log("returning totalCount: ", props.totalCount)
-            return {
-                data: Object.values(props.items),
-                page: props.page,
-                totalCount: props.totalCount
-            }
-        }
-
-        if (res.status === 400) {
-            console.log('400 called')
-            let json = await res.json();
-            // setError(json.message);
-            //setError(error.res.data.message)
-        } else {
-            console.error('API error /api/login ', res);
-        }
-
-    };
-    /*
-        useEffect(() => {
-            if (!isLoaded) {
-                fetchData();
-            }
-        });
-     
-    */
-
-
     //const info = props.items;
     //const data = Object.values(info);
     const [columns, setColumns] = useState([
@@ -78,7 +28,7 @@ const Items = (props) => {
         { title: 'Category', field: 'category' }
     ]);
     const { classes } = props;
-    const today = (new Date()).toISOString().split('T')[0];
+
 
 
     const tableOptions = {
@@ -129,6 +79,7 @@ const Items = (props) => {
     }
 
     const checkExpiryDate = (rowData) => {
+        const today = (new Date()).toISOString().split('T')[0];
         const expiring = new Date(rowData.expiry_date);
         expiring.setDate(expiring.getDate() - 14);
         const warning14DaysBeforeExpiration = expiring.toISOString().split('T')[0];
@@ -140,6 +91,64 @@ const Items = (props) => {
             return 'blue';
         }
     }
+
+    async function fetchData() {
+        const reqOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+        };
+
+        //setIsLoaded(true);
+        let pageSize = props.pageSize;
+        let offset = props.page;
+        let QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
+        let res = await fetch(QUERY_URL, reqOptions);
+
+        if (res.status === 200) {
+            let json = await res.json();
+            //const message = json.message;
+            console.log('dispatching')
+            props.dispatch(actions.getItems(json));
+
+            return true;
+            // couse: values are not updated
+            console.log("returning promise");
+
+            console.log("returning totalCount: ", props.totalCount)
+            /*
+            return {
+                data: Object.values(props.items),
+                page: props.page,
+                totalCount: props.totalCount
+            }
+            */
+        }
+
+        if (res.status === 400) {
+            console.log('400 called')
+            let json = await res.json();
+            // setError(json.message);
+            //setError(error.res.data.message)
+            return false;
+        } else {
+            console.error('API error /api/login ', res);
+            return false
+        }
+
+    };
+
+
+
+
+    /*
+        useEffect(() => {
+            if (!isLoaded) {
+                fetchData();
+            }
+        });
+     
+    */
+
 
 
     return (
@@ -181,7 +190,6 @@ const Items = (props) => {
 
 export default withStyles(style)(connect((state) => {
     console.log("state? : ", state);
-    console.log("totalCount: ", state.totalCount)
     return {
         items: state.data,
         page: state.page,

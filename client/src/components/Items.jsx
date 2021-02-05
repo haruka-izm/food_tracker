@@ -18,6 +18,9 @@ import style from '../styles/styleItems';
 
 const Items = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
+    const { classes } = props;
+
+
     //const info = props.items;
     //const data = Object.values(info);
     const [columns, setColumns] = useState([
@@ -27,9 +30,6 @@ const Items = (props) => {
         { title: 'Expiry Date', field: 'expiry_date' },
         { title: 'Category', field: 'category' }
     ]);
-    const { classes } = props;
-
-
 
     const tableOptions = {
         search: false,  // search bar disabled
@@ -90,8 +90,15 @@ const Items = (props) => {
         if (today >= warning14DaysBeforeExpiration) {
             return 'blue';
         }
-    }
+    };
 
+    ;
+
+    let pageSize = props.pageSize;
+    let offset = pageSize * props.page;
+    const totalCount = props.totalCount;
+    const items = props.items;
+    const page = props.page;
     async function fetchData() {
         const reqOptions = {
             method: 'GET',
@@ -99,29 +106,23 @@ const Items = (props) => {
         };
 
         //setIsLoaded(true);
-        let pageSize = props.pageSize;
-        let offset = props.page;
-        let QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
-        let res = await fetch(QUERY_URL, reqOptions);
+
+        const QUERY_URL = `http://localhost:8080/api/items/query?limit=${pageSize}&offset=${offset}`;
+        const res = await fetch(QUERY_URL, reqOptions);
 
         if (res.status === 200) {
-            let json = await res.json();
-            //const message = json.message;
-            console.log('dispatching')
+            const json = await res.json();
             props.dispatch(actions.getItems(json));
 
-            return true;
             // couse: values are not updated
-            console.log("returning promise");
-
             console.log("returning totalCount: ", props.totalCount)
-            /*
+
             return {
-                data: Object.values(props.items),
-                page: props.page,
-                totalCount: props.totalCount
+                data: Object.values(items),
+                page: page,
+                totalCount: totalCount
             }
-            */
+
         }
 
         if (res.status === 400) {
@@ -146,13 +147,15 @@ const Items = (props) => {
                 fetchData();
             }
         });
-     
+    
     */
 
 
 
     return (
+
         <div className={classes.table} >
+
             <MaterialTable
                 title='Stocks'
                 columns={columns}

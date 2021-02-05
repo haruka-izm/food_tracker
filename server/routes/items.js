@@ -147,7 +147,7 @@ function updateItemData(id, itemInfo) {
 };
 
 
-const deleteItem = (id) => {
+function deleteItem(id) {
     const sql = `DELETE FROM food_tracker.items WHERE id=${id}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {

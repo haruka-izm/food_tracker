@@ -1,7 +1,19 @@
 # Food Tracker
-Food Tracker is a JavaScript application to save your food from waisting.
+Food Tracker is an application to save your food from waisting.
 
-## Before You Start
+
+# Features
+ - Create, modify, and delete items
+ - Get notifications by email when items are expiring
+
+# Contents
+ - [Before You Start](#BeforeYouStart)  
+ - [Installation (Locally)](#Installation(Locally))
+ - [Usage](#Usage)
+   - [Signup](##Signup)
+
+
+# Before You Start
 This app requires a connection to a MySQL service. Follow the instructions on MySQL's official documentation specific to your system to install MySQL locally.  
 After successfully installed MySQL, create database tables as follow
 
@@ -23,7 +35,7 @@ After successfully installed MySQL, create database tables as follow
    );
 
 
-## Installation (Locally)
+# Installation (Locally)
 - Frontend
 
   `cd client`  
@@ -40,4 +52,6 @@ After successfully installed MySQL, create database tables as follow
 
 
 
-## Usage
+# Usage
+## Signup
+## Add items

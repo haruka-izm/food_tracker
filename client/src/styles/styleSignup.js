@@ -6,7 +6,7 @@ export default () => ({
         display: 'block',
         padding: '10px',
         margin: 'auto',
-        marginTop: '40px',
+        marginTop: '80px',
         marginBottom: '20px'
     },
     warning: {

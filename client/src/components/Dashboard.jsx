@@ -1,13 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { removeUserSession } from '../utils/Common';
 import Navbar from './Navbar';
-import Items from './Items';
+import Table from './Table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
 
 function Dashboard(props) {
     const user = props.email;
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    async function fetchData() {
+        const reqOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+        };
+
+        setIsLoaded(true);
+
+        const QUERY_URL = 'http://localhost:8080/api/items/query';
+        const res = await fetch(QUERY_URL, reqOptions);
+
+        if (res.status === 200) {
+            console.log("res returned")
+            const json = await res.json();
+            props.dispatch(actions.getItems(json));
+
+        }
+
+        if (res.status === 400) {
+            console.log('400 called')
+            let json = await res.json();
+            // setError(json.message);
+            //setError(error.res.data.message)
+            return false;
+        } else {
+            console.error('API error /api/login ', res);
+            return false
+        }
+
+    };
+
+
+    useEffect(() => {
+        if (!isLoaded) {
+            fetchData();
+        }
+    });
 
 
     return (
@@ -17,16 +56,7 @@ function Dashboard(props) {
             </div>
 
             <div id='content'>
-
-                <Items />
-
-                {/**
-                 * 
-                 <div>
-                    <input type='button' onClick={handleLogout} value='Logout' />
-                </div>
-                 */}
-
+                <Table />
             </div>
         </div >
     )

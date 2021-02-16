@@ -1,6 +1,5 @@
 import { actionTypes } from '../constants';
 
-//const axios = require('axios');
 
 const QUERY_URL = 'http://localhost:8080/api/items/query';
 const POST_URL = 'http://localhost:8080/api/items';
@@ -16,14 +15,13 @@ export function getItems(itemsInfo) {
 
     return {
         type: actionTypes.GET_ITEMS,
-        payload: { data: data, totalCount: itemsInfo.totalCount }
+        payload: data
     }
 };
 
 export async function addItem(newItem) {
     console.log('add item called')
     console.log('newItem: ', newItem)
-    // check item in DB
 
     const postRequestOptions = {
         method: 'POST',

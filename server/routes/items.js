@@ -36,8 +36,8 @@ router.route("/")
 router.route("/query")
     .get(async (req, res) => {
         console.log("query called")
-        const limit = parseInt(req.query.limit);
-        const offset = parseInt(req.query.offset);
+        const limit = parseInt(req.query.limit) || 1000;
+        const offset = parseInt(req.query.offset) || 0;
 
 
         // disabled: for test purpose
@@ -197,7 +197,7 @@ function getNumOfAllItems() {
             return resolve(numberOfRows);
         });
     });
-}
+};
 
 
 

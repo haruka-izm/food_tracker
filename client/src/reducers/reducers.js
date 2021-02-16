@@ -1,11 +1,7 @@
 import { actionTypes } from '../constants';
 
 const initialValue = {
-    // { {},{},{} }
-    data: {},
-    page: 0,
-    totalCount: 0,
-    pageSize: 5
+    data: {}
 }
 function reducer(state = initialValue, action) {
     switch (action.type) {
@@ -13,16 +9,14 @@ function reducer(state = initialValue, action) {
             console.log('state updated')
             return {
                 ...state,
-                data: action.payload.data,
-                page: state.page + 1,
-                totalCount: action.payload.totalCount
+                data: action.payload
             };
 
         case (actionTypes.ADD_ITEM):
             console.log("add item selected")
             return {
                 ...state,
-                ...action.payload
+                data: action.payload
             };
 
         case (actionTypes.ADD_ITEM_FAILED):
@@ -35,7 +29,7 @@ function reducer(state = initialValue, action) {
             console.log("update_item chosen")
             return {
                 ...state,
-                ...action.payload
+                data: action.payload
             };
 
         case (actionTypes.UPDATE_ITEM_FAILED):
@@ -46,7 +40,7 @@ function reducer(state = initialValue, action) {
 
         case (actionTypes.DELETE_ITEM):
             return {
-                ...action.payload
+                data: action.payload
             };
 
         case (actionTypes.DELETE_ITEM_FAILED):

@@ -14,9 +14,11 @@ function reducer(state = initialValue, action) {
 
         case (actionTypes.ADD_ITEM):
             console.log("add item selected")
+
             return {
                 ...state,
-                data: action.payload
+                data: { ...state.data, ...action.payload }
+
             };
 
         case (actionTypes.ADD_ITEM_FAILED):
@@ -29,7 +31,7 @@ function reducer(state = initialValue, action) {
             console.log("update_item chosen")
             return {
                 ...state,
-                data: action.payload
+                data: { ...state.data, ...action.payload }
             };
 
         case (actionTypes.UPDATE_ITEM_FAILED):
@@ -39,7 +41,9 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.DELETE_ITEM):
+
             return {
+                ...state,
                 data: action.payload
             };
 

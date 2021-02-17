@@ -34,6 +34,7 @@ export async function addItem(newItem) {
         const itemInfo = json.message;
         let data = {};
         data[itemInfo.id] = itemInfo;
+        console.log('returning data: ', data)
         return {
             type: actionTypes.ADD_ITEM,
             payload: data
@@ -89,6 +90,7 @@ export async function deleteItem(id) {
         const getResponse = await fetch(QUERY_URL, getRequestOptions);
         const json = await getResponse.json();
         const data = json.message;
+        console.log('returning data: ', data)
 
         return {
             type: actionTypes.DELETE_ITEM,

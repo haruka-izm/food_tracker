@@ -3,9 +3,8 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbConfig = require('../DB/db');
 const utils = require('../utils');
-
-
 const con = mysql.createConnection(dbConfig);
+
 const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
 const DELETED_MSG = "Item was deleted from the database.";

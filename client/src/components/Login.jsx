@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { TextField, Button, FormControl, makeStyles, Typography } from "@material-ui/core";
+import { TextField, Button, FormControl, Typography } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
-//import { makeStyles } from '@material-ui/core/styles';
 //import { setUserSession } from '../utils/Common';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleLogin';

@@ -20,6 +20,7 @@ const Table = (props) => {
 
     const { classes } = props;
     const info = props.items;
+    console.log('info: ', info)
     const data = Object.values(info);
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },

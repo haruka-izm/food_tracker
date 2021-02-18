@@ -62,6 +62,7 @@ export async function updateItem(itemInfo) {
     if (putResponse.status === 201) {
         let data = {};
         data[id] = itemInfo;
+        console.log('updated data: ', data)
 
         return {
             type: actionTypes.UPDATE_ITEM,

@@ -84,4 +84,4 @@ const useFormInput = initialValue => {
 };
 
 
-export default connect()(withStyles(style)(SignUp));
+export default withStyles(style)(connect()(SignUp));

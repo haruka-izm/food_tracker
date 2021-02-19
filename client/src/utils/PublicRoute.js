@@ -1,15 +1,22 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isAuthenticated } from './Common';
+import { connect } from 'react-redux';
 
 
-function PublicRoute({ component: Component, ...rest }) {
+
+function PublicRoute({ component: Component, isAuthed, ...rest }) {
+    console.log('public isAuth: ', isAuthed)
     return (
         <Route
             {...rest}
-            render={(props) => !isAuthenticated() ? <Component {...props} /> : <Redirect to={{ pathname: '/dashboard' }} />}
+            render={(props) => isAuthed == false ? <Component {...props} /> : <Redirect to={{ pathname: '/dashboard' }} />}
         />
     )
 }
 
-export default PublicRoute;
+//export default PublicRoute;
+export default connect(state => {
+    return {
+        isAuthed: state.isAuthenticated
+    }
+})(PublicRoute);

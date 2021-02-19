@@ -16,9 +16,8 @@ export const getToken = () => {
     return window.sessionStorage.hasOwnProperty('token');
 };
 
-export const isAuthenticated = (props) => {
-
-
+export const isAuthenticated = (result) => {
+    return true;
 }
 
 export const removeUserSession = () => {

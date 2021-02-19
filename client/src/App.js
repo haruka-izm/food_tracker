@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 //import { getToken, removeUserSession, setUserSession } from './utils/Common';
 import { Provider } from 'react-redux';
+
 import Home from './components/Home';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -17,6 +18,7 @@ import { theme } from './theme/theme';
 // render={props => <Destination_component {...props} prop_name=value />}
 
 function App() {
+
   return (
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>

@@ -12,21 +12,22 @@ import { connect } from 'react-redux';
 */
 
 
-function PrivateRoute({ component: Component, ...rest }) {
+function PrivateRoute({ component: Component, isAuthed, ...rest }) {
+  console.log("private", isAuthed)
   return (
     <Route
       {...rest}
-      render={(props) => rest.isAuthenticated ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+      render={(props) => isAuthed == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
     />
   )
 }
 
+//export default PrivateRoute;
 export default connect(state => {
   return {
-    isAuthenticated: state.isAuthenticated
+    isAuthed: state.isAuthenticated
   }
 })(PrivateRoute);
-
 
 /*
 <Redirect to="path/to/page" />

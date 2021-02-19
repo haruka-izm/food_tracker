@@ -109,6 +109,7 @@ function getErrorMessage(resStatus) {
 
 
 export function isValidUser() {
+    console.log("verification")
     return {
         type: actionTypes.IS_AUTHENTICATED,
         payload: true

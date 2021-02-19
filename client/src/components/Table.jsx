@@ -111,7 +111,6 @@ const Table = (props) => {
 
 
 export default withStyles(style)(connect((state) => {
-    console.log("state? : ", state);
     return {
         items: state.data
     }

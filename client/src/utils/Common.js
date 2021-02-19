@@ -1,3 +1,5 @@
+import * as actions from '../actions/actions';
+
 export const getUser = () => {
     const user = sessionStorage.getItem('user');
     if (user) {
@@ -10,8 +12,14 @@ export const getUser = () => {
 export const getToken = () => {
     const test = sessionStorage.getItem('token');
     console.log("token?: ", test);
-    return sessionStorage.getItem('token') || null;
+    //return sessionStorage.getItem('token') || null;
+    return window.sessionStorage.hasOwnProperty('token');
 };
+
+export const isAuthenticated = (props) => {
+
+
+}
 
 export const removeUserSession = () => {
     sessionStorage.removeItem('token');

@@ -29,21 +29,21 @@ router.post("/", (req, res) => {
             const passwordIsMatched = await bycrypt.compare(password, result[0].password);
             if (passwordIsMatched) {
                 const token = await utils.generateToken(email);
-                console.log('token: ', token)
                 if (token == null) {
                     return res.status(400).send({ message: "authentication failed." });
 
                 }
+                console.log('issued token: ', token)
                 res.cookie('token', token, {
                     expires: new Date(Date.now() + 60 * 60),  // 1h
                     secure: false,
                     httpOnly: true,
                 });
 
-
                 return res.status(200).send({ message: "Successfully logged in" });
 
             } else {
+                console.log("no way called")
                 return res.status(400).send({ message: "Your login information doesn't match." });
             }
         }

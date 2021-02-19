@@ -45,20 +45,11 @@ const SignUp = props => {
         <Paper className={classes.container}>
             <div >
                 <div>
-                    {/**
-                 * <form >
-                 * 
-                 */}
-
                     <FormControl >
                         <TextField type="text" {...email} required placeholder="Email" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type='password' {...password} required placeholder="password" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type='password' {...confirmedPassword} required placeholder="re-enter password" variant="outlined" className={classes.emailAndPassword}></TextField>
                     </FormControl>
-
-                    {/**
-                     *  </form>
-                     */}
 
                     <Typography className={classes.warning}>
                         {error}

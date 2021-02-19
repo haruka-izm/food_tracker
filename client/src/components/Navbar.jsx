@@ -20,12 +20,10 @@ const Navbar = props => {
     };
 
     const handleClose = () => {
-        console.log("selected clicked")
         setAnchorEl(null);
     };
 
     const handleLogout = () => {
-        console.log("logout clicked")
         setAnchorEl(null);
         props.history.push('/login');
     };

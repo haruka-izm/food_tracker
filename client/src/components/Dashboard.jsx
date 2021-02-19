@@ -22,14 +22,12 @@ function Dashboard(props) {
         const res = await fetch(QUERY_URL, reqOptions);
 
         if (res.status === 200) {
-            console.log("res returned")
             const json = await res.json();
             props.dispatch(actions.getItems(json));
 
         }
 
         if (res.status === 400) {
-            console.log('400 called')
             let json = await res.json();
             // setError(json.message);
             //setError(error.res.data.message)

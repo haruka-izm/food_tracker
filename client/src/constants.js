@@ -7,5 +7,8 @@ export var actionTypes = keyMirror({
     DELETE_ITEM: null,
     DELETE_ITEM_FAILED: null,
     UPDATE_ITEM: null,
-    UPDATE_ITEM_FAILED: null
+    UPDATE_ITEM_FAILED: null,
+
+    IS_AUTHENTICATED: null,
+    IS_AUTHENTICATED_FAILED: null
 })

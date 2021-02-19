@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { getToken } from './Common';
+import { connect } from 'react-redux';
+import { isAuthenticated } from './Common';
 
 /*
 {component: Component, ...rest}
@@ -10,16 +11,21 @@ import { getToken } from './Common';
 
 */
 
+
 function PrivateRoute({ component: Component, ...rest }) {
-    return (
-        <Route
-            {...rest}
-            render={(props) => getToken() ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
-        />
-    )
+  return (
+    <Route
+      {...rest}
+      render={(props) => rest.isAuthenticated ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+    />
+  )
 }
 
-export default PrivateRoute;
+export default connect(state => {
+  return {
+    isAuthenticated: state.isAuthenticated
+  }
+})(PrivateRoute);
 
 
 /*

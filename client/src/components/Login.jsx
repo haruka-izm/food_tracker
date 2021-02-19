@@ -5,6 +5,8 @@ import Paper from '@material-ui/core/Paper';
 //import { setUserSession } from '../utils/Common';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleLogin';
+import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
 
 const LOGIN_URL = 'http://localhost:8080/api/login';
@@ -31,16 +33,20 @@ const Login = props => {
 
         const res = await fetch(LOGIN_URL, reqOptions);
         if (res.status === 200) {
+            console.log('user is authenticated')
+            props.dispatch(actions.isValidUser());
             props.history.push('/dashboard');
-            //return res.json();
+
         }
 
         if (res.status === 400) {
             console.log('400 called')
+            props.dispatch(actions.isNotValidUser());
             const json = await res.json();
             setError(json.message);
         } else {
             console.error('API error /api/login ', res);
+            props.dispatch(actions.isNotValidUser());
             //setError("Something went wrong. Please try again later.")
         }
 
@@ -54,10 +60,6 @@ const Login = props => {
         <Paper className={classes.paper}>
             <div className={classes.container}>
                 <div>
-                    {/*
-                       <form >
-                       
-                       */}
 
                     <FormControl>
                         {/*
@@ -73,10 +75,7 @@ const Login = props => {
                             <TextField type='password' {...password} required placeholder='Password' variant='outlined' className={classes.emailAndPassword}></TextField>
                         </div>
                     </FormControl>
-                    {/*
-                       </form>
-                       
-                       */}
+
                     <Typography className={classes.warning}>
                         {error}
                     </Typography>
@@ -111,4 +110,4 @@ const useFormInput = initialValue => {
 
 
 
-export default withRouter(withStyles(style)(Login));
+export default withRouter(connect()(withStyles(style)(Login)));

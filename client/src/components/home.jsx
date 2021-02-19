@@ -22,18 +22,7 @@ const Home = (props) => {
             <Grid item>
                 <Login />
             </Grid>
-
         </Grid>
-
-        /*
-        <div className={classes.container}>
-            
-
-            <div className={classes.form}>
-               
-            </div>
-        </div>
-        */
     );
 };
 

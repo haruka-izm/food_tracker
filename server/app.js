@@ -28,7 +28,7 @@ const app = express();
 const signUp = require("./routes/signUp");
 const login = require("./routes/login");
 const items = require("./routes/items");
-//const getQuery = require("./routes/getQuery");
+
 
 app.use(json({ extended: false }));
 app.use(json());
@@ -37,12 +37,9 @@ app.use(cors());
 app.use(cookieParser());
 
 // to do (if possible): add middleware
-//app.use("/api", getQuery);
 app.use("/api/signup", signUp);
 app.use("/api/login", login);
 app.use("/api/items", items);
-
-
 
 
 app.listen(port);

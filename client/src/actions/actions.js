@@ -6,8 +6,6 @@ const POST_URL = 'http://localhost:8080/api/items';
 const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" };
 
 export function getItems(itemsInfo) {
-    console.log('dispatch called');
-    console.log("itemsInfo.message: ", itemsInfo.message)
     let data = {};
     itemsInfo.message.forEach(element => {
         data[element.id] = element;
@@ -20,9 +18,6 @@ export function getItems(itemsInfo) {
 };
 
 export async function addItem(newItem) {
-    console.log('add item called')
-    console.log('newItem: ', newItem)
-
     const postRequestOptions = {
         method: 'POST',
         headers: HEADERS,
@@ -34,7 +29,7 @@ export async function addItem(newItem) {
         const itemInfo = json.message;
         let data = {};
         data[itemInfo.id] = itemInfo;
-        console.log('returning data: ', data)
+
         return {
             type: actionTypes.ADD_ITEM,
             payload: data
@@ -49,8 +44,6 @@ export async function addItem(newItem) {
 }
 
 export async function updateItem(itemInfo) {
-    console.log("updateItem called");
-    console.log("itemInfo: ", itemInfo)
     const id = itemInfo.id;
 
     const putRequestOptions = {
@@ -62,7 +55,6 @@ export async function updateItem(itemInfo) {
     if (putResponse.status === 201) {
         let data = {};
         data[id] = itemInfo;
-        console.log('updated data: ', data)
 
         return {
             type: actionTypes.UPDATE_ITEM,
@@ -91,7 +83,6 @@ export async function deleteItem(id) {
         const getResponse = await fetch(QUERY_URL, getRequestOptions);
         const json = await getResponse.json();
         const data = json.message;
-        console.log('returning data: ', data)
 
         return {
             type: actionTypes.DELETE_ITEM,
@@ -109,10 +100,24 @@ export async function deleteItem(id) {
 
 
 function getErrorMessage(resStatus) {
-    console.log("resStatus: ", resStatus);
     if (resStatus === 400) {
         console.log('400 called');
         return "Bad request. Please try again";
     }
     return "Process failed";
+}
+
+
+export function isValidUser() {
+    return {
+        type: actionTypes.IS_AUTHENTICATED,
+        payload: true
+    }
+};
+
+export function isNotValidUser() {
+    return {
+        type: actionTypes.IS_AUTHENTICATED_FAILED,
+        payload: false
+    }
 }

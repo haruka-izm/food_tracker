@@ -1,20 +1,19 @@
 import { actionTypes } from '../constants';
 
 const initialValue = {
-    data: {}
+    data: {},
+    isAuthenticated: false
 }
+
 function reducer(state = initialValue, action) {
     switch (action.type) {
         case (actionTypes.GET_ITEMS):
-            console.log('state updated')
             return {
                 ...state,
                 data: action.payload
             };
 
         case (actionTypes.ADD_ITEM):
-            console.log("add item selected")
-
             return {
                 ...state,
                 data: { ...state.data, ...action.payload }
@@ -22,26 +21,22 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.ADD_ITEM_FAILED):
-            console.log("add item failed")
             return {
                 ...state
             };
 
         case (actionTypes.UPDATE_ITEM):
-            console.log("update_item chosen")
             return {
                 ...state,
                 data: { ...state.data, ...action.payload }
             };
 
         case (actionTypes.UPDATE_ITEM_FAILED):
-            console.log("update_item_failed called")
             return {
                 ...state
             };
 
         case (actionTypes.DELETE_ITEM):
-
             return {
                 ...state,
                 data: action.payload
@@ -52,6 +47,17 @@ function reducer(state = initialValue, action) {
                 ...state,
                 errorMessage: action.payload
             };
+
+        case (actionTypes.IS_AUTHENTICATED):
+            return {
+                ...state,
+                isAuthenticated: action.payload
+            }
+
+        case (actionTypes.IS_AUTHENTICATED_FAILED):
+            return {
+                ...state
+            }
 
         default:
             return state;

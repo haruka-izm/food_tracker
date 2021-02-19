@@ -12,8 +12,6 @@ const ITEM_ADDED_MSG = "Item was added to the database."
 
 router.route("/")
     .post(async (req, res) => {
-        console.log('post called')
-        console.log('req.body', req.body)
         const result = await addItem(req.body);
         if (result.msg == ITEM_ADDED_MSG) {
             const id = result.id;
@@ -34,13 +32,14 @@ router.route("/")
 // need to be declaired before /:id
 router.route("/query")
     .get(async (req, res) => {
-        console.log("query called")
+        console.log("query called?")
         const limit = parseInt(req.query.limit) || 1000;
         const offset = parseInt(req.query.offset) || 0;
 
+        if (!utils.verifyToken(req, res)) {
+            return res.status(401).send({ message: 'Invalid token or You need to login again.' });
 
-        // disabled: for test purpose
-        //utils.verifyToken(req, res);
+        }
         const itemInfo = await getItems(limit, offset);
         let totalCount;
         if (offset == 0) {
@@ -55,19 +54,22 @@ router.route("/query")
         } else {
             res.status(200).send({ "message": itemInfo });
         }
-
     })
 
 
 router.route("/:id")
     .get(async (req, res) => {
-        //utils.verifyToken(req, res);
+        if (!utils.verifyToken(req, res)) {
+            return res.status(401).send({ message: 'Invalid token or You need to login again.' });
+        }
         const { id } = req.params;
         const itemInfo = await findById(id);
         res.status(200).send({ "message": itemInfo });
     })
     .put(async (req, res) => {
-        //utils.verifyToken(req, res);
+        if (!utils.verifyToken(req, res)) {
+            return res.status(401).send({ message: 'Invalid token or You need to login again.' });
+        }
         const { id } = req.params;
         const itemInfo = await findById(id);
 
@@ -84,7 +86,9 @@ router.route("/:id")
         }
     })
     .delete(async (req, res) => {
-        //utils.verifyToken(req, res);
+        if (!utils.verifyToken(req, res)) {
+            return res.status(401).send({ message: 'Invalid token or You need to login again.' });
+        }
         const { id } = req.params;
         const itemInfo = await findById(id);
 

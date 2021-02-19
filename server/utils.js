@@ -79,14 +79,16 @@ const verifyToken = async (req, res) => {
     const token = req.cookies.token || '';
 
     if (!token) {
-        return res.status(401).send({ message: 'You need to log in.' });
+        return false;
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
         if (error) {
-            return res.status(401).send({ message: "Invalid token." });
+            return false;
         }
     });
+
+    return true;
 };
 
 module.exports = { generateToken, verifyToken };

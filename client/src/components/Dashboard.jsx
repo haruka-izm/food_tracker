@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { removeUserSession } from '../utils/Common';
 import Navbar from './Navbar';
 import Table from './Table';
 import { connect } from 'react-redux';

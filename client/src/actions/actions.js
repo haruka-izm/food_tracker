@@ -113,12 +113,21 @@ export function isValidUser() {
     return {
         type: actionTypes.IS_AUTHENTICATED,
         payload: true
-    }
+    };
 };
 
 export function isNotValidUser() {
     return {
         type: actionTypes.IS_AUTHENTICATED_FAILED,
         payload: false
+    };
+};
+
+export function logOut() {
+    return {
+        type: actionTypes.LOGOUT,
+        payload: false
     }
 }
+
+

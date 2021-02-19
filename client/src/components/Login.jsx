@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { TextField, Button, FormControl, Typography } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
-//import { setUserSession } from '../utils/Common';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleLogin';
 import { connect } from 'react-redux';

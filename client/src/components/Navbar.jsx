@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 // without `withRouter`, can't logout
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
+
 import { Button } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from "@material-ui/core/ListItem";
@@ -25,6 +28,7 @@ const Navbar = props => {
 
     const handleLogout = () => {
         setAnchorEl(null);
+        props.dispatch(actions.logOut());
         props.history.push('/login');
     };
 
@@ -57,11 +61,8 @@ const Navbar = props => {
                 </div>
             </Grid>
         </Grid>
-
-
-
     )
 }
 
 
-export default withRouter(withStyles(style)(Navbar));
+export default connect()(withRouter(withStyles(style)(Navbar)));

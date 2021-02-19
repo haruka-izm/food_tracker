@@ -59,6 +59,12 @@ function reducer(state = initialValue, action) {
                 ...state
             }
 
+        case (actionTypes.LOGOUT):
+            return {
+                ...state,
+                isAuthenticated: action.payload
+            }
+
         default:
             return state;
     };

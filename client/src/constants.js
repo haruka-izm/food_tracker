@@ -10,5 +10,6 @@ export var actionTypes = keyMirror({
     UPDATE_ITEM_FAILED: null,
 
     IS_AUTHENTICATED: null,
-    IS_AUTHENTICATED_FAILED: null
+    IS_AUTHENTICATED_FAILED: null,
+    LOGOUT: null
 })

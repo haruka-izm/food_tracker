@@ -39,7 +39,6 @@ const Login = props => {
         }
 
         if (res.status === 400) {
-            console.log('400 called')
             props.dispatch(actions.isNotValidUser());
             const json = await res.json();
             setError(json.message);

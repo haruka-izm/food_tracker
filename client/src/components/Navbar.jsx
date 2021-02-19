@@ -26,10 +26,24 @@ const Navbar = props => {
         setAnchorEl(null);
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        const LOGOUT_URL = "http://localhost:8080/api/logout";
         setAnchorEl(null);
-        props.dispatch(actions.logOut());
-        props.history.push('/login');
+
+        const reqOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+        };
+
+        const res = await fetch(LOGOUT_URL, reqOptions);
+        if (res.status === 204) {
+            props.dispatch(actions.logOut());
+            props.history.push('/');
+
+        } else {
+            console.log('Failed to logout')
+        }
+
     };
 
     return (

@@ -21,7 +21,6 @@ router.route("/")
             res.status(201).send({ "message": itemInfo });
         }
         else {
-            // to do: confirm status code
             console.log("DB error")
             console.log('error: ', error)
             res.status(400).send({ "message": error });
@@ -73,8 +72,7 @@ router.route("/:id")
         const itemInfo = await findById(id);
 
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
-            // to do: confirm status code
-            res.status(400).send({ "message": itemInfo });
+            res.status(404).send({ "message": itemInfo });
         } else {
             const itemInfo = req.body;
             const updatedItem = await updateItemData(id, itemInfo);

@@ -50,7 +50,6 @@ cron.schedule('* 23 * * *', async () => {
 
 
 function checkExpirationDateOfAllItems(dateOfExpiration) {
-    // to do: <= or =
     const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}'`;
 
     return new Promise((resolve, reject) => {
@@ -91,4 +90,13 @@ const verifyToken = async (req, res) => {
     return true;
 };
 
-module.exports = { generateToken, verifyToken };
+const clearToken = (res) => {
+    try {
+        res.clearCookie('token');
+        return res.status(204).send();
+    } catch {
+        return res.status(401).send({ message: 'Failed to log out' });
+    }
+}
+
+module.exports = { generateToken, verifyToken, clearToken };

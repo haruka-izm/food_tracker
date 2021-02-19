@@ -26,7 +26,8 @@ also add following,
 const app = express();
 
 const signUp = require("./routes/signUp");
-const login = require("./routes/login");
+const login = require("./routes/logIn");
+const logout = require("./routes/logOut");
 const items = require("./routes/items");
 
 
@@ -40,6 +41,7 @@ app.use(cookieParser());
 app.use("/api/signup", signUp);
 app.use("/api/login", login);
 app.use("/api/items", items);
+app.use("/api/logout", logout);
 
 
 app.listen(port);

@@ -18,7 +18,6 @@ User.createNewUser = async (newUser) => {
             throw error;
         };
 
-        // to do: check if this user exists
         const sql = `INSERT INTO food_tracker.test (email, password) VALUES ("${newUser.email}", "${encryptedPW}")`;
         con.query(sql, function (err, result) {
             if (err) throw err;

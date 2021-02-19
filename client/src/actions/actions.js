@@ -101,7 +101,6 @@ export async function deleteItem(id) {
 
 function getErrorMessage(resStatus) {
     if (resStatus === 400) {
-        console.log('400 called');
         return "Bad request. Please try again";
     }
     return "Process failed";

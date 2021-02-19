@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
                     return res.status(400).send({ message: "authentication failed." });
 
                 }
-                console.log('issued token: ', token)
+
                 res.cookie('token', token, {
                     expires: new Date(Date.now() + 60 * 60),  // 1h
                     secure: false,

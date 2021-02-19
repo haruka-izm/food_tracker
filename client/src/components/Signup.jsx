@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { TextField, Button, FormControl, Typography } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from 'react-redux';
 import style from '../styles/styleSignup';
+import * as actions from '../actions/actions';
 
 const SIGNUP_URL = 'http://localhost:8080/api/signup';
 
@@ -28,14 +30,18 @@ const SignUp = props => {
 
             const res = await fetch(SIGNUP_URL, reqOptions);
             if (res.status === 201) {
+                props.dispatch(actions.isValidUser());
+                console.log('user successfully signup and login')
                 props.history.push('/dashboard');
                 //return res.json();
             }
 
             if (res.status === 400) {
+                props.dispatch(actions.isNotValidUser());
                 const json = await res.json();
                 setError(json.message);
             } else {
+                props.dispatch(actions.isNotValidUser());
                 console.error('API error /api/login ', res);
             }
         }
@@ -78,4 +84,4 @@ const useFormInput = initialValue => {
 };
 
 
-export default withStyles(style)(SignUp);
+export default connect()(withStyles(style)(SignUp));

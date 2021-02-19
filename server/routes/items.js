@@ -32,7 +32,6 @@ router.route("/")
 // need to be declaired before /:id
 router.route("/query")
     .get(async (req, res) => {
-        console.log("query called?")
         const limit = parseInt(req.query.limit) || 1000;
         const offset = parseInt(req.query.offset) || 0;
 

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 
 function PublicRoute({ component: Component, isAuthed, ...rest }) {
-    console.log('public isAuth: ', isAuthed)
     return (
         <Route
             {...rest}
@@ -14,7 +13,7 @@ function PublicRoute({ component: Component, isAuthed, ...rest }) {
     )
 }
 
-//export default PublicRoute;
+
 export default connect(state => {
     return {
         isAuthed: state.isAuthenticated

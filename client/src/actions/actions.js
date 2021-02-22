@@ -14,7 +14,7 @@ export function getItems(itemsInfo) {
     return {
         type: actionTypes.GET_ITEMS,
         payload: data
-    }
+    };
 };
 
 export async function addItem(newItem) {
@@ -33,15 +33,15 @@ export async function addItem(newItem) {
         return {
             type: actionTypes.ADD_ITEM,
             payload: data
-        }
+        };
     } else {
         const msg = getErrorMessage(postResponse.status);
         return {
             type: actionTypes.ADD_ITEM_FAILED,
             payload: { message: msg }
-        }
-    }
-}
+        };
+    };
+};
 
 export async function updateItem(itemInfo) {
     const id = itemInfo.id;
@@ -65,9 +65,9 @@ export async function updateItem(itemInfo) {
         return {
             type: actionTypes.UPDATE_ITEM_FAILED,
             payload: { message: msg }
-        }
-    }
-}
+        };
+    };
+};
 
 export async function deleteItem(id) {
     const deleteRequestOptions = {
@@ -94,8 +94,8 @@ export async function deleteItem(id) {
             type: actionTypes.DELETE_ITEM_FAILED,
             payload: { message: msg }
         };
-    }
-}
+    };
+};
 
 
 
@@ -104,11 +104,10 @@ function getErrorMessage(resStatus) {
         return "Bad request. Please try again";
     }
     return "Process failed";
-}
+};
 
 
 export function isValidUser() {
-    console.log("verification")
     return {
         type: actionTypes.IS_AUTHENTICATED,
         payload: true
@@ -126,7 +125,7 @@ export function logOut() {
     return {
         type: actionTypes.LOGOUT,
         payload: false
-    }
-}
+    };
+};
 
 

@@ -31,21 +31,15 @@ const SignUp = props => {
             const res = await fetch(SIGNUP_URL, reqOptions);
             if (res.status === 201) {
                 props.dispatch(actions.isValidUser());
-                console.log('user successfully signup and login')
                 props.history.push('/dashboard');
-                //return res.json();
-            }
 
-            if (res.status === 400) {
+            } else {
                 props.dispatch(actions.isNotValidUser());
                 const json = await res.json();
                 setError(json.message);
-            } else {
-                props.dispatch(actions.isNotValidUser());
-                console.error('API error /api/login ', res);
-            }
-        }
-    }
+            };
+        };
+    };
 
     return (
         <Paper className={classes.container}>

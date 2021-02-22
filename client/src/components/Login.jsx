@@ -32,20 +32,13 @@ const Login = props => {
 
         const res = await fetch(LOGIN_URL, reqOptions);
         if (res.status === 200) {
-            console.log('user is authenticated')
             props.dispatch(actions.isValidUser());
             props.history.push('/dashboard');
 
-        }
-
-        if (res.status === 400) {
+        } else {
             props.dispatch(actions.isNotValidUser());
             const json = await res.json();
             setError(json.message);
-        } else {
-            console.error('API error /api/login ', res);
-            props.dispatch(actions.isNotValidUser());
-            //setError("Something went wrong. Please try again later.")
         }
 
     }
@@ -60,12 +53,6 @@ const Login = props => {
                 <div>
 
                     <FormControl>
-                        {/*
-                    
-                    {...email} : not React syntax, JS syntax
-                               : passing key/value pair to a component
-
-                    */}
                         <div >
                             <TextField type="text" {...email} required placeholder="Email" variant='outlined' className={classes.emailAndPassword} ></TextField>
                         </div>

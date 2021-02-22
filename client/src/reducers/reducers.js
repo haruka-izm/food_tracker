@@ -68,6 +68,6 @@ function reducer(state = initialValue, action) {
         default:
             return state;
     };
-}
+};
 
 export default reducer;

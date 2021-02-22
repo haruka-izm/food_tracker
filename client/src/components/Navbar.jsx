@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// without `withRouter`, can't logout
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -42,7 +41,7 @@ const Navbar = props => {
 
         } else {
             console.log('Failed to logout')
-        }
+        };
 
     };
 

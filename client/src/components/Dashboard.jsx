@@ -24,16 +24,12 @@ function Dashboard(props) {
             const json = await res.json();
             props.dispatch(actions.getItems(json));
 
-        }
+        } else {
 
-        if (res.status === 400) {
-            let json = await res.json();
+            //let json = await res.json();
             // setError(json.message);
             //setError(error.res.data.message)
             return false;
-        } else {
-            console.error('API error /api/login ', res);
-            return false
         }
 
     };
@@ -59,5 +55,5 @@ function Dashboard(props) {
     )
 };
 
-// connect(): meke props.dispatch() availeble
+
 export default connect()(Dashboard);

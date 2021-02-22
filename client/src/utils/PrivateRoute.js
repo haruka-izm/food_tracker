@@ -3,26 +3,16 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
-/*
-{component: Component, ...rest}
--> assign property `component` defined on props to `Component`
--> ...rest: take all remaining properties defined on props to `rest`
-
-
-*/
-
-
 function PrivateRoute({ component: Component, isAuthed, ...rest }) {
-  console.log("private", isAuthed)
   return (
     <Route
       {...rest}
       render={(props) => isAuthed == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
     />
-  )
-}
+  );
+};
 
-//export default PrivateRoute;
+
 export default connect(state => {
   return {
     isAuthed: state.isAuthenticated

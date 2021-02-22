@@ -21,14 +21,13 @@ router.route("/")
             res.status(201).send({ "message": itemInfo });
         }
         else {
-            console.log("DB error")
             console.log('error: ', error)
             res.status(400).send({ "message": error });
         }
 
     })
 
-// need to be declaired before /:id
+
 router.route("/query")
     .get(async (req, res) => {
         const limit = parseInt(req.query.limit) || 1000;

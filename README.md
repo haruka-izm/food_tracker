@@ -54,9 +54,9 @@ After successfully installed MySQL, follow the instruction below.
 
 # Usage
 ## Signup
-![`signup demo`](insert address to the img)
+![`signup demo`](./img/signup.gif)
 ## Add items
-![`add an item demo`]
+![`add an item demo`](./img/add_item.gif)
 
 ## Modify items
-![`modify items`]
+![`modify items`](./img/modify_item.gif)

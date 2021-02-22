@@ -43,7 +43,6 @@ router.post("/", (req, res) => {
                 return res.status(200).send({ message: "Successfully logged in" });
 
             } else {
-                console.log("no way called")
                 return res.status(400).send({ message: "Your login information doesn't match." });
             }
         }

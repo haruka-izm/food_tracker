@@ -13,8 +13,7 @@ import PublicRoute from './utils/PublicRoute';
 
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './theme/theme';
-// want to pass prop on <Route /> => use `render`prop
-// render={props => <Destination_component {...props} prop_name=value />}
+
 
 function App() {
 

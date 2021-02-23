@@ -68,15 +68,14 @@ const generateToken = email => {
     }
 
     const data = { email: email };
-    const expiration = { expiresIn: process.env.JWT_EXPIRATION }
+    const expiration = { expiresIn: process.env.JWT_EXPIRATION };
     const token = jwt.sign(data, process.env.JWT_SECRET, expiration);
     return token;
 };
 
 
 const verifyToken = async (req, res) => {
-    const token = req.cookies.token || '';
-
+    const token = req.cookies['token'] || '';
     if (!token) {
         return false;
     }

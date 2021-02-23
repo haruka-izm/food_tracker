@@ -34,12 +34,16 @@ router.post("/", (req, res) => {
 
                 }
 
-                res.cookie('token', token, {
-                    expires: new Date(Date.now() + 60 * 60),  // 1h
+                const GMTcurrentTime = new Date();
+                console.log("GMT current time: ", GMTcurrentTime)
+                // to EDT and expires in 1 hour
+                GMTcurrentTime.setHours(15);
+                console.log("set exp : ", GMTcurrentTime)
+                res.cookie("token", token, {
+                    expires: GMTcurrentTime,
                     secure: false,
                     httpOnly: true,
                 });
-
                 return res.status(200).send({ message: "Successfully logged in" });
 
             } else {

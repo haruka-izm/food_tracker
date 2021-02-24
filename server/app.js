@@ -30,6 +30,7 @@ const signUp = require("./routes/signUp");
 const login = require("./routes/logIn");
 const logout = require("./routes/logOut");
 const items = require("./routes/items");
+const users = require("./routes/users");
 const corsOptions = { credentials: true, origin: 'http://localhost:3000' };
 
 app.use(json({ extended: false }));
@@ -43,6 +44,7 @@ app.use("/api/signup", signUp);
 app.use("/api/login", login);
 app.use("/api/items", items);
 app.use("/api/logout", logout);
+app.use("/api/users", users);
 
 
 app.listen(port);

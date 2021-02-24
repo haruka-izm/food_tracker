@@ -3,21 +3,42 @@ import Navbar from './Navbar';
 import Table from './Table';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
+import axios from 'axios';
 
+const QUERY_URL = 'http://localhost:8080/api/items/query';
 
 function Dashboard(props) {
     const user = props.email;
     const [isLoaded, setIsLoaded] = useState(false);
 
     async function fetchData() {
+        setIsLoaded(true);
+        /*
+                const reqOptions = { withCredentials: true };
+                const res = await axios.get(QUERY_URL);
+                if (res.status === 200) {
+                    const json = await res.json();
+                    props.dispatch(actions.getItems(json));
+        
+                } else {
+        
+                    //let json = await res.json();
+                    // setError(json.message);
+                    //setError(error.res.data.message)
+                    return false;
+                };
+        
+                */
+
+
         const reqOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" }
         };
 
         setIsLoaded(true);
 
-        const QUERY_URL = 'http://localhost:8080/api/items/query';
         const res = await fetch(QUERY_URL, reqOptions);
 
         if (res.status === 200) {
@@ -31,6 +52,7 @@ function Dashboard(props) {
             //setError(error.res.data.message)
             return false;
         }
+
 
     };
 

@@ -4,6 +4,7 @@ const express = require('express');
 const port = 8080;
 const { json, urlencoded } = express; // json: body-parser
 const cors = require('cors');
+//const bodyParser = require('body-parser');
 
 // need this
 const cookieParser = require('cookie-parser');
@@ -29,12 +30,12 @@ const signUp = require("./routes/signUp");
 const login = require("./routes/logIn");
 const logout = require("./routes/logOut");
 const items = require("./routes/items");
-
+const corsOptions = { credentials: true, origin: 'http://localhost:3000' };
 
 app.use(json({ extended: false }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // to do (if possible): add middleware

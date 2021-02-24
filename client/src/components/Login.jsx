@@ -26,7 +26,8 @@ const Login = props => {
 
         const reqOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" },
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" },
             body: JSON.stringify({ email: email.value, password: password.value })
         };
 

@@ -76,6 +76,7 @@ const generateToken = email => {
 
 const verifyToken = async (req, res) => {
     const token = req.cookies['token'] || '';
+    console.log('verifying token: ', token)
     if (!token) {
         return false;
     }

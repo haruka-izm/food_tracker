@@ -34,10 +34,6 @@ router.route("/query")
         const limit = parseInt(req.query.limit) || 1000;
         const offset = parseInt(req.query.offset) || 0;
 
-        //console.log("1111111111111111111111111111111111111111111111111111");
-        //console.log(req);
-        //console.log("2222222222222222222222222222222222222222222222222222");
-
         const verified = await utils.verifyToken(req, res);
         console.log("verified: ", verified)
         if (!verified) {

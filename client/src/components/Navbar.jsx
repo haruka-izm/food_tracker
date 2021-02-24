@@ -31,7 +31,8 @@ const Navbar = props => {
 
         const reqOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" }
         };
 
         const res = await fetch(LOGOUT_URL, reqOptions);

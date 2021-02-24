@@ -3,7 +3,7 @@ import { actionTypes } from '../constants';
 
 const QUERY_URL = 'http://localhost:8080/api/items/query';
 const POST_URL = 'http://localhost:8080/api/items';
-const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" };
+const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" };
 
 export function getItems(itemsInfo) {
     let data = {};
@@ -48,6 +48,7 @@ export async function updateItem(itemInfo) {
 
     const putRequestOptions = {
         method: 'PUT',
+        credentials: 'include',
         headers: HEADERS,
         body: JSON.stringify(itemInfo)
     };
@@ -72,12 +73,14 @@ export async function updateItem(itemInfo) {
 export async function deleteItem(id) {
     const deleteRequestOptions = {
         method: 'DELETE',
+        credentials: 'include',
         headers: HEADERS
     };
     const deleteResponse = await fetch(id, deleteRequestOptions);
     if (deleteResponse.status === 200) {
         const getRequestOptions = {
             method: 'GET',
+            credentials: 'include',
             headers: HEADERS
         };
         const getResponse = await fetch(QUERY_URL, getRequestOptions);

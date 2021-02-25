@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
+import { requestOptions, urlOptions } from '../constants';
 
 import { Button } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
@@ -26,16 +27,8 @@ const Navbar = props => {
     };
 
     const handleLogout = async () => {
-        const LOGOUT_URL = "http://localhost:8080/api/logout";
         setAnchorEl(null);
-
-        const reqOptions = {
-            method: 'GET',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" }
-        };
-
-        const res = await fetch(LOGOUT_URL, reqOptions);
+        const res = await fetch(urlOptions.LOGOUT, requestOptions.GET);
         if (res.status === 204) {
             props.dispatch(actions.logOut());
             props.history.push('/');

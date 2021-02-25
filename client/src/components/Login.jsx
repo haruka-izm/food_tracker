@@ -6,9 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleLogin';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
+import { requestOptions, urlOptions } from '../constants';
 
-
-const LOGIN_URL = 'http://localhost:8080/api/login';
 
 const Login = props => {
     const email = useFormInput('');
@@ -24,14 +23,9 @@ const Login = props => {
         // fetch: 2 steps to handle JSON data
         //       1)make a http req, 2) call .json on the req
 
-        const reqOptions = {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" },
-            body: JSON.stringify({ email: email.value, password: password.value })
-        };
+        const postBody = { body: JSON.stringify({ email: email.value, password: password.value }) }
 
-        const res = await fetch(LOGIN_URL, reqOptions);
+        const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
         if (res.status === 200) {
             props.dispatch(actions.isValidUser());
             props.history.push('/dashboard');

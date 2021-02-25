@@ -1,9 +1,5 @@
-import { actionTypes } from '../constants';
+import { actionTypes, requestOptions, urlOptions } from '../constants';
 
-
-const QUERY_URL = 'http://localhost:8080/api/items/query';
-const POST_URL = 'http://localhost:8080/api/items';
-const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" };
 
 export function getItems(itemsInfo) {
     let data = {};
@@ -18,13 +14,9 @@ export function getItems(itemsInfo) {
 };
 
 export async function addItem(newItem) {
-    const postRequestOptions = {
-        method: 'POST',
-        headers: HEADERS,
-        credentials: 'include',
-        body: JSON.stringify(newItem)
-    };
-    const postResponse = await fetch(POST_URL, postRequestOptions);
+
+    const postBody = { body: JSON.stringify(newItem) }
+    const postResponse = await fetch(urlOptions.POST, { ...requestOptions.POST, ...postBody });
     if (postResponse.status === 201) {
         const json = await postResponse.json();
         const itemInfo = json.message;
@@ -45,15 +37,11 @@ export async function addItem(newItem) {
 };
 
 export async function updateItem(itemInfo) {
+    console.log("updateItem called")
     const id = itemInfo.id;
 
-    const putRequestOptions = {
-        method: 'PUT',
-        credentials: 'include',
-        headers: HEADERS,
-        body: JSON.stringify(itemInfo)
-    };
-    const putResponse = await fetch(id, putRequestOptions);
+    const putBody = { body: JSON.stringify(itemInfo) }
+    const putResponse = await fetch(id, { ...requestOptions.PUT, ...putBody });
     if (putResponse.status === 201) {
         let data = {};
         data[id] = itemInfo;
@@ -72,19 +60,11 @@ export async function updateItem(itemInfo) {
 };
 
 export async function deleteItem(id) {
-    const deleteRequestOptions = {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: HEADERS
-    };
-    const deleteResponse = await fetch(id, deleteRequestOptions);
+
+    const deleteResponse = await fetch(id, requestOptions.DELETE);
     if (deleteResponse.status === 200) {
-        const getRequestOptions = {
-            method: 'GET',
-            credentials: 'include',
-            headers: HEADERS
-        };
-        const getResponse = await fetch(QUERY_URL, getRequestOptions);
+
+        const getResponse = await fetch(urlOptions.ITEM_QUERY, requestOptions.GET);
         const json = await getResponse.json();
         const data = json.message;
 

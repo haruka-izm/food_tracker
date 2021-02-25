@@ -5,8 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { connect } from 'react-redux';
 import style from '../styles/styleSignup';
 import * as actions from '../actions/actions';
+import { requestOptions, urlOptions } from '../constants';
 
-const SIGNUP_URL = 'http://localhost:8080/api/signup';
 
 const SignUp = props => {
     const email = useFormInput('');
@@ -23,10 +23,7 @@ const SignUp = props => {
         if (password.value != confirmedPassword.value) {
             setError("Passwords don't match.");
         } else {
-            const reqOptions = {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" },
+            const postBody = {
                 body: JSON.stringify({
                     email: email.value,
                     username: username.value,
@@ -34,8 +31,7 @@ const SignUp = props => {
 
                 })
             };
-
-            const res = await fetch(SIGNUP_URL, reqOptions);
+            const res = await fetch(urlOptions.SIGNUP, { ...requestOptions.POST, ...postBody });
             if (res.status === 201) {
                 props.dispatch(actions.isValidUser());
                 props.history.push('/dashboard');

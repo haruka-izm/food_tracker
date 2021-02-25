@@ -8,7 +8,7 @@ import * as actions from '../actions/actions';
 const QUERY_URL = 'http://localhost:8080/api/items/query';
 
 function Dashboard(props) {
-    const user = props.email;
+    //const user = props.email;
     const [isLoaded, setIsLoaded] = useState(false);
 
     async function fetchData() {

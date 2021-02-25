@@ -11,6 +11,7 @@ const SIGNUP_URL = 'http://localhost:8080/api/signup';
 const SignUp = props => {
     const email = useFormInput('');
     const password = useFormInput('');
+    const username = useFormInput('');
     const confirmedPassword = useFormInput('');
     const [error, setError] = useState(null);
     //const [loading, setLoading] = useState(false);
@@ -26,7 +27,12 @@ const SignUp = props => {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" },
-                body: JSON.stringify({ email: email.value, password: password.value })
+                body: JSON.stringify({
+                    email: email.value,
+                    username: username.value,
+                    password: password.value
+
+                })
             };
 
             const res = await fetch(SIGNUP_URL, reqOptions);
@@ -42,12 +48,14 @@ const SignUp = props => {
         };
     };
 
+    // todo: add username field
     return (
         <Paper className={classes.container}>
             <div >
                 <div>
                     <FormControl >
                         <TextField type="text" {...email} required placeholder="Email" variant="outlined" className={classes.emailAndPassword}></TextField>
+                        <TextField type="text" {...username} required placeholder="user name" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type='password' {...password} required placeholder="password" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type='password' {...confirmedPassword} required placeholder="re-enter password" variant="outlined" className={classes.emailAndPassword}></TextField>
                     </FormControl>

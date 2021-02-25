@@ -62,12 +62,12 @@ function checkExpirationDateOfAllItems(dateOfExpiration) {
     });
 };
 
-const generateToken = email => {
-    if (!email) {
+const generateToken = id => {
+    if (!id) {
         return null;
-    }
+    };
 
-    const data = { email: email };
+    const data = { userID: id };
     const expiration = { expiresIn: process.env.JWT_EXPIRATION };
     const token = jwt.sign(data, process.env.JWT_SECRET, expiration);
     return token;

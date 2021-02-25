@@ -20,9 +20,11 @@ After successfully installed MySQL, follow the instruction below.
  - Create required tables, run MySQL statements below
    - CREATE DATABASE food_tracker;
    - CREATE TABLE food_tracker.users (
+     id INT NOT NULL AUTO_INCREMENT,
        email VARCHAR(50),
+       username VARCHAR(50),
        password VARCHAR(200),
-       PRIMARY KEY (email)
+       PRIMARY KEY (id)
    );
    - CREATE TABLE food_tracker.items (
        id INT NOT NULL AUTO_INCREMENT,

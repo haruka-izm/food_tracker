@@ -28,6 +28,8 @@ router.post("/", (req, res) => {
         if (result.length > 0) {
             const passwordIsMatched = await bycrypt.compare(password, result[0].password);
             if (passwordIsMatched) {
+                // get userId by email
+
                 const token = await utils.generateToken(email);
                 if (token == null) {
                     return res.status(400).send({ message: "authentication failed." });

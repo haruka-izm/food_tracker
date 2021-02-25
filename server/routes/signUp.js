@@ -9,15 +9,15 @@ const utils = require('../utils');
 const con = mysql.createConnection(dbConfig);
 
 router.post("/", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
 
     if (email.length == 0 || password.length == 0) {
         return res.status(400).send({ message: "Please provide required information." });
     }
 
-    const creation = await createNewUser(email, password);
+    const creation = await createNewUser(email, password, username);
     if (creation == 'CREATED') {
-        const token = await utils.generateToken(email);
+        const token = await utils.generateToken(username);
         if (token == null) {
             return res.status(400).send({ message: "authentication failed." });
         }
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
 
 
-createNewUser = async (email, password) => {
+createNewUser = async (email, password, username) => {
     const result = await findByEmail(email);
 
     if (result == "FOUND") {
@@ -45,7 +45,7 @@ createNewUser = async (email, password) => {
     }
 
     const encryptedPW = await bcrypt.hash(password, 10);
-    const sql = `INSERT INTO food_tracker.users (email, password) VALUES ("${email}", "${encryptedPW}")`;
+    const sql = `INSERT INTO food_tracker.users (email, username, password) VALUES ("${email}", "${username}", "${encryptedPW}")`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, result) {

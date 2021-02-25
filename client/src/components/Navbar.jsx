@@ -46,6 +46,7 @@ const Navbar = props => {
 
     };
 
+    // todo: add display username field or in Table component?
     return (
 
         <Grid container>

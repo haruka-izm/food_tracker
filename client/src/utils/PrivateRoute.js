@@ -1,9 +1,29 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
+const QUERY_URL = "http://localhost:8080/api/users/me";
 
 function PrivateRoute({ component: Component, isAuthed, ...rest }) {
+  // todo: GET users/me
+  const verifyUser = async () => {
+    const reqOptions = {
+      method: 'GET',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" }
+    };
+
+    const res = await fetch(QUERY_URL, reqOptions);
+    if (res.status === 200) {
+      rest.dispatch(actions.isValidUser());
+    } else {
+      rest.dispatch(actions.isNotValidUser());
+    };
+  };
+
+  verifyUser();
+
   return (
     <Route
       {...rest}

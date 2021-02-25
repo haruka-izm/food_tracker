@@ -8,8 +8,8 @@ import Dashboard from './components/Dashboard';
 import SignUp from './components/Signup';
 
 import store from './store';
-import PrivateRoute from './utils/PrivateRoute';
-import PublicRoute from './utils/PublicRoute';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './theme/theme';

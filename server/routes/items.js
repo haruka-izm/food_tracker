@@ -25,8 +25,7 @@ router.route("/")
             console.log('error: ', error)
             res.status(400).send({ "message": error });
         }
-
-    })
+    });
 
 
 router.route("/query")
@@ -35,7 +34,6 @@ router.route("/query")
         const offset = parseInt(req.query.offset) || 0;
 
         const verified = await utils.verifyToken(req, res);
-        console.log("verified: ", verified)
         if (!verified) {
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
 
@@ -53,8 +51,8 @@ router.route("/query")
             });
         } else {
             res.status(200).send({ "message": itemInfo });
-        }
-    })
+        };
+    });
 
 
 router.route("/:id")

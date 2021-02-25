@@ -10,6 +10,7 @@ export default () => ({
         textAlign: 'center',
         display: 'block',
         padding: '10px',
+        marginLeft: '15px'
 
     },
     warning: {

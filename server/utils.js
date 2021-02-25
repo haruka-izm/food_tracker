@@ -22,7 +22,6 @@ const generateToken = id => {
 
 const verifyToken = async (req, res) => {
     const token = req.cookies['token'] || '';
-    console.log('verifying token: ', token)
     if (!token) {
         return false;
     }
@@ -46,7 +45,6 @@ const clearToken = (res) => {
 };
 
 const findByEmail = (email) => {
-    console.log("findBy")
     const sql = `SELECT * FROM food_tracker.users WHERE email="${email}"`;
 
     return new Promise((resolve, reject) => {

@@ -16,7 +16,6 @@ router.post("/", async (req, res) => {
     };
 
     const userInfo = await utils.findByEmail(email);
-    console.log("userInfo: ", userInfo)
     if (userInfo == 'NOT FOUND') {
         return res.status(400).send({ message: "The user doesn't exist." });
     };
@@ -35,13 +34,10 @@ router.post("/", async (req, res) => {
         }
 
         const GMTcurrentTime = new Date();
-        console.log("GMT current time: ", GMTcurrentTime)
-        // to EDT and expires in 1 hour
-        // 16
-        //GMTcurrentTime.setHours(17);
-        GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 2);
-        console.log("set exp : ", GMTcurrentTime)
-        console.log("token: ", token)
+
+        // to EDT and expires in 1 day
+        GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
+
         res.cookie("token", token, {
             expires: GMTcurrentTime,
             secure: false,

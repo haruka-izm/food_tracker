@@ -35,7 +35,7 @@ const Table = (props) => {
             color: checkExpiryDate(rowData),
             fontFamily: 'Arial'
         })
-    }
+    };
 
     const editable = {
         onRowAdd: newItem => new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ const Table = (props) => {
                 resolve();
             }, 1000);
         }),
-        onRowUpdate: (newData, oldData) =>
+        onRowUpdate: (newData) =>
             new Promise((resolve, reject) => {
                 setTimeout(async () => {
                     props.dispatch(await actions.updateItem(newData));
@@ -59,7 +59,7 @@ const Table = (props) => {
                     resolve();
                 }, 1000);
             }),
-    }
+    };
 
 
     const icons = {

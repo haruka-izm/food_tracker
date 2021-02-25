@@ -20,16 +20,16 @@ const generateToken = id => {
 };
 
 
-const verifyToken = async (req, res) => {
+const verifyToken = async (req) => {
     const token = req.cookies['token'] || '';
     if (!token) {
         return false;
-    }
+    };
 
     jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
         if (error) {
             return false;
-        }
+        };
     });
 
     return true;
@@ -42,6 +42,12 @@ const clearToken = (res) => {
     } catch {
         return res.status(401).send({ message: 'Failed to log out' });
     }
+};
+
+const getUserId = (req) => {
+    const token = req.cookies['token'];
+    const decoded = jwt.decode(token);
+    return decoded.userID;
 };
 
 const findByEmail = (email) => {
@@ -64,20 +70,33 @@ const createNewUser = async (email, password, username) => {
     const result = await findByEmail(email);
 
     if (result == "FOUND") {
-        return 'FAILED';
+        return { result: 'FAILED' };
     }
 
     const encryptedPW = await bcrypt.hash(password, 10);
     const sql = `INSERT INTO food_tracker.users (email, username, password) VALUES ("${email}", "${username}", "${encryptedPW}")`;
 
     return new Promise((resolve, reject) => {
-        con.query(sql, function (err, result) {
+        con.query(sql, function (err, row) {
             if (err) {
-                return reject(`ERROR: ${err}`);
-            }
-            return resolve("CREATED");
+                return reject({ result: 'ERROR', msg: err });
+            };
+            return resolve({ result: "CREATED", id: row.insertId });
         });
     });
+};
+
+const findById = (id) => {
+    const sql = `SELECT * FROM food_tracker.users WHERE id=${id}`;
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, (err, row) => {
+            if (err) {
+                return reject({ result: 'ERROR', msg: err });
+            };
+            return resolve({ result: "CREATED", name: row[0].username });
+        })
+    })
 };
 
 
@@ -138,4 +157,12 @@ function checkExpirationDateOfAllItems(dateOfExpiration) {
 
 
 
-module.exports = { generateToken, verifyToken, clearToken, findByEmail, createNewUser };
+module.exports = {
+    generateToken,
+    verifyToken,
+    clearToken,
+    findByEmail,
+    createNewUser,
+    getUserId,
+    findById
+};

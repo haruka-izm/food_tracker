@@ -2,7 +2,8 @@ import { actionTypes } from '../constants';
 
 const initialValue = {
     data: {},
-    isAuthenticated: false
+    isAuthenticated: false,
+    displayName: ""
 }
 
 function reducer(state = initialValue, action) {
@@ -51,7 +52,8 @@ function reducer(state = initialValue, action) {
         case (actionTypes.IS_AUTHENTICATED):
             return {
                 ...state,
-                isAuthenticated: action.payload
+                isAuthenticated: action.payload.authentication,
+                displayName: action.payload.displayName
             }
 
         case (actionTypes.IS_AUTHENTICATED_FAILED):

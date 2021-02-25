@@ -48,7 +48,6 @@ const SignUp = props => {
         };
     };
 
-    // todo: add username field
     return (
         <Paper className={classes.container}>
             <div >

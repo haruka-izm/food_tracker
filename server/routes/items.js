@@ -12,7 +12,11 @@ const ITEM_ADDED_MSG = "Item was added to the database."
 
 router.route("/")
     .post(async (req, res) => {
-        // todo : add token ferification
+        const verified = await utils.verifyToken(req);
+        if (!verified) {
+            return res.status(401).send({ message: 'Invalid token or you need to login again.' });
+        };
+
         const result = await addItem(req.body);
         if (result.msg == ITEM_ADDED_MSG) {
             const id = result.id;
@@ -33,11 +37,11 @@ router.route("/query")
         const limit = parseInt(req.query.limit) || 1000;
         const offset = parseInt(req.query.offset) || 0;
 
-        const verified = await utils.verifyToken(req, res);
+        const verified = await utils.verifyToken(req);
         if (!verified) {
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
 
-        }
+        };
         const itemInfo = await getItems(limit, offset);
         let totalCount;
         if (offset == 0) {
@@ -57,7 +61,7 @@ router.route("/query")
 
 router.route("/:id")
     .get(async (req, res) => {
-        if (!utils.verifyToken(req, res)) {
+        if (!utils.verifyToken(req)) {
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
@@ -65,7 +69,7 @@ router.route("/:id")
         res.status(200).send({ "message": itemInfo });
     })
     .put(async (req, res) => {
-        if (!utils.verifyToken(req, res)) {
+        if (!utils.verifyToken(req)) {
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
@@ -83,7 +87,7 @@ router.route("/:id")
         }
     })
     .delete(async (req, res) => {
-        if (!utils.verifyToken(req, res)) {
+        if (!utils.verifyToken(req)) {
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;

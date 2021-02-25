@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const utils = require('../utils');
 
-router.get('/me', (req, res) => {
-    // todo: add ID col(PK & AI) in DB
-    //       put ID into the token
-    // todo add user display name
+router.get('/me', async (req, res) => {
+    // todo: need to verify token?
+    const isVerified = await utils.verifyToken(req);
+    if (!isVerified) {
+        return res.status(404).send({ message: "You need to log in" });
+    };
 
-    // get ID from the token
+    const userID = await utils.getUserId(req);
 
-    // look up the user by ID
-
-    // return the display name
-    let user = { displayName: "John" };
-    res.status(200).send(user);
+    const user = await utils.findById(userID);
+    let userInfo = { displayName: user.name };
+    res.status(200).send(userInfo);
 
 });
 

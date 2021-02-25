@@ -21,6 +21,7 @@ export async function addItem(newItem) {
     const postRequestOptions = {
         method: 'POST',
         headers: HEADERS,
+        credentials: 'include',
         body: JSON.stringify(newItem)
     };
     const postResponse = await fetch(POST_URL, postRequestOptions);
@@ -110,10 +111,10 @@ function getErrorMessage(resStatus) {
 };
 
 
-export function isValidUser() {
+export function isValidUser(user) {
     return {
         type: actionTypes.IS_AUTHENTICATED,
-        payload: true
+        payload: { authentication: true, ...user }
     };
 };
 

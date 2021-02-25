@@ -96,7 +96,7 @@ const Table = (props) => {
         <div className={classes.table} >
 
             <MaterialTable
-                title='Stocks'
+                title={props.nameToDisplay}
                 columns={columns}
                 data={data}
                 options={tableOptions}
@@ -110,6 +110,7 @@ const Table = (props) => {
 
 export default withStyles(style)(connect((state) => {
     return {
-        items: state.data
+        items: state.data,
+        nameToDisplay: state.displayName
     }
 })(Table));

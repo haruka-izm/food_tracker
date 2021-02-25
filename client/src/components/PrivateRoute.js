@@ -16,7 +16,8 @@ function PrivateRoute({ component: Component, isAuthed, ...rest }) {
 
     const res = await fetch(QUERY_URL, reqOptions);
     if (res.status === 200) {
-      rest.dispatch(actions.isValidUser());
+      const json = await res.json();
+      rest.dispatch(actions.isValidUser(json));
     } else {
       rest.dispatch(actions.isNotValidUser());
     };

@@ -6,7 +6,7 @@ import * as actions from '../actions/actions';
 const QUERY_URL = "http://localhost:8080/api/users/me";
 
 function PrivateRoute({ component: Component, isAuthed, ...rest }) {
-  // todo: GET users/me
+
   const verifyUser = async () => {
     const reqOptions = {
       method: 'GET',

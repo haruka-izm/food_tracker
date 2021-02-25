@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const cron = require('node-cron');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
@@ -6,7 +7,83 @@ const dbConfig = require('./DB/db');
 const { env } = require('process');
 const con = mysql.createConnection(dbConfig);
 
-// to do: delete test emails and
+
+const generateToken = id => {
+    if (!id) {
+        return null;
+    };
+
+    const data = { userID: id };
+    const expiration = { expiresIn: process.env.JWT_EXPIRATION };
+    const token = jwt.sign(data, process.env.JWT_SECRET, expiration);
+    return token;
+};
+
+
+const verifyToken = async (req, res) => {
+    const token = req.cookies['token'] || '';
+    console.log('verifying token: ', token)
+    if (!token) {
+        return false;
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+        if (error) {
+            return false;
+        }
+    });
+
+    return true;
+};
+
+const clearToken = (res) => {
+    try {
+        res.clearCookie('token');
+        return res.status(204).send();
+    } catch {
+        return res.status(401).send({ message: 'Failed to log out' });
+    }
+};
+
+const findByEmail = (email) => {
+    console.log("findBy")
+    const sql = `SELECT * FROM food_tracker.users WHERE email="${email}"`;
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, result) => {
+            if (error) {
+                reject("ERROR");
+            }
+            if (result.length > 0) {
+                resolve(result);
+            }
+            resolve("NOT FOUND");
+        });
+    });
+};
+
+const createNewUser = async (email, password, username) => {
+    const result = await findByEmail(email);
+
+    if (result == "FOUND") {
+        return 'FAILED';
+    }
+
+    const encryptedPW = await bcrypt.hash(password, 10);
+    const sql = `INSERT INTO food_tracker.users (email, username, password) VALUES ("${email}", "${username}", "${encryptedPW}")`;
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, function (err, result) {
+            if (err) {
+                return reject(`ERROR: ${err}`);
+            }
+            return resolve("CREATED");
+        });
+    });
+};
+
+
+// todo: delete test emails and
 // give instruction to add a user's email
 
 // check all items' epxpiration date every day
@@ -48,7 +125,6 @@ cron.schedule('* 23 * * *', async () => {
     }
 });
 
-
 function checkExpirationDateOfAllItems(dateOfExpiration) {
     const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}'`;
 
@@ -62,41 +138,6 @@ function checkExpirationDateOfAllItems(dateOfExpiration) {
     });
 };
 
-const generateToken = id => {
-    if (!id) {
-        return null;
-    };
-
-    const data = { userID: id };
-    const expiration = { expiresIn: process.env.JWT_EXPIRATION };
-    const token = jwt.sign(data, process.env.JWT_SECRET, expiration);
-    return token;
-};
 
 
-const verifyToken = async (req, res) => {
-    const token = req.cookies['token'] || '';
-    console.log('verifying token: ', token)
-    if (!token) {
-        return false;
-    }
-
-    jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
-        if (error) {
-            return false;
-        }
-    });
-
-    return true;
-};
-
-const clearToken = (res) => {
-    try {
-        res.clearCookie('token');
-        return res.status(204).send();
-    } catch {
-        return res.status(401).send({ message: 'Failed to log out' });
-    }
-}
-
-module.exports = { generateToken, verifyToken, clearToken };
+module.exports = { generateToken, verifyToken, clearToken, findByEmail, createNewUser };

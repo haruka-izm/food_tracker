@@ -32,6 +32,7 @@ function Dashboard(props) {
         setIsLoaded(true);
 
         const res = await fetch(urlOptions.ITEM_QUERY, requestOptions.GET);
+        console.log('/items/query called')
         if (res.status === 200) {
             const json = await res.json();
             props.dispatch(actions.getItems(json));

@@ -3,19 +3,19 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
 
-function PublicRoute({ component: Component, isAuthed, ...rest }) {
     return (
         <Route
             {...rest}
-            render={(props) => isAuthed == false ? <Component {...props} /> : <Redirect to={{ pathname: '/' }} />}
+            render={(props) => isAuthenticated == false ? <Component {...props} /> : <Redirect to={{ pathname: '/' }} />}
         />
     )
-}
+};
 
 
 export default connect(state => {
     return {
-        isAuthed: state.isAuthenticated
+        isAuthenticated: state.isAuthenticated
     }
 })(PublicRoute);

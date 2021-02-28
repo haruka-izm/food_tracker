@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -6,33 +6,55 @@ import { requestOptions, urlOptions } from '../constants';
 
 
 
-function PrivateRoute({ component: Component, isAuthed, ...rest }) {
+function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
+  console.log("Private route called")
+  console.log("BEFORE validation isAuthed: ", isAuthenticated)
 
-  const verifyUser = async () => {
+  async function verifyUser() {
+    console.log("users/me called")
 
     const res = await fetch(urlOptions.USER_QUERY, requestOptions.GET);
     if (res.status === 200) {
+      console.log("users/me true")
       const json = await res.json();
       rest.dispatch(actions.isValidUser(json));
+
+      // isAuhenticated not using updated Redux state: still `false`
+      console.log('AFTER called users/me isAuthed: ', isAuthenticated);
+      return true;
+
     } else {
       rest.dispatch(actions.isNotValidUser());
+      return false;
     };
+
   };
 
-  verifyUser();
+  useEffect(() => {
+    if (isAuthenticated == false) {
+      verifyUser();
+      console.log("verifyUser done")
+    }
+  }, []);
+
+
+
+
+  console.log('last line');
 
   return (
     <Route
       {...rest}
-      render={(props) => isAuthed == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+      render={(props) => isAuthenticated == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
     />
   );
 };
 
 
 export default connect(state => {
+  console.log('state: ', state.isAuthenticated)
   return {
-    isAuthed: state.isAuthenticated
+    isAuthenticated: state.isAuthenticated
   }
 })(PrivateRoute);
 

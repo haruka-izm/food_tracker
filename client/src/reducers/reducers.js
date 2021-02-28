@@ -50,6 +50,8 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.IS_AUTHENTICATED):
+            console.log("Redux isAuthenticated: ", action.payload.authentication)
+            console.log("Redux displayName: ", action.payload.displayName)
             return {
                 ...state,
                 isAuthenticated: action.payload.authentication,

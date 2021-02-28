@@ -109,6 +109,7 @@ const Table = (props) => {
 
 
 export default withStyles(style)(connect((state) => {
+    console.log("state: ", state.data)
     return {
         items: state.data,
         nameToDisplay: state.displayName

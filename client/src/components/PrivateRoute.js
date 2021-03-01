@@ -31,21 +31,18 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
   };
 
   useEffect(() => {
-    if (isAuthenticated == false) {
+    if (isAuthenticated === null) {
       verifyUser();
-      console.log("verifyUser done")
     }
-  }, []);
-
-
-
+  }, [isAuthenticated]);
 
   console.log('last line');
 
   return (
     <Route
       {...rest}
-      render={(props) => isAuthenticated == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+      render={(props) => isAuthenticated == null ? "loading..."
+        : isAuthenticated == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
     />
   );
 };

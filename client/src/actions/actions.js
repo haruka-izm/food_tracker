@@ -108,7 +108,7 @@ export function isNotValidUser() {
 export function logOut() {
     return {
         type: actionTypes.LOGOUT,
-        payload: false
+        payload: null
     };
 };
 

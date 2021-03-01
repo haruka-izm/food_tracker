@@ -2,7 +2,7 @@ import { actionTypes } from '../constants';
 
 const initialValue = {
     data: {},
-    isAuthenticated: false,
+    isAuthenticated: null,
     displayName: ""
 }
 

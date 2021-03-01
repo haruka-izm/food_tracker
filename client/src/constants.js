@@ -1,17 +1,18 @@
 import keyMirror from 'keymirror';
 
 export const actionTypes = keyMirror({
-    GET_ITEMS: null,
-    ADD_ITEM: null,
-    ADD_ITEM_FAILED: null,
-    DELETE_ITEM: null,
-    DELETE_ITEM_FAILED: null,
-    UPDATE_ITEM: null,
-    UPDATE_ITEM_FAILED: null,
+    GET_ITEMS_SUCCESS: null,
+    ADD_ITEM_SUCCESS: null,
+    ADD_ITEM_FAILURE: null,
+    DELETE_ITEM_SUCCESS: null,
+    DELETE_ITEM_FAILURE: null,
+    UPDATE_ITEM_SUCCESS: null,
+    UPDATE_ITEM_FAILURE: null,
 
-    IS_AUTHENTICATED: null,
-    IS_AUTHENTICATED_FAILED: null,
-    LOGOUT: null
+
+    IS_AUTHENTICATED_SUCCESS: null,
+    IS_AUTHENTICATED_FAILURE: null,
+    LOGOUT_SUCCESS: null
 });
 
 

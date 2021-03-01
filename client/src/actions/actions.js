@@ -8,7 +8,7 @@ export function getItems(itemsInfo) {
     });
 
     return {
-        type: actionTypes.GET_ITEMS,
+        type: actionTypes.GET_ITEMS_SUCCESS,
         payload: data
     };
 };
@@ -24,13 +24,13 @@ export async function addItem(newItem) {
         data[itemInfo.id] = itemInfo;
 
         return {
-            type: actionTypes.ADD_ITEM,
+            type: actionTypes.ADD_ITEM_SUCCESS,
             payload: data
         };
     } else {
         const msg = getErrorMessage(postResponse.status);
         return {
-            type: actionTypes.ADD_ITEM_FAILED,
+            type: actionTypes.ADD_ITEM_FAILURE,
             payload: { message: msg }
         };
     };
@@ -47,13 +47,13 @@ export async function updateItem(itemInfo) {
         data[id] = itemInfo;
 
         return {
-            type: actionTypes.UPDATE_ITEM,
+            type: actionTypes.UPDATE_ITEM_SUCCESS,
             payload: data
         }
     } else {
         const msg = getErrorMessage(putResponse.status);
         return {
-            type: actionTypes.UPDATE_ITEM_FAILED,
+            type: actionTypes.UPDATE_ITEM_FAILURE,
             payload: { message: msg }
         };
     };
@@ -69,13 +69,13 @@ export async function deleteItem(id) {
         const data = json.message;
 
         return {
-            type: actionTypes.DELETE_ITEM,
+            type: actionTypes.DELETE_ITEM_SUCCESS,
             payload: data
         };
     } else {
         const msg = getErrorMessage(deleteResponse.status);
         return {
-            type: actionTypes.DELETE_ITEM_FAILED,
+            type: actionTypes.DELETE_ITEM_FAILURE,
             payload: { message: msg }
         };
     };
@@ -93,21 +93,21 @@ function getErrorMessage(resStatus) {
 
 export function isValidUser(user) {
     return {
-        type: actionTypes.IS_AUTHENTICATED,
+        type: actionTypes.IS_AUTHENTICATED_SUCCESS,
         payload: { authentication: true, ...user }
     };
 };
 
 export function isNotValidUser() {
     return {
-        type: actionTypes.IS_AUTHENTICATED_FAILED,
+        type: actionTypes.IS_AUTHENTICATED_FAILURE,
         payload: false
     };
 };
 
 export function logOut() {
     return {
-        type: actionTypes.LOGOUT,
+        type: actionTypes.LOGOUT_SUCCESS,
         payload: null
     };
 };

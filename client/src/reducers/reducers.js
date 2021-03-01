@@ -8,48 +8,48 @@ const initialValue = {
 
 function reducer(state = initialValue, action) {
     switch (action.type) {
-        case (actionTypes.GET_ITEMS):
+        case (actionTypes.GET_ITEMS_SUCCESS):
             return {
                 ...state,
                 data: action.payload
             };
 
-        case (actionTypes.ADD_ITEM):
+        case (actionTypes.ADD_ITEM_SUCCESS):
             return {
                 ...state,
                 data: { ...state.data, ...action.payload }
 
             };
 
-        case (actionTypes.ADD_ITEM_FAILED):
+        case (actionTypes.ADD_ITEM_FAILURE):
             return {
                 ...state
             };
 
-        case (actionTypes.UPDATE_ITEM):
+        case (actionTypes.UPDATE_ITEM_SUCCESS):
             return {
                 ...state,
                 data: { ...state.data, ...action.payload }
             };
 
-        case (actionTypes.UPDATE_ITEM_FAILED):
+        case (actionTypes.UPDATE_ITEM_FAILURE):
             return {
                 ...state
             };
 
-        case (actionTypes.DELETE_ITEM):
+        case (actionTypes.DELETE_ITEM_SUCCESS):
             return {
                 ...state,
                 data: action.payload
             };
 
-        case (actionTypes.DELETE_ITEM_FAILED):
+        case (actionTypes.DELETE_ITEM_FAILURE):
             return {
                 ...state,
                 errorMessage: action.payload
             };
 
-        case (actionTypes.IS_AUTHENTICATED):
+        case (actionTypes.IS_AUTHENTICATED_SUCCESS):
             console.log("Redux isAuthenticated: ", action.payload.authentication)
             console.log("Redux displayName: ", action.payload.displayName)
             return {
@@ -58,12 +58,12 @@ function reducer(state = initialValue, action) {
                 displayName: action.payload.displayName
             }
 
-        case (actionTypes.IS_AUTHENTICATED_FAILED):
+        case (actionTypes.IS_AUTHENTICATED_FAILURE):
             return {
                 ...state
             }
 
-        case (actionTypes.LOGOUT):
+        case (actionTypes.LOGOUT_SUCCESS):
             return {
                 ...state,
                 isAuthenticated: action.payload

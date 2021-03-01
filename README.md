@@ -10,7 +10,10 @@ Food Tracker is an application to save your food from waisting.
  - [Before You Start](#BeforeYouStart)  
  - [Installation (Locally)](#Installation(Locally))
  - [Usage](#Usage)
-   - [Signup](##Signup)
+   - [Sign Up](##Signup)
+   - [Add Items](##Add-items)
+   - [Modify Items](##Modify-items)
+
 
 
 # Before You Start

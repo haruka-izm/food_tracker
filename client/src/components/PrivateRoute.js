@@ -7,20 +7,12 @@ import { requestOptions, urlOptions } from '../constants';
 
 
 function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
-  console.log("Private route called")
-  console.log("BEFORE validation isAuthed: ", isAuthenticated)
 
   async function verifyUser() {
-    console.log("users/me called")
-
     const res = await fetch(urlOptions.USER_QUERY, requestOptions.GET);
     if (res.status === 200) {
-      console.log("users/me true")
       const json = await res.json();
       rest.dispatch(actions.isValidUser(json));
-
-      // isAuhenticated not using updated Redux state: still `false`
-      console.log('AFTER called users/me isAuthed: ', isAuthenticated);
       return true;
 
     } else {
@@ -36,7 +28,6 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
     }
   }, [isAuthenticated]);
 
-  console.log('last line');
 
   return (
     <Route

@@ -9,7 +9,7 @@ import * as actions from '../actions/actions';
 import { requestOptions, urlOptions } from '../constants';
 
 
-const Login = props => {
+const LogIn = props => {
     const email = useFormInput('');
     const password = useFormInput('');
     const [error, setError] = useState(null);
@@ -22,15 +22,15 @@ const Login = props => {
         // fetch vs axios
         // fetch: 2 steps to handle JSON data
         //       1)make a http req, 2) call .json on the req
-        console.log("/login called")
+
         const postBody = { body: JSON.stringify({ email: email.value, password: password.value }) }
 
         const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
         if (res.status === 200) {
-            console.log("/login 200 ok")
+
             //props.dispatch(actions.isValidUser());
             props.history.push('/dashboard');
-            console.log("pushed to dashboard")
+
         } else {
             props.dispatch(actions.isNotValidUser());
             const json = await res.json();
@@ -40,6 +40,7 @@ const Login = props => {
     }
 
     const handleCreateNewAccount = () => {
+        console.log("create new accout button clicked")
         props.history.push('/signup');
     }
 
@@ -91,4 +92,4 @@ const useFormInput = initialValue => {
 
 
 
-export default withRouter(connect()(withStyles(style)(Login)));
+export default withRouter(connect()(withStyles(style)(LogIn)));

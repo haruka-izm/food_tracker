@@ -37,7 +37,6 @@ export async function addItem(newItem) {
 };
 
 export async function updateItem(itemInfo) {
-    console.log("updateItem called")
     const id = itemInfo.id;
 
     const putBody = { body: JSON.stringify(itemInfo) }

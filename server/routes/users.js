@@ -11,7 +11,7 @@ router.get('/me', async (req, res) => {
 
     const userID = await utils.getUserId(req);
 
-    const user = await utils.findById(userID);
+    const user = await utils.findUserById(userID);
     if (user.found) {
         let userInfo = { displayName: user.data.username };
         res.status(200).send(userInfo);

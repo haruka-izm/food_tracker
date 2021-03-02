@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
         return res.status(400).send({ message: "Please provide required information." });
     };
 
-    const userInfo = await utils.findByEmail(email);
+    const userInfo = await utils.findUserByEmail(email);
     if (userInfo == 'NOT FOUND') {
         return res.status(400).send({ message: "The user doesn't exist." });
     };

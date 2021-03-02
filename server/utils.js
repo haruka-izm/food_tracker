@@ -8,6 +8,11 @@ const { env } = require('process');
 const con = mysql.createConnection(dbConfig);
 
 
+const ITEM_NOT_FOUND_MSG = "Item not found.";
+const UPDATED_MSG = "Item data was updated.";
+const DELETED_MSG = "Item was deleted from the database.";
+
+
 const generateToken = id => {
     if (!id) {
         return null;
@@ -50,7 +55,7 @@ const getUserId = (req) => {
     return decoded.userID;
 };
 
-const findByEmail = (email) => {
+const findUserByEmail = (email) => {
     const sql = `SELECT * FROM food_tracker.users WHERE email="${email}"`;
 
     return new Promise((resolve, reject) => {
@@ -67,7 +72,7 @@ const findByEmail = (email) => {
 };
 
 const createNewUser = async (email, password, username) => {
-    const result = await findByEmail(email);
+    const result = await findUserByEmail(email);
 
     if (result == "FOUND") {
         return { result: 'FAILED' };
@@ -86,7 +91,7 @@ const createNewUser = async (email, password, username) => {
     });
 };
 
-const findById = (id) => {
+const findUserById = (id) => {
     const sql = `SELECT * FROM food_tracker.users WHERE id=${id}`;
 
     return new Promise((resolve, reject) => {
@@ -100,6 +105,22 @@ const findById = (id) => {
 };
 
 
+const findItemById = (id) => {
+    const sql = `SELECT * FROM food_tracker.items WHERE id=${id}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
+                return resolve({ found: false, data: ITEM_NOT_FOUND_MSG });
+            }
+            return resolve({ found: true, data: rows[0] });
+        });
+    });
+};
+
+
 const addItem = (newItem) => {
     const { name, quantity, purchased_date, expiry_date, category } = newItem;
     const num = parseInt(quantity);
@@ -109,7 +130,7 @@ const addItem = (newItem) => {
             if (error) {
                 return reject(error);
             }
-            return resolve({ 'msg': ITEM_ADDED_MSG, 'id': row.insertId });
+            return resolve({ 'added': true, 'id': row.insertId });
         });
     });
 };
@@ -244,8 +265,9 @@ module.exports = {
     verifyToken,
     clearToken,
 
-    findByEmail,
-    findById,
+    findUserByEmail,
+    findUserById,
+    findItemById,
     createNewUser,
     getUserId,
     getItems,

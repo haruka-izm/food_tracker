@@ -3,12 +3,11 @@ const router = express.Router();
 const mysql = require('mysql');
 const dbConfig = require('../DB/db');
 const utils = require('../utils');
-const con = mysql.createConnection(dbConfig);
+
 
 const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
 const DELETED_MSG = "Item was deleted from the database.";
-const ITEM_ADDED_MSG = "Item was added to the database."
 
 router.route("/")
     .post(async (req, res) => {
@@ -17,17 +16,18 @@ router.route("/")
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
-        const result = await utils.addItem(req.body);
-        if (result.msg == ITEM_ADDED_MSG) {
-            const id = result.id;
-            const itemInfo = await findById(id);
-
-            itemInfo.id = `http://localhost:8080/api/items/${id}`;
-            res.status(201).send({ "message": itemInfo });
+        const newItem = await utils.addItem(req.body);
+        if (newItem.added) {
+            const item = await utils.findItemById(newItem.id);
+            if (item.found) {
+                item.data.id = `http://localhost:8080/api/items/${newItem.id}`;
+                return res.status(201).send({ "message": item.data });
+            }
+            return res.status(400).send({ "message": "Item not found" });
         }
         else {
             console.log('error: ', error)
-            res.status(400).send({ "message": error });
+            return res.status(400).send({ "message": error });
         }
     });
 
@@ -65,7 +65,7 @@ router.route("/:id")
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
-        const itemInfo = await findById(id);
+        const itemInfo = await utils.findItemById(id);
         res.status(200).send({ "message": itemInfo });
     })
     .put(async (req, res) => {
@@ -73,7 +73,7 @@ router.route("/:id")
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
-        const itemInfo = await findById(id);
+        const itemInfo = await utils.findItemById(id);
 
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
             res.status(404).send({ "message": itemInfo });
@@ -91,7 +91,7 @@ router.route("/:id")
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
-        const itemInfo = await findById(id);
+        const itemInfo = await utils.findItemById(id);
 
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
             res.status(400).send({ "message": itemInfo });
@@ -102,27 +102,6 @@ router.route("/:id")
             }
         };
     });
-
-
-
-
-function findById(id) {
-    const sql = `SELECT * FROM food_tracker.items WHERE id=${id}`;
-    return new Promise((resolve, reject) => {
-        con.query(sql, (error, rows) => {
-            if (error) {
-                return reject(error);
-            }
-            if (rows[0] == undefined) {
-                return resolve(ITEM_NOT_FOUND_MSG);
-            }
-            return resolve(rows[0]);
-        });
-    });
-};
-
-
-
 
 
 module.exports = router;

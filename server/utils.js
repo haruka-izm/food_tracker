@@ -92,16 +92,98 @@ const findById = (id) => {
     return new Promise((resolve, reject) => {
         con.query(sql, (err, row) => {
             if (err) {
-                return reject({ result: 'ERROR', msg: err });
+                return reject({ found: false, msg: err });
             };
-            return resolve({ result: "CREATED", name: row[0].username });
+            return resolve({ found: true, data: row[0] });
         })
     })
 };
 
 
-// todo: delete test emails and
-// give instruction to add a user's email
+const addItem = (newItem) => {
+    const { name, quantity, purchased_date, expiry_date, category } = newItem;
+    const num = parseInt(quantity);
+    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}')`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                return reject(error);
+            }
+            return resolve({ 'msg': ITEM_ADDED_MSG, 'id': row.insertId });
+        });
+    });
+};
+
+
+const updateItemData = (id, itemInfo) => {
+    const { name, quantity, purchased_date, expiry_date, category } = itemInfo;
+    const num = parseInt(quantity);
+    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${num}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                return reject(error);
+            }
+            return resolve(UPDATED_MSG);
+        });
+    });
+};
+
+
+const deleteItem = (id) => {
+    const sql = `DELETE FROM food_tracker.items WHERE id=${id}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                return reject(error);
+            }
+            return resolve(DELETED_MSG);
+        });
+    });
+}
+
+
+
+const getItems = (limit, offset) => {
+    const sql = `SELECT * FROM food_tracker.items LIMIT ${limit} OFFSET ${offset}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
+                return resolve(ITEM_NOT_FOUND_MSG);
+            }
+
+            rows.forEach(row => {
+                row.id = `http://localhost:8080/api/items/${row.id}`;
+            });
+
+            return resolve(rows);
+        });
+    });
+};
+
+const getNumOfAllItems = () => {
+    const sql = "SELECT COUNT(*) as TotalCount from food_tracker.items";
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
+                return resolve(ITEM_NOT_FOUND_MSG);
+            }
+
+            const numberOfRows = rows[0].TotalCount;
+            return resolve(numberOfRows);
+        });
+    });
+};
+
+
+
 
 // check all items' epxpiration date every day
 // and send a user email notifying what items are expiring
@@ -142,7 +224,7 @@ cron.schedule('* 23 * * *', async () => {
     }
 });
 
-function checkExpirationDateOfAllItems(dateOfExpiration) {
+const checkExpirationDateOfAllItems = (dateOfExpiration) => {
     const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}'`;
 
     return new Promise((resolve, reject) => {
@@ -161,8 +243,14 @@ module.exports = {
     generateToken,
     verifyToken,
     clearToken,
+
     findByEmail,
+    findById,
     createNewUser,
     getUserId,
-    findById
+    getItems,
+    getNumOfAllItems,
+    addItem,
+    updateItemData,
+    deleteItem
 };

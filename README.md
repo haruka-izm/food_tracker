@@ -38,7 +38,11 @@ After successfully installed MySQL, follow the instruction below.
        category VARCHAR(30),
        PRIMARY KEY (id)
    );
-
+  - If you want to send e-mail notifications, set up the requirements below
+    - open .env file in the sever folder
+    - replace the instructions with actual e-mail addresses and password
+    - replace the MAIL_SERVICE to the one that your MAIL_SENDER's service such as 'gmail'. The default is 'outlook'.
+      
 
 # Installation (Locally)
 - Frontend

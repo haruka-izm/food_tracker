@@ -17,7 +17,7 @@ router.route("/")
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
-        const result = await addItem(req.body);
+        const result = await utils.addItem(req.body);
         if (result.msg == ITEM_ADDED_MSG) {
             const id = result.id;
             const itemInfo = await findById(id);
@@ -42,10 +42,10 @@ router.route("/query")
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
 
         };
-        const itemInfo = await getItems(limit, offset);
+        const itemInfo = await utils.getItems(limit, offset);
         let totalCount;
         if (offset == 0) {
-            totalCount = await getNumOfAllItems();
+            totalCount = await utils.getNumOfAllItems();
         }
 
         if (typeof totalCount == "number") {
@@ -79,7 +79,7 @@ router.route("/:id")
             res.status(404).send({ "message": itemInfo });
         } else {
             const itemInfo = req.body;
-            const updatedItem = await updateItemData(id, itemInfo);
+            const updatedItem = await utils.updateItemData(id, itemInfo);
 
             if (updatedItem != undefined) {
                 res.status(201).send({ "message": UPDATED_MSG });
@@ -96,27 +96,13 @@ router.route("/:id")
         if (itemInfo == ITEM_NOT_FOUND_MSG) {
             res.status(400).send({ "message": itemInfo });
         } else {
-            const deletedItem = await deleteItem(id);
+            const deletedItem = await utils.deleteItem(id);
             if (deletedItem != undefined) {
                 res.status(200).send({ "message": DELETED_MSG });
             }
         };
     });
 
-
-function addItem(newItem) {
-    const { name, quantity, purchased_date, expiry_date, category } = newItem;
-    const num = parseInt(quantity);
-    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}')`;
-    return new Promise((resolve, reject) => {
-        con.query(sql, (error, row) => {
-            if (error) {
-                return reject(error);
-            }
-            return resolve({ 'msg': ITEM_ADDED_MSG, 'id': row.insertId });
-        });
-    });
-};
 
 
 
@@ -136,72 +122,6 @@ function findById(id) {
 };
 
 
-function updateItemData(id, itemInfo) {
-    const { name, quantity, purchased_date, expiry_date, category } = itemInfo;
-    const num = parseInt(quantity);
-    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${num}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
-    return new Promise((resolve, reject) => {
-        con.query(sql, (error, row) => {
-            if (error) {
-                return reject(error);
-            }
-            return resolve(UPDATED_MSG);
-        });
-    });
-};
-
-
-function deleteItem(id) {
-    const sql = `DELETE FROM food_tracker.items WHERE id=${id}`;
-    return new Promise((resolve, reject) => {
-        con.query(sql, (error, row) => {
-            if (error) {
-                return reject(error);
-            }
-            return resolve(DELETED_MSG);
-        });
-    });
-}
-
-
-
-function getItems(limit, offset) {
-    const sql = `SELECT * FROM food_tracker.items LIMIT ${limit} OFFSET ${offset}`;
-    return new Promise((resolve, reject) => {
-        con.query(sql, (error, rows) => {
-            if (error) {
-                return reject(error);
-            }
-            if (rows[0] == undefined) {
-                return resolve(ITEM_NOT_FOUND_MSG);
-            }
-
-            rows.forEach(row => {
-                row.id = `http://localhost:8080/api/items/${row.id}`;
-            });
-
-            return resolve(rows);
-        });
-    });
-};
-
-function getNumOfAllItems() {
-    const sql = "SELECT COUNT(*) as TotalCount from food_tracker.items";
-
-    return new Promise((resolve, reject) => {
-        con.query(sql, (error, rows) => {
-            if (error) {
-                return reject(error);
-            }
-            if (rows[0] == undefined) {
-                return resolve(ITEM_NOT_FOUND_MSG);
-            }
-
-            const numberOfRows = rows[0].TotalCount;
-            return resolve(numberOfRows);
-        });
-    });
-};
 
 
 

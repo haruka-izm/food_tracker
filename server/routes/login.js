@@ -15,23 +15,23 @@ router.post("/", async (req, res) => {
         return res.status(400).send({ message: "Please provide required information." });
     };
 
-    const userInfo = await utils.findUserByEmail(email);
-    if (userInfo == 'NOT FOUND') {
+    const user = await utils.findUserByEmail(email);
+    if (!user.found) {
         return res.status(400).send({ message: "The user doesn't exist." });
     };
 
-    if (userInfo == "ERROR") {
+    if (user.found == null) {
         return res.status(400).send({ message: "Invalid credentials. Please try again." });
     };
 
-    const passwordIsMatched = await bycrypt.compare(password, userInfo[0].password);
+    const passwordIsMatched = await bycrypt.compare(password, user.data[0].password);
     if (passwordIsMatched) {
-        const userId = userInfo[0].id;
+        const userId = user.data[0].id;
         const token = await utils.generateToken(userId);
         if (token == null) {
             return res.status(400).send({ message: "authentication failed." });
 
-        }
+        };
 
         const GMTcurrentTime = new Date();
 
@@ -45,8 +45,6 @@ router.post("/", async (req, res) => {
         });
         return res.status(200).send({ message: "Successfully logged in" });
     };
-
-
 });
 
 

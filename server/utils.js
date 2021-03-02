@@ -13,7 +13,7 @@ const UPDATED_MSG = "Item data was updated.";
 const DELETED_MSG = "Item was deleted from the database.";
 
 
-const generateToken = id => {
+const generateToken = (id) => {
     if (!id) {
         return null;
     };
@@ -59,14 +59,14 @@ const findUserByEmail = (email) => {
     const sql = `SELECT * FROM food_tracker.users WHERE email="${email}"`;
 
     return new Promise((resolve, reject) => {
-        con.query(sql, (error, result) => {
+        con.query(sql, (error, rows) => {
             if (error) {
-                reject("ERROR");
+                reject({ found: null, data: error });
             }
-            if (result.length > 0) {
-                resolve(result);
+            if (rows.length > 0) {
+                resolve({ found: true, data: rows });
             }
-            resolve("NOT FOUND");
+            resolve({ found: false });
         });
     });
 };

@@ -100,7 +100,7 @@ export function isValidUser(user) {
 export function isNotValidUser() {
     return {
         type: actionTypes.IS_AUTHENTICATED_FAILURE,
-        payload: false
+        payload: { authentication: false }
     };
 };
 

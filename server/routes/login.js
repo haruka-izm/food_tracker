@@ -44,7 +44,6 @@ router.post("/", async (req, res) => {
         });
         return res.status(200).send({ message: "Successfully logged in" });
     } else {
-        // todo : confirm status code
         return res.status(401).send({ message: "Invalid credentials. Please try again." });
     }
 });

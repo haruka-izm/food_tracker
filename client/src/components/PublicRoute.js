@@ -8,7 +8,7 @@ function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
     return (
         <Route
             {...rest}
-            render={(props) => isAuthenticated == false ? <Component {...props} /> : <Redirect to={{ pathname: '/' }} />}
+            render={(props) => isAuthenticated == false || isAuthenticated == null ? <Component {...props} /> : <Redirect to={{ pathname: '/' }} />}
         />
     )
 };

@@ -58,7 +58,8 @@ function reducer(state = initialValue, action) {
 
         case (actionTypes.IS_AUTHENTICATED_FAILURE):
             return {
-                ...state
+                ...state,
+                isAuthenticated: action.payload.authentication
             }
 
         case (actionTypes.LOGOUT_SUCCESS):

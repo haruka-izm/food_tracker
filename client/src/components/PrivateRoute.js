@@ -13,11 +13,10 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
     if (res.status === 200) {
       const json = await res.json();
       rest.dispatch(actions.isValidUser(json));
-      return true;
 
     } else {
       rest.dispatch(actions.isNotValidUser());
-      return false;
+
     };
 
   };
@@ -32,15 +31,14 @@ function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => isAuthenticated == null ? "loading..."
-        : isAuthenticated == true ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />}
+      render={(props) => isAuthenticated == null ? "loading" :
+        isAuthenticated == true ? <Component {...props} /> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />}
     />
   );
 };
 
 
 export default connect(state => {
-  console.log('state: ', state.isAuthenticated)
   return {
     isAuthenticated: state.isAuthenticated
   }

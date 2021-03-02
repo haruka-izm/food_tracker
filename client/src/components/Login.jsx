@@ -40,9 +40,8 @@ const LogIn = props => {
     }
 
     const handleCreateNewAccount = () => {
-        console.log("create new accout button clicked")
         props.history.push('/signup');
-    }
+    };
 
     return (
         <Paper className={classes.paper}>

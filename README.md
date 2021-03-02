@@ -1,10 +1,10 @@
 # Food Tracker
-Food Tracker is an application to save your food from waisting.
+Food Tracker is an application to save your food from going to waste.
 
 
 # Features
  - Create, modify, and delete items
- - Get notifications by email when items are expiring
+ - Get notifications by email when items are close to expiring
 
 # Contents
  - [Before You Start](#BeforeYouStart)  
@@ -18,9 +18,9 @@ Food Tracker is an application to save your food from waisting.
 
 # Before You Start
 This app requires a connection to a MySQL service. Follow the instructions on MySQL's official documentation specific to your system to install MySQL locally.  
-After successfully installed MySQL, follow the instruction below.
+After successfully installing MySQL, follow the instructions below.
 
- - Create required tables, run MySQL statements below
+ - For creating the required tables, run MySQL statements below
    - CREATE DATABASE food_tracker;
    - CREATE TABLE food_tracker.users (
      id INT NOT NULL AUTO_INCREMENT,
@@ -38,10 +38,11 @@ After successfully installed MySQL, follow the instruction below.
        category VARCHAR(30),
        PRIMARY KEY (id)
    );
-  - If you want to send e-mail notifications, set up the requirements below
-    - open .env file in the sever folder
-    - replace the instructions with actual e-mail addresses and password
-    - replace the MAIL_SERVICE to the one that your MAIL_SENDER's service such as 'gmail'. The default is 'outlook'.
+  - If you want e-mail notifications to be sent:
+    - open .env file in the server folder
+    - set MAIL_SENDER's value to a valid email account name
+    - set MAIL_SENDER_PASSWORD's value to the password for the account above
+    - set MAIL_SERVICE to the type of service for the provided account (e.g. "gmail", "outlook")
       
 
 # Installation (Locally)

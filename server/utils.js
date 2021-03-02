@@ -206,6 +206,7 @@ const getNumOfAllItems = () => {
 
 // check all items' epxpiration date every day
 // and send a user email notifying what items are expiring
+let MAIL_RECEIVER = "";
 cron.schedule('* 23 * * *', async () => {
     const today = new Date();
     today.setDate(today.getDate() + 14);

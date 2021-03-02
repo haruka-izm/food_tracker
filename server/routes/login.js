@@ -30,7 +30,6 @@ router.post("/", async (req, res) => {
         const token = await utils.generateToken(userId);
         if (token == null) {
             return res.status(400).send({ message: "authentication failed." });
-
         };
 
         const GMTcurrentTime = new Date();
@@ -44,7 +43,10 @@ router.post("/", async (req, res) => {
             httpOnly: false
         });
         return res.status(200).send({ message: "Successfully logged in" });
-    };
+    } else {
+        // todo : confirm status code
+        return res.status(401).send({ message: "Invalid credentials. Please try again." });
+    }
 });
 
 

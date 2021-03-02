@@ -5,10 +5,6 @@ const dbConfig = require('../DB/db');
 const utils = require('../utils');
 
 
-const ITEM_NOT_FOUND_MSG = "Item not found.";
-const UPDATED_MSG = "Item data was updated.";
-const DELETED_MSG = "Item was deleted from the database.";
-
 router.route("/")
     .post(async (req, res) => {
         const verified = await utils.verifyToken(req);
@@ -65,41 +61,44 @@ router.route("/:id")
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
-        const itemInfo = await utils.findItemById(id);
-        res.status(200).send({ "message": itemInfo });
+        const item = await utils.findItemById(id);
+        if (item.found) {
+            return res.status(200).send({ "message": item.data });
+        }
+
     })
     .put(async (req, res) => {
         if (!utils.verifyToken(req)) {
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
-        const itemInfo = await utils.findItemById(id);
+        const item = await utils.findItemById(id);
 
-        if (itemInfo == ITEM_NOT_FOUND_MSG) {
-            res.status(404).send({ "message": itemInfo });
-        } else {
-            const itemInfo = req.body;
-            const updatedItem = await utils.updateItemData(id, itemInfo);
+        if (!item.found) {
+            return res.status(404).send({ "message": item.data });
+        };
 
-            if (updatedItem != undefined) {
-                res.status(201).send({ "message": UPDATED_MSG });
-            }
+        const itemInfo = req.body;
+        const updatingItem = await utils.updateItemData(id, itemInfo);
+        if (updatingItem.updated) {
+            return res.status(201).send({ "message": updatingItem.data });
         }
+
     })
     .delete(async (req, res) => {
         if (!utils.verifyToken(req)) {
             return res.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
-        const itemInfo = await utils.findItemById(id);
+        const item = await utils.findItemById(id);
 
-        if (itemInfo == ITEM_NOT_FOUND_MSG) {
-            res.status(400).send({ "message": itemInfo });
-        } else {
-            const deletedItem = await utils.deleteItem(id);
-            if (deletedItem != undefined) {
-                res.status(200).send({ "message": DELETED_MSG });
-            }
+        if (!item.found) {
+            return res.status(400).send({ "message": item.data });
+        };
+
+        const deletingItem = await utils.deleteItem(id);
+        if (deletingItem.deleted) {
+            return res.status(200).send({ "message": deletingItem.data });
         };
     });
 

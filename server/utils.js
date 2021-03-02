@@ -7,11 +7,9 @@ const dbConfig = require('./DB/db');
 const { env } = require('process');
 const con = mysql.createConnection(dbConfig);
 
-
-const ITEM_NOT_FOUND_MSG = "Item not found.";
 const UPDATED_MSG = "Item data was updated.";
+const ITEM_NOT_FOUND_MSG = "Item not found.";
 const DELETED_MSG = "Item was deleted from the database.";
-
 
 const generateToken = (id) => {
     if (!id) {
@@ -61,7 +59,7 @@ const findUserByEmail = (email) => {
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
-                reject({ found: null, data: error });
+                resolve({ found: null, data: error });
             }
             if (rows.length > 0) {
                 resolve({ found: true, data: rows });
@@ -72,9 +70,9 @@ const findUserByEmail = (email) => {
 };
 
 const createNewUser = async (email, password, username) => {
-    const result = await findUserByEmail(email);
+    const user = await findUserByEmail(email);
 
-    if (result == "FOUND") {
+    if (user.found) {
         return { result: 'FAILED' };
     }
 
@@ -84,9 +82,9 @@ const createNewUser = async (email, password, username) => {
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, row) {
             if (err) {
-                return reject({ result: 'ERROR', msg: err });
+                return reject({ created: false, msg: err });
             };
-            return resolve({ result: "CREATED", id: row.insertId });
+            return resolve({ created: true, id: row.insertId });
         });
     });
 };
@@ -143,9 +141,9 @@ const updateItemData = (id, itemInfo) => {
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
-                return reject(error);
+                return reject({ updated: false, data: error });
             }
-            return resolve(UPDATED_MSG);
+            return resolve({ updated: true, data: UPDATED_MSG });
         });
     });
 };
@@ -156,9 +154,9 @@ const deleteItem = (id) => {
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
-                return reject(error);
+                return reject({ deleted: false, data: error });
             }
-            return resolve(DELETED_MSG);
+            return resolve({ deleted: true, data: DELETED_MSG });
         });
     });
 }

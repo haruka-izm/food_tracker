@@ -3,8 +3,6 @@ const router = express.Router();
 const utils = require('../utils');
 
 
-//const con = mysql.createConnection(dbConfig);
-
 router.post("/", async (req, res) => {
     const { email, password, username } = req.body;
 
@@ -12,24 +10,24 @@ router.post("/", async (req, res) => {
         return res.status(400).send({ message: "Please provide required information." });
     };
 
-    const creation = await utils.createNewUser(email, password, username);
-    if (creation.result == 'FAILED') {
+    const newUser = await utils.createNewUser(email, password, username);
+    if (!newUser.created) {
         return res.status(400).send({ message: `The user: ${email} already exists.` });
     };
 
-    if (creation.result == 'CREATED') {
-        const token = await utils.generateToken(creation.id);
-        if (token == null) {
-            return res.status(400).send({ message: "authentication failed." });
-        }
-        res.cookie('token', token, {
-            expires: new Date(Date.now() + 60 * 60 * 24 * 30),  // 30 days
-            secure: false,
-            httpOnly: true,
-        });
+    //if (newUser.result == 'CREATED') {
+    const token = await utils.generateToken(newUser.id);
+    if (token == null) {
+        return res.status(400).send({ message: "authentication failed." });
+    }
+    res.cookie('token', token, {
+        expires: new Date(Date.now() + 60 * 60 * 24 * 30),  // 30 days
+        secure: false,
+        httpOnly: true,
+    });
 
-        return res.status(201).send({ message: `a new user: ${email} is created.` });
-    };
+    return res.status(201).send({ message: `a new user: ${email} is created.` });
+    //};
 
 
 });

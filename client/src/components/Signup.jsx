@@ -33,7 +33,8 @@ const SignUp = props => {
             };
             const res = await fetch(urlOptions.SIGNUP, { ...requestOptions.POST, ...postBody });
             if (res.status === 201) {
-                props.dispatch(actions.isValidUser());
+                //const json = await res.json();
+                //props.dispatch(actions.isValidUser(json.displayName));
                 props.history.push('/dashboard');
 
             } else {

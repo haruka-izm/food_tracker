@@ -91,6 +91,7 @@ function getErrorMessage(resStatus) {
 
 
 export function isValidUser(user) {
+    console.log("isValidUser called")
     return {
         type: actionTypes.IS_AUTHENTICATED_SUCCESS,
         payload: { authentication: true, ...user }

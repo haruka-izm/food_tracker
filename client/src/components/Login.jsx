@@ -27,8 +27,6 @@ const LogIn = props => {
 
         const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
         if (res.status === 200) {
-
-            //props.dispatch(actions.isValidUser());
             props.history.push('/dashboard');
 
         } else {

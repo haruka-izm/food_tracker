@@ -36,6 +36,7 @@ After successfully installing MySQL, follow the instructions below.
        purchased_date VARCHAR(10), 
        expiry_date VARCHAR(10), 
        category VARCHAR(30),
+       user_id INT,
        PRIMARY KEY (id)
    );
   - If you want e-mail notifications to be sent:

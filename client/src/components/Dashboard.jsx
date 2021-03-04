@@ -8,9 +8,7 @@ import { requestOptions, urlOptions } from '../constants';
 
 
 function Dashboard(props) {
-    //const user = props.email;
     const [isLoaded, setIsLoaded] = useState(false);
-
     async function fetchData() {
         setIsLoaded(true);
 
@@ -42,7 +40,7 @@ function Dashboard(props) {
             //let json = await res.json();
             // setError(json.message);
             //setError(error.res.data.message)
-            return false;
+            setIsLoaded(false);
         };
     };
 

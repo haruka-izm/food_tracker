@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
         res.cookie("token", token, {
             expires: GMTcurrentTime,
             secure: false,
-            httpOnly: false
+            httpOnly: true
         });
         return res.status(200).send({ message: "Successfully logged in" });
     } else {

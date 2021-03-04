@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -19,6 +19,7 @@ import style from '../styles/styleItems';
 const Table = (props) => {
     const { classes } = props;
     const info = props.items;
+    //const displayName = props.displayName;
     const data = Object.values(info);
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },
@@ -90,13 +91,10 @@ const Table = (props) => {
     };
 
 
-
     return (
-
         <div className={classes.table} >
-
             <MaterialTable
-                title={props.nameToDisplay}
+                title={props.displayName}
                 columns={columns}
                 data={data}
                 options={tableOptions}
@@ -112,6 +110,6 @@ export default withStyles(style)(connect((state) => {
     console.log("state: ", state.displayName)
     return {
         items: state.data,
-        nameToDisplay: state.displayName
+        displayName: state.displayName
     }
 })(Table));

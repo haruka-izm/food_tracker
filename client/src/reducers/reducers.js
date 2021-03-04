@@ -50,6 +50,7 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.IS_AUTHENTICATED_SUCCESS):
+            console.log("reducer called")
             return {
                 ...state,
                 isAuthenticated: action.payload.authentication,

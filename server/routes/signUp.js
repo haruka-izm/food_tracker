@@ -20,13 +20,20 @@ router.post("/", async (req, res) => {
     if (token == null) {
         return res.status(400).send({ message: "authentication failed." });
     }
+
+    const GMTcurrentTime = new Date();
+    GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
+
     res.cookie('token', token, {
-        expires: new Date(Date.now() + 60 * 60 * 24 * 30),  // 30 days
+        expires: GMTcurrentTime,
         secure: false,
         httpOnly: true,
     });
 
-    return res.status(201).send({ message: `a new user: ${email} is created.` });
+    return res.status(201).send({
+        message: `a new user: ${email} is created.`,
+        displayName: username
+    });
     //};
 
 

@@ -2,6 +2,13 @@ import { actionTypes, requestOptions, urlOptions } from '../constants';
 
 
 export function getItems(itemsInfo) {
+    if (itemsInfo.message == "Item not found.") {
+        return {
+            type: actionTypes.GET_ITEMS_FAILURE,
+            payload: {}
+        };
+    };
+
     let data = {};
     itemsInfo.message.forEach(element => {
         data[element.id] = element;
@@ -91,7 +98,6 @@ function getErrorMessage(resStatus) {
 
 
 export function isValidUser(user) {
-    console.log("isValidUser called")
     return {
         type: actionTypes.IS_AUTHENTICATED_SUCCESS,
         payload: { authentication: true, ...user }
@@ -99,6 +105,7 @@ export function isValidUser(user) {
 };
 
 export function isNotValidUser() {
+    console.log("isNotValidUser called")
     return {
         type: actionTypes.IS_AUTHENTICATED_FAILURE,
         payload: { authentication: false }

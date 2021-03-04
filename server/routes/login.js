@@ -32,17 +32,8 @@ router.post("/", async (req, res) => {
             return res.status(400).send({ message: "authentication failed." });
         };
 
-        const GMTcurrentTime = new Date();
-
-        // to EDT and expires in 1 day
-        GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
-
-        res.cookie("token", token, {
-            expires: GMTcurrentTime,
-            secure: false,
-            httpOnly: true
-        });
-        return res.status(200).send({ message: "Successfully logged in" });
+        const response = utils.setCookie(res, token)
+        return response.status(200).send({ message: "Successfully logged in" });
     } else {
         return res.status(401).send({ message: "Invalid credentials. Please try again." });
     }

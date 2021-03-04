@@ -15,28 +15,16 @@ router.post("/", async (req, res) => {
         return res.status(400).send({ message: `The user: ${email} already exists.` });
     };
 
-    //if (newUser.result == 'CREATED') {
     const token = await utils.generateToken(newUser.id);
     if (token == null) {
         return res.status(400).send({ message: "authentication failed." });
     }
 
-    const GMTcurrentTime = new Date();
-    GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
-
-    res.cookie('token', token, {
-        expires: GMTcurrentTime,
-        secure: false,
-        httpOnly: true,
-    });
-
-    return res.status(201).send({
+    const response = utils.setCookie(res, token);
+    return response.status(201).send({
         message: `a new user: ${email} is created.`,
         displayName: username
     });
-    //};
-
-
 });
 
 

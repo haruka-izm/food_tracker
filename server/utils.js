@@ -47,6 +47,22 @@ const clearToken = (res) => {
     }
 };
 
+
+const setCookie = (res, token) => {
+    console.log("setCookie called")
+    const GMTcurrentTime = new Date();
+
+    // to EDT and expires in 1 day
+    GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
+
+    return res.cookie("token", token, {
+        expires: GMTcurrentTime,
+        secure: false,
+        httpOnly: true
+    });
+
+};
+
 const getUserId = (req) => {
     const token = req.cookies['token'];
     const decoded = jwt.decode(token);
@@ -263,6 +279,8 @@ module.exports = {
     generateToken,
     verifyToken,
     clearToken,
+
+    setCookie,
 
     findUserByEmail,
     findUserById,

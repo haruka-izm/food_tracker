@@ -31,7 +31,7 @@ const Navbar = props => {
         const res = await fetch(urlOptions.LOGOUT, requestOptions.GET);
         if (res.status === 204) {
             props.dispatch(actions.logOut());
-            props.history.push('/');
+            // props.history.push('/');
 
         } else {
             console.log('Failed to logout')

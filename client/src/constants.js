@@ -2,6 +2,7 @@ import keyMirror from 'keymirror';
 
 export const actionTypes = keyMirror({
     GET_ITEMS_SUCCESS: null,
+    GET_ITEMS_FAILURE: null,
     ADD_ITEM_SUCCESS: null,
     ADD_ITEM_FAILURE: null,
     DELETE_ITEM_SUCCESS: null,

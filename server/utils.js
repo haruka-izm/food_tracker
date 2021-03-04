@@ -10,6 +10,7 @@ const con = mysql.createConnection(dbConfig);
 const UPDATED_MSG = "Item data was updated.";
 const ITEM_NOT_FOUND_MSG = "Item not found.";
 const DELETED_MSG = "Item was deleted from the database.";
+const USER_NOT_FOUND_MSG = "User not found.";
 
 const generateToken = (id) => {
     if (!id) {
@@ -29,13 +30,16 @@ const verifyToken = async (req) => {
         return false;
     };
 
-    jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+    let data = {};
+    jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
         if (error) {
-            return false;
+            data['msg'] = false;
         };
+        data['msg'] = true;
+        data['userId'] = decoded.userID;
     });
 
-    return true;
+    return data;
 };
 
 const clearToken = (res) => {
@@ -49,8 +53,8 @@ const clearToken = (res) => {
 
 
 const setCookie = (res, token) => {
-    console.log("setCookie called")
     const GMTcurrentTime = new Date();
+
 
     // to EDT and expires in 1 day
     GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
@@ -119,8 +123,8 @@ const findUserById = (id) => {
 };
 
 
-const findItemById = (id) => {
-    const sql = `SELECT * FROM food_tracker.items WHERE id=${id}`;
+const findItemById = (itemId) => {
+    const sql = `SELECT * FROM food_tracker.items WHERE id=${itemId}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
@@ -135,10 +139,10 @@ const findItemById = (id) => {
 };
 
 
-const addItem = (newItem) => {
+const addItem = (newItem, userId) => {
     const { name, quantity, purchased_date, expiry_date, category } = newItem;
     const num = parseInt(quantity);
-    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}')`;
+    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category, user_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId})`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -179,8 +183,9 @@ const deleteItem = (id) => {
 
 
 
-const getItems = (limit, offset) => {
-    const sql = `SELECT * FROM food_tracker.items LIMIT ${limit} OFFSET ${offset}`;
+const getItems = (limit, offset, userId) => {
+    const user_id = parseInt(userId);
+    const sql = `SELECT * FROM food_tracker.items WHERE user_id=${user_id} LIMIT ${limit} OFFSET ${offset}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
@@ -199,8 +204,9 @@ const getItems = (limit, offset) => {
     });
 };
 
-const getNumOfAllItems = () => {
-    const sql = "SELECT COUNT(*) as TotalCount from food_tracker.items";
+const getNumOfAllItems = (userId) => {
+
+    const sql = `SELECT COUNT(*) as TotalCount from food_tracker.items WHERE user_id=${userId}`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
@@ -223,6 +229,7 @@ const getNumOfAllItems = () => {
 // check all items' epxpiration date every day
 // and send a user email notifying what items are expiring
 let MAIL_RECEIVER = "";
+
 cron.schedule('* 23 * * *', async () => {
     const today = new Date();
     today.setDate(today.getDate() + 14);
@@ -245,20 +252,36 @@ cron.schedule('* 23 * * *', async () => {
 
         const mailOptions = {
             from: process.env.MAIL_SENDER,
-            to: process.env.MAIL_RECEIVER,
+            to: MAIL_RECEIVER,
             subject: 'Notification: expiring food lists',
             text: content
         };
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
-    }
+        if (MAIL_RECEIVER != "") {
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }
+    };
 });
+
+
+const getMailReceiver = async () => {
+    // users/me -> get the current userId
+
+    let userId;
+    // get email by userId
+    const user = await findUserById(userId);
+    if (!user.found) {
+        return USER_NOT_FOUND_MSG;
+    };
+
+    return user.data.email;
+};
 
 const checkExpirationDateOfAllItems = (dateOfExpiration) => {
     const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}'`;
@@ -272,6 +295,9 @@ const checkExpirationDateOfAllItems = (dateOfExpiration) => {
         });
     });
 };
+
+
+
 
 
 
@@ -291,5 +317,6 @@ module.exports = {
     getNumOfAllItems,
     addItem,
     updateItemData,
-    deleteItem
+    deleteItem,
+
 };

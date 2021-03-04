@@ -34,6 +34,8 @@ router.post("/", async (req, res) => {
 
         const response = utils.setCookie(res, token)
         return response.status(200).send({ message: "Successfully logged in" });
+
+
     } else {
         return res.status(401).send({ message: "Invalid credentials. Please try again." });
     }

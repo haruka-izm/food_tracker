@@ -6,11 +6,11 @@ const utils = require('../utils');
 router.route("/")
     .post(async (req, res) => {
         const verified = await utils.verifyToken(req);
-        if (!verified) {
+        if (!verified.msg) {
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
-        const newItem = await utils.addItem(req.body);
+        const newItem = await utils.addItem(req.body, verified.userId);
         if (newItem.added) {
             const item = await utils.findItemById(newItem.id);
             if (item.found) {
@@ -32,14 +32,15 @@ router.route("/query")
         const offset = parseInt(req.query.offset) || 0;
 
         const verified = await utils.verifyToken(req);
-        if (!verified) {
+        if (!verified.msg) {
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
 
         };
-        const itemInfo = await utils.getItems(limit, offset);
+
+        const itemInfo = await utils.getItems(limit, offset, verified.userId);
         let totalCount;
         if (offset == 0) {
-            totalCount = await utils.getNumOfAllItems();
+            totalCount = await utils.getNumOfAllItems(verified.userId);
         }
 
         if (typeof totalCount == "number") {

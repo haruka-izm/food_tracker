@@ -9,6 +9,7 @@ import { requestOptions, urlOptions } from '../constants';
 function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
 
   async function verifyUser() {
+
     const res = await fetch(urlOptions.USER_QUERY, requestOptions.GET);
     if (res.status === 200) {
       const json = await res.json();

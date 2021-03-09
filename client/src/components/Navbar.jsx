@@ -39,7 +39,14 @@ const Navbar = props => {
 
     };
 
-    // todo: add display username field or in Table component?
+    const handleMyAcccount = () => {
+        props.history.push("/myAccount");
+    };
+
+    const handleDashboard = () => {
+        props.history.push("/dashboard");
+    };
+
     return (
 
         <Grid container>
@@ -63,7 +70,8 @@ const Navbar = props => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <MenuItem onClick={handleMyAcccount}>My account</MenuItem>
+                        <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>

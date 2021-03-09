@@ -270,11 +270,7 @@ cron.schedule('* 23 * * *', async () => {
 });
 
 
-const getMailReceiver = async () => {
-    // users/me -> get the current userId
-
-    let userId;
-    // get email by userId
+const getMailReceiver = async (userId) => {
     const user = await findUserById(userId);
     if (!user.found) {
         return USER_NOT_FOUND_MSG;

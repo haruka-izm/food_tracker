@@ -6,6 +6,7 @@ import Home from './components/Home';
 import LogIn from './components/LogIn';
 import Dashboard from './components/Dashboard';
 import SignUp from './components/SignUp';
+import MyAccount from './components/myAccount';
 
 import store from './store';
 import PrivateRoute from './components/PrivateRoute';
@@ -28,6 +29,7 @@ function App() {
                 <PublicRoute path="/login" component={LogIn} />
                 <PublicRoute path="/signup" component={SignUp} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
+                <PrivateRoute path="/myAccount" component={MyAccount} />
               </Switch>
             </div>
           </div>

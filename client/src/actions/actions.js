@@ -1,5 +1,7 @@
 import { actionTypes, requestOptions, urlOptions } from '../constants';
 
+// test
+
 
 export function getItems(itemsInfo) {
     if (itemsInfo.message == "Item not found.") {
@@ -105,7 +107,6 @@ export function isValidUser(user) {
 };
 
 export function isNotValidUser() {
-    console.log("isNotValidUser called")
     return {
         type: actionTypes.IS_AUTHENTICATED_FAILURE,
         payload: { authentication: false }

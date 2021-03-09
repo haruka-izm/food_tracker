@@ -1,5 +1,6 @@
 import { actionTypes, requestOptions, urlOptions } from '../constants';
 
+// test
 
 export function getItems(itemsInfo) {
     if (itemsInfo.message == "Item not found.") {

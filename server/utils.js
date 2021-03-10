@@ -24,22 +24,26 @@ const generateToken = (id) => {
 };
 
 
-const verifyToken = async (req) => {
+const verifyToken = async (req, res) => {
     const token = req.cookies['token'] || '';
     if (!token) {
         return false;
     };
 
-    let data = {};
-    jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
         if (error) {
-            data['msg'] = false;
+            return { msg: false };
         };
-        data['msg'] = true;
-        data['userId'] = decoded.userID;
+        return { msg: true, userId: decoded.userID };
     });
 
-    return data;
+    if (!decoded.msg) {
+        return false;
+    };
+
+    const newToken = generateToken(decoded.userId);
+    const newRes = setCookie(res, newToken);
+    return { response: newRes, userId: decoded.userId };
 };
 
 const clearToken = (res) => {

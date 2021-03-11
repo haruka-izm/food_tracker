@@ -27,6 +27,7 @@ After successfully installing MySQL, follow the instructions below.
        email VARCHAR(50),
        username VARCHAR(50),
        password VARCHAR(200),
+       email_notification VARCHAR(5) DEFAULT 'false',
        PRIMARY KEY (id)
    );
    - CREATE TABLE food_tracker.items (

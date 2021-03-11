@@ -232,59 +232,57 @@ const getNumOfAllItems = (userId) => {
 
 // check all items' epxpiration date every day
 // and send a user email notifying what items are expiring
-let MAIL_RECEIVER = "";
 
 cron.schedule('* 23 * * *', async () => {
+
     const today = new Date();
     today.setDate(today.getDate() + 14);
     const dateOfExpiration = today.toISOString().split('T')[0];
 
-    const expiringItems = await checkExpirationDateOfAllItems(dateOfExpiration);
-    if (expiringItems.length != 0) {
-        let content = 'Expiring food is:\n';
-        expiringItems.forEach(item => {
-            content += `${item.name}\n`;
-        });
+    // get users whose notification is 'true'
+    const users = await getUsersForEmailNotification();
+    for (let i = 0; i < users.length; i++) {
+        let MAIL_RECEIVER = users[i].email;
 
-        const transporter = nodemailer.createTransport({
-            service: process.env.MAIL_SERVICE,
-            auth: {
-                user: process.env.MAIL_SENDER,
-                pass: process.env.MAIL_SENDER_PASSWORD
-            }
-        });
+        const expiringItems = await checkExpirationDateOfAllItems(dateOfExpiration, users[i].id);
+        if (expiringItems.length != 0) {
+            let content = 'Expiring food is:\n';
+            expiringItems.forEach(item => {
+                content += `${item.name}\n`;
+            });
 
-        const mailOptions = {
-            from: process.env.MAIL_SENDER,
-            to: MAIL_RECEIVER,
-            subject: 'Notification: expiring food lists',
-            text: content
-        };
-
-        if (MAIL_RECEIVER != "") {
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
+            const mailOptions = {
+                from: process.env.MAIL_SENDER,
+                to: MAIL_RECEIVER,
+                subject: 'Notification: expiring food lists',
+                text: content
+            };
+            console.log("content: ", content)
+            const transporter = nodemailer.createTransport({
+                service: process.env.MAIL_SERVICE,
+                auth: {
+                    user: process.env.MAIL_SENDER,
+                    pass: process.env.MAIL_SENDER_PASSWORD
                 }
             });
-        }
-    };
+
+            if (MAIL_RECEIVER != "") {
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+            }
+        };
+    }
+
 });
 
 
-const getMailReceiver = async (userId) => {
-    const user = await findUserById(userId);
-    if (!user.found) {
-        return USER_NOT_FOUND_MSG;
-    };
-
-    return user.data.email;
-};
-
-const checkExpirationDateOfAllItems = (dateOfExpiration) => {
-    const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}'`;
+const checkExpirationDateOfAllItems = (dateOfExpiration, userId) => {
+    const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}' AND user_id=${userId}`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
@@ -295,6 +293,19 @@ const checkExpirationDateOfAllItems = (dateOfExpiration) => {
         });
     });
 };
+
+const getUsersForEmailNotification = () => {
+    const sql = `SELECT * FROM food_tracker.users WHERE email_notification='true'`;
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            };
+            return resolve(rows);
+        });
+    });
+}
 
 
 

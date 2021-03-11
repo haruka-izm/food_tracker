@@ -6,7 +6,7 @@ const utils = require('../utils');
 router.route("/")
     .post(async (req, res) => {
         const verified = await utils.verifyToken(req, res);
-        if (!verified) {
+        if (!verified.result) {
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
@@ -32,7 +32,7 @@ router.route("/query")
         const offset = parseInt(req.query.offset) || 0;
 
         const verified = await utils.verifyToken(req, res);
-        if (!verified) {
+        if (!verified.result) {
             return verified.response.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
@@ -56,7 +56,7 @@ router.route("/query")
 router.route("/:id")
     .get(async (req, res) => {
         const verified = await utils.verifyToken(req, res);
-        if (!verified) {
+        if (!verified.result) {
             return verified.response.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
@@ -68,8 +68,7 @@ router.route("/:id")
     })
     .put(async (req, res) => {
         const verified = await utils.verifyToken(req, res);
-        console.log("verified: ", verified)
-        if (!verified) {
+        if (!verified.result) {
             return verified.response.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;
@@ -88,7 +87,7 @@ router.route("/:id")
     })
     .delete(async (req, res) => {
         const verified = await utils.verifyToken(req, res);
-        if (!verified) {
+        if (!verified.result) {
             return verified.response.status(401).send({ message: 'Invalid token or You need to login again.' });
         }
         const { id } = req.params;

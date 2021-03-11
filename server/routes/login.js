@@ -6,7 +6,7 @@ const dbConfig = require('../DB/db');
 const utils = require('../utils');
 
 
-const con = mysql.createConnection(dbConfig);
+//const con = mysql.createConnection(dbConfig);
 
 router.post("/", async (req, res) => {
     const { email, password } = req.body;
@@ -27,14 +27,13 @@ router.post("/", async (req, res) => {
     const passwordIsMatched = await bycrypt.compare(password, user.data[0].password);
     if (passwordIsMatched) {
         const userId = user.data[0].id;
-        const token = await utils.generateToken(userId);
+        const token = utils.generateToken(userId);
         if (token == null) {
             return res.status(400).send({ message: "authentication failed." });
         };
 
         const response = utils.setCookie(res, token)
         return response.status(200).send({ message: "Successfully logged in" });
-
 
     } else {
         return res.status(401).send({ message: "Invalid credentials. Please try again." });

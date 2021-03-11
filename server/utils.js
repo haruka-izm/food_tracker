@@ -27,7 +27,7 @@ const generateToken = (id) => {
 const verifyToken = async (req, res) => {
     const token = req.cookies['token'] || '';
     if (!token) {
-        return false;
+        return { result: false };
     };
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
@@ -37,14 +37,29 @@ const verifyToken = async (req, res) => {
         return { msg: true, userId: decoded.userID };
     });
 
+    console.log("decoded.msg: ", decoded.msg)
     if (!decoded.msg) {
-        return false;
+        return { result: false };
     };
 
     const newToken = generateToken(decoded.userId);
     const newRes = setCookie(res, newToken);
-    return { response: newRes, userId: decoded.userId };
+    return { response: newRes, userId: decoded.userId, result: true };
 };
+
+const setCookie = (res, token) => {
+    const GMTcurrentTime = new Date();
+
+    // to EDT and expires in 1 day
+    GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
+
+    return res.cookie("token", token, {
+        expires: GMTcurrentTime,
+        secure: false,
+        httpOnly: true
+    });
+};
+
 
 const clearToken = (res) => {
     try {
@@ -55,21 +70,6 @@ const clearToken = (res) => {
     }
 };
 
-
-const setCookie = (res, token) => {
-    const GMTcurrentTime = new Date();
-
-
-    // to EDT and expires in 1 day
-    GMTcurrentTime.setDate(GMTcurrentTime.getDate() + 1);
-
-    return res.cookie("token", token, {
-        expires: GMTcurrentTime,
-        secure: false,
-        httpOnly: true
-    });
-
-};
 
 const getUserId = (req) => {
     const token = req.cookies['token'];

@@ -18,5 +18,27 @@ router.get('/me', async (req, res) => {
     }; //todo or what?
 });
 
+router.route("/preferences")
+    .put(async (req, res) => {
+        /*
+        const verified = await utils.verifyToken(req, res);
+        if (!verified.result) {
+            return verified.response.status(401).send({ message: 'Invalid token or You need to login again.' });
+        };
+
+        */
+        //const preferences = req.body;
+        const mock = { email_notification: 'true', email: 'test@gamil.com' }
+        const updateQuery = await utils.updateUserPreferences(2, mock)
+
+        console.log("res: ", updateQuery)
+        console.log("res.update: ", updateQuery.update)
+        if (updateQuery.updated == false) {
+            return res.status(204).send({ message: "Updating user information failed. Please try again." });
+        }
+
+        return res.status(200).send({ message: "Information successfully updated." });
+    })
+
 
 module.exports = router;

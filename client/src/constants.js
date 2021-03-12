@@ -42,10 +42,17 @@ export const requestOptions = {
 };
 
 export const urlOptions = {
-    ITEM_QUERY: 'http://localhost:8080/api/items/query',
-    USER_QUERY: 'http://localhost:8080/api/users/me',
-    POST: 'http://localhost:8080/api/items',
     LOGIN: 'http://localhost:8080/api/login',
     LOGOUT: 'http://localhost:8080/api/logout',
-    SIGNUP: 'http://localhost:8080/api/signup'
+    SIGNUP: 'http://localhost:8080/api/signup',
+
+    // api/items
+    POST_ITEM: 'http://localhost:8080/api/items',
+    ITEM_QUERY: 'http://localhost:8080/api/items/query',
+
+    // api/users
+    PUT_PREFERENCES: 'http://localhost:8080/api/users/preferences',
+    USER_QUERY: 'http://localhost:8080/api/users/me',
+
+
 };

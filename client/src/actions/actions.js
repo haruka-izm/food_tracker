@@ -23,7 +23,7 @@ export function getItems(itemsInfo) {
 export async function addItem(newItem) {
 
     const postBody = { body: JSON.stringify(newItem) }
-    const postResponse = await fetch(urlOptions.POST, { ...requestOptions.POST, ...postBody });
+    const postResponse = await fetch(urlOptions.POST_ITEM, { ...requestOptions.POST, ...postBody });
     if (postResponse.status === 201) {
         const json = await postResponse.json();
         const itemInfo = json.message;

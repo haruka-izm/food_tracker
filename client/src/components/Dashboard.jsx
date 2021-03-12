@@ -12,7 +12,7 @@ function Dashboard(props) {
     async function fetchData() {
         setIsLoaded(true);
 
-        /* < using axios ver >
+        /* < using axios >
 
         const res = await axios.get(urlOptions.ITEM_QUERY, requestOptions.GET);
         if (res.status === 200) {

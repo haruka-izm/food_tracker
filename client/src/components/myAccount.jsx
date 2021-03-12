@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import axios from "axios";
+import { requestOptions, urlOptions } from "../constants";
 
 import Navbar from './Navbar';
 import Card from '@material-ui/core/Card';
@@ -13,10 +15,23 @@ import style from '../styles/styleMyAccount';
 
 const MyAccount = (props) => {
     const { classes } = props;
+    // to do: when a page is loaded, fetch preferences and apply UI
+    // [] == fetchUIdata()?
     const [notification, setNotification] = useState(false);
 
-    const handleNotification = (event) => {
+    const handleNotification = async (event) => {
         setNotification(event.target.checked);
+
+        const val = event.target.checked;
+        const putBody = { email_notification: val.toString() }
+        const res = await axios.put(urlOptions.PUT_PREFERENCES, putBody, requestOptions.PUT);
+        if (res.status === 200) {
+
+
+        } else {
+
+        };
+
     };
 
     return (

@@ -227,6 +227,29 @@ const getNumOfAllItems = (userId) => {
     });
 };
 
+const updateUserPreferences = (userId, preferences) => {
+    let sql = `UPDATE food_tracker.users `;
+    let SET = `SET `;
+    const WHERE = ` WHERE id=${userId}`;
+    for (const [key, value] of Object.entries(preferences)) {
+        SET += `${key}="${value}",`
+    };
+
+    const len = SET.length;
+    const actualSET = SET.slice(0, len - 1);
+    sql += (actualSET + WHERE);
+
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject({ updated: false });
+            }
+            return resolve({ updated: true });
+        });
+    });
+
+};
+
 
 
 
@@ -328,6 +351,7 @@ module.exports = {
     getNumOfAllItems,
     addItem,
     updateItemData,
+    updateUserPreferences,
     deleteItem,
 
 };

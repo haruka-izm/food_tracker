@@ -15,7 +15,7 @@ import style from '../styles/styleMyAccount';
 
 const MyAccount = (props) => {
     const { classes } = props;
-    // to do: when a page is loaded, fetch preferences and apply UI
+    // to do: when a page is loaded, fetch preferences and apply to UI
     // [] == fetchUIdata()?
     const [notification, setNotification] = useState(false);
 
@@ -26,9 +26,10 @@ const MyAccount = (props) => {
         const putBody = { email_notification: val.toString() }
         const res = await axios.put(urlOptions.PUT_PREFERENCES, putBody, requestOptions.PUT);
         if (res.status === 200) {
-
+            // todo: update UI
 
         } else {
+            // todo: update UI
 
         };
 

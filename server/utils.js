@@ -242,7 +242,7 @@ const updateUserPreferences = (userId, preferences) => {
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
-                return reject({ updated: false });
+                return resolve({ updated: false });
             }
             return resolve({ updated: true });
         });

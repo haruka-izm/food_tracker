@@ -27,14 +27,10 @@ const Navbar = props => {
     };
 
     const handleLogout = async () => {
-        console.log("logout called")
         setAnchorEl(null);
         const res = await fetch(urlOptions.LOGOUT, requestOptions.GET);
         if (res.status === 204) {
-            props.dispatch(actions.isLoggingOut())
             props.dispatch(actions.logOut());
-            //props.history.push('/');
-
         } else {
             console.log('Failed to logout')
         };

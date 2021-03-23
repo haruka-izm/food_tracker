@@ -4,7 +4,6 @@ const initialValue = {
     data: {},
     isAuthenticated: null,
     displayName: "",
-    isLoggingOut: false
 }
 
 function reducer(state = initialValue, action) {
@@ -57,7 +56,6 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.IS_AUTHENTICATED_SUCCESS):
-            console.log("user is valid")
             return {
                 ...state,
                 isAuthenticated: action.payload.authentication,
@@ -74,12 +72,6 @@ function reducer(state = initialValue, action) {
             return {
                 ...state,
                 isAuthenticated: action.payload
-            }
-
-        case (actionTypes.IS_LOGGING_OUT_SUCCESS):
-            return {
-                ...state,
-                isLoggingOut: action.payload
             }
 
         case (actionTypes.IS_AUTHENTICATING):

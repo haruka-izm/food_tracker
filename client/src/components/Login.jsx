@@ -27,13 +27,10 @@ const Login = props => {
         const postBody = { body: JSON.stringify({ email: email.value, password: password.value }) }
 
         const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
-        console.log("/login endpoint called")
         if (res.status === 200) {
             props.history.push('/dashboard');
-            console.log("pushing to /dashboard")
 
         } else {
-            //props.dispatch(actions.isNotValidUser());
             const json = await res.json();
             setError(json.message);
         }

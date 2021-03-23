@@ -7,9 +7,6 @@ import { requestOptions, urlOptions } from '../constants';
 
 
 function PrivateRoute({ component: Component, isAuthenticated, isLoggingOut, ...rest }) {
-  console.log("PrivateRoute called")
-  console.log(`current auth status: ${isAuthenticated} \n
-  isLoggingOut: ${isLoggingOut}`)
 
   async function verifyUser() {
     const res = await fetch(urlOptions.USER_QUERY, requestOptions.GET);
@@ -23,14 +20,8 @@ function PrivateRoute({ component: Component, isAuthenticated, isLoggingOut, ...
   };
 
   useEffect(() => {
-    console.log("useEffect called")
-    //if (isAuthenticated === null && !isLoggingOut) {
     if (isAuthenticated === null) {
-      //todo yo yo yo add isLoggingOut to redux state (right?..) and 
-      //set it to true when 'log out' button is clicked. Maybe set it to false when 
-      // 'log in' or 'sign up' is clicked?..
       verifyUser();
-
     }
   }, [isAuthenticated]);
 
@@ -47,8 +38,7 @@ function PrivateRoute({ component: Component, isAuthenticated, isLoggingOut, ...
 
 export default connect(state => {
   return {
-    isAuthenticated: state.isAuthenticated,
-    isLoggingOut: state.isLoggingOut
+    isAuthenticated: state.isAuthenticated
   }
 })(PrivateRoute);
 

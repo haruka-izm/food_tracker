@@ -105,20 +105,12 @@ export function isValidUser(user) {
 };
 
 export function isNotValidUser() {
-    console.log("isNotValidUser called")
     return {
         type: actionTypes.IS_AUTHENTICATED_FAILURE,
         payload: { authentication: false }
     };
 };
 
-export function isLoggingOut() {
-    console.log("isLoggingOut called")
-    return {
-        type: actionTypes.IS_LOGGING_OUT_SUCCESS,
-        payload: true
-    };
-}
 
 export function isAuthenticating() {
     return {

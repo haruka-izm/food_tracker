@@ -20,7 +20,6 @@ router.route("/")
             return verified.response.status(400).send({ "message": "Item not found" });
         }
         else {
-            console.log('error: ', error)
             return verified.response.status(400).send({ "message": error });
         }
     });

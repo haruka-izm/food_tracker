@@ -279,7 +279,7 @@ cron.schedule('* 23 * * *', async () => {
                 subject: 'Notification: expiring food lists',
                 text: content
             };
-            console.log("content: ", content)
+
             const transporter = nodemailer.createTransport({
                 service: process.env.MAIL_SERVICE,
                 auth: {

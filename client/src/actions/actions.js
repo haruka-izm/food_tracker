@@ -112,6 +112,22 @@ export function isNotValidUser() {
     };
 };
 
+export function isLoggingOut() {
+    console.log("isLoggingOut called")
+    return {
+        type: actionTypes.IS_LOGGING_OUT_SUCCESS,
+        payload: true
+    };
+}
+
+export function isAuthenticating() {
+    return {
+        type: actionTypes.LOGOUT_SUCCESS,
+        payload: null
+    };
+};
+
+
 export function logOut() {
     return {
         type: actionTypes.LOGOUT_SUCCESS,

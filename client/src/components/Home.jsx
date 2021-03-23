@@ -1,5 +1,5 @@
 import React from 'react';
-import LogIn from './LogIn';
+import Login from './Login';
 import { withStyles } from "@material-ui/core/styles";
 import style from '../styles/styleHome';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +20,7 @@ const Home = (props) => {
             </Typography>
             </Grid>
             <Grid item>
-                <LogIn />
+                <Login />
             </Grid>
         </Grid>
     );

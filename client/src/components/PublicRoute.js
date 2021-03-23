@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 
 function PublicRoute({ component: Component, isAuthenticated, ...rest }) {
-
+    console.log("PublicRoute called")
     return (
         <Route
             {...rest}

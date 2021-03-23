@@ -9,13 +9,14 @@ import * as actions from '../actions/actions';
 import { requestOptions, urlOptions } from '../constants';
 
 
-const LogIn = props => {
+const Login = props => {
     const email = useFormInput('');
     const password = useFormInput('');
     const [error, setError] = useState(null);
     const { classes } = props;
 
     const handleLogin = async (event) => {
+        props.dispatch(actions.isAuthenticating())
         event.preventDefault();
         setError(null);
 
@@ -26,11 +27,13 @@ const LogIn = props => {
         const postBody = { body: JSON.stringify({ email: email.value, password: password.value }) }
 
         const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
+        console.log("/login endpoint called")
         if (res.status === 200) {
             props.history.push('/dashboard');
+            console.log("pushing to /dashboard")
 
         } else {
-            props.dispatch(actions.isNotValidUser());
+            //props.dispatch(actions.isNotValidUser());
             const json = await res.json();
             setError(json.message);
         }
@@ -89,4 +92,4 @@ const useFormInput = initialValue => {
 
 
 
-export default withRouter(connect()(withStyles(style)(LogIn)));
+export default withRouter(connect()(withStyles(style)(Login)));

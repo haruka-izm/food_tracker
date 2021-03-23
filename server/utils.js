@@ -37,7 +37,6 @@ const verifyToken = async (req, res) => {
         return { msg: true, userId: decoded.userID };
     });
 
-    console.log("decoded.msg: ", decoded.msg)
     if (!decoded.msg) {
         return { result: false };
     };

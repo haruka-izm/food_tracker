@@ -3,9 +3,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Home from './components/Home';
-import LogIn from './components/LogIn';
+import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import SignUp from './components/SignUp';
+import Signup from './components/Signup';
 import MyAccount from './components/myAccount';
 
 import store from './store';
@@ -26,8 +26,8 @@ function App() {
             <div className="content">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <PublicRoute path="/login" component={LogIn} />
-                <PublicRoute path="/signup" component={SignUp} />
+                <PublicRoute path="/login" component={Login} />
+                <PublicRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/myAccount" component={MyAccount} />
               </Switch>

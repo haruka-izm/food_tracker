@@ -8,7 +8,7 @@ import * as actions from '../actions/actions';
 import { requestOptions, urlOptions } from '../constants';
 
 
-const SignUp = props => {
+const Signup = props => {
     const email = useFormInput('');
     const password = useFormInput('');
     const username = useFormInput('');
@@ -33,11 +33,11 @@ const SignUp = props => {
             };
             const res = await fetch(urlOptions.SIGNUP, { ...requestOptions.POST, ...postBody });
             if (res.status === 201) {
-                console.log("success res")
+                //props.dispatch(actions.isValidUser());
                 props.history.push('/dashboard');
 
             } else {
-                props.dispatch(actions.isNotValidUser());
+                //props.dispatch(actions.isNotValidUser());
                 const json = await res.json();
                 setError(json.message);
             };
@@ -82,4 +82,4 @@ const useFormInput = initialValue => {
 };
 
 
-export default withStyles(style)(connect()(SignUp));
+export default withStyles(style)(connect()(Signup));

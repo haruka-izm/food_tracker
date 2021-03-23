@@ -11,8 +11,12 @@ export const actionTypes = keyMirror({
     UPDATE_ITEM_FAILURE: null,
 
 
+    IS_AUTHENTICATING: null,
     IS_AUTHENTICATED_SUCCESS: null,
     IS_AUTHENTICATED_FAILURE: null,
+
+    IS_LOGGING_OUT_SUCCESS: null,
+    IS_LOGGING_OUT_FAILURE: null,
     LOGOUT_SUCCESS: null
 });
 

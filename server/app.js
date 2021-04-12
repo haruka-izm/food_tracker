@@ -4,6 +4,7 @@ const express = require('express');
 const port = 8080;
 const { json, urlencoded } = express; // json: body-parser
 const cors = require('cors');
+const socket = require('socket.io');
 //const bodyParser = require('body-parser');
 
 // need this
@@ -25,6 +26,8 @@ also add following,
 
 // usually called: app, server
 const app = express();
+const server = app.listen(port);
+const io = socket(server);
 
 const signUp = require("./routes/signUp");
 const login = require("./routes/logIn");
@@ -47,7 +50,18 @@ app.use("/api/logout", logout);
 app.use("/api/users", users);
 
 
-app.listen(port);
+io.on('connection', socket => {
+    console.log('A new user joined the chat');
+    socket.emit('message', 'You joined the chat');
+
+    socket.on('message', (msg) => {
+        io.emit('message', msg);
+    });
+});
+
+
+//app.listen(port);
+
 
 
 

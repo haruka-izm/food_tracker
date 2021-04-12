@@ -44,6 +44,7 @@ export const requestOptions = {
 };
 
 export const urlOptions = {
+    SERVER: 'http://localhost:8080',
     LOGIN: 'http://localhost:8080/api/login',
     LOGOUT: 'http://localhost:8080/api/logout',
     SIGNUP: 'http://localhost:8080/api/signup',
@@ -55,6 +56,5 @@ export const urlOptions = {
     // api/users
     PUT_PREFERENCES: 'http://localhost:8080/api/users/preferences',
     USER_QUERY: 'http://localhost:8080/api/users/me',
-
 
 };

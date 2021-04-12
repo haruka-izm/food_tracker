@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const express = require('express');
-const port = 8080;
 const { json, urlencoded } = express; // json: body-parser
 const cors = require('cors');
 const socket = require('socket.io');
@@ -24,10 +23,18 @@ also add following,
         -- middleware
 */
 
-// usually called: app, server
+const port = 8080;
 const app = express();
 const server = app.listen(port);
-const io = socket(server);
+const corsOptionsForSocket = {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type'],
+        credentials: true
+    }
+};
+const io = socket(server, corsOptionsForSocket);
 
 const signUp = require("./routes/signUp");
 const login = require("./routes/logIn");

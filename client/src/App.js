@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import MyAccount from './components/myAccount';
+import Chat from './components/Chat';
 
 import store from './store';
 import PrivateRoute from './components/PrivateRoute';
@@ -30,6 +31,7 @@ function App() {
                 <PublicRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/myAccount" component={MyAccount} />
+                <PrivateRoute path="/chat" component={Chat} />
               </Switch>
             </div>
           </div>

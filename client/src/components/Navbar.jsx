@@ -45,6 +45,10 @@ const Navbar = props => {
         props.history.push("/dashboard");
     };
 
+    const handleChat = () => {
+        props.history.push("/chat")
+    };
+
     return (
 
         <Grid container>
@@ -70,6 +74,7 @@ const Navbar = props => {
                     >
                         <MenuItem onClick={handleMyAcccount}>My account</MenuItem>
                         <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
+                        <MenuItem onClick={handleChat}>Chat</MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>

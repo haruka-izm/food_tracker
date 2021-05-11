@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import socketIOClient from 'socket.io-client';
 
-import { urlOptions, socketOptions } from '../constants';
+import { urlOptions, socketOptions } from '../../constants';
 
 
 const SERVER = urlOptions.SERVER;

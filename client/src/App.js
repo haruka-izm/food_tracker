@@ -7,7 +7,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import MyAccount from './components/myAccount';
-import Chat from './components/Chat';
+import Chat from './components/chat/Chat';
 
 import store from './store';
 import PrivateRoute from './components/PrivateRoute';
@@ -26,12 +26,19 @@ function App() {
           <div>
             <div className="content">
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={Chat} />
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/myAccount" component={MyAccount} />
-                <PrivateRoute path="/chat" component={Chat} />
+                {
+
+                  /**
+                   <PrivateRoute path="/chat" component={Chat} />
+              
+
+                   */
+                }
               </Switch>
             </div>
           </div>

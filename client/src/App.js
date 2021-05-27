@@ -26,19 +26,17 @@ function App() {
           <div>
             <div className="content">
               <Switch>
-                <Route exact path="/" component={Chat} />
+                <Route exact path="/" component={Home} />
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/myAccount" component={MyAccount} />
-                {
-
-                  /**
-                   <PrivateRoute path="/chat" component={Chat} />
-              
-
-                   */
-                }
+                {/**
+                 * todo: change `Route` to `PrivateRoute` after
+                 * implementing chat
+                 * 
+                 */}
+                <Route path="/chat/:roomId" component={Chat} />
               </Switch>
             </div>
           </div>

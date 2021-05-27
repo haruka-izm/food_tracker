@@ -2,6 +2,7 @@ import React from 'react';
 
 import Navbar from '../Navbar';
 import ChatBox from './ChatBox';
+import ChatRoom from './ChatRoom';
 
 const Chat = () => {
     return (
@@ -11,7 +12,8 @@ const Chat = () => {
             </div>
 
             <div id="content">
-                <ChatBox />
+                <ChatRoom />
+
             </div>
         </div>
     )

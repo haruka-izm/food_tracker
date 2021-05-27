@@ -35,12 +35,14 @@ const corsOptionsForSocket = {
     }
 };
 const io = socket(server, corsOptionsForSocket);
+const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage';
 
 const signUp = require("./routes/signUp");
 const login = require("./routes/logIn");
 const logout = require("./routes/logOut");
 const items = require("./routes/items");
 const users = require("./routes/users");
+const { Socket } = require('dgram');
 const corsOptions = { credentials: true, origin: 'http://localhost:3000' };
 
 app.use(json({ extended: false }));
@@ -59,11 +61,23 @@ app.use("/api/users", users);
 
 io.on('connection', socket => {
     console.log('A new user joined the chat');
-    socket.emit('message', 'You joined the chat');
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
+    console.log(`joined chat at ${roomId}`)
 
-    socket.on('message', (msg) => {
-        io.emit('message', msg);
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+        console.log("BE received data: ", data)
+
+        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+        console.log("data sent to FE")
     });
+
+
+
+    socket.on('disconnect', () => {
+        socket.leave(roomId);
+        console.log(`chat is over at ${roomId}`)
+    })
 });
 
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import socketIOClient from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 import { urlOptions, socketOptions } from '../../constants';
 
 
 const SERVER = urlOptions.SERVER;
-const socket = socketIOClient(SERVER, socketOptions);
+const socket = io(SERVER, socketOptions);
 
 const ChatBox = () => {
 

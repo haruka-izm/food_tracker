@@ -26,7 +26,6 @@ const ChatRoom = (props) => {
 
     return (
         <div>
-            <div>room loaded</div>
             <div className="chat-room-container">
                 <h1 className="room-name">Room: {ROOM_ID}</h1>
                 <div className="messages-container">

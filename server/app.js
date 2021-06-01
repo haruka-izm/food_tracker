@@ -60,7 +60,6 @@ app.use("/api/users", users);
 
 
 io.on('connection', socket => {
-    console.log('A new user joined the chat');
     const { roomId } = socket.handshake.query;
     socket.join(roomId);
     console.log(`joined chat at ${roomId}`)
@@ -68,7 +67,7 @@ io.on('connection', socket => {
     socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
         console.log("BE received data: ", data)
 
-        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+        io.to(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
         console.log("data sent to FE")
     });
 

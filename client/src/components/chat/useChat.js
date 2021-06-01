@@ -4,9 +4,9 @@ import socketIOClient from "socket.io-client";
 import { urlOptions, socketOptions } from '../../constants';
 
 
-const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const SERVER = urlOptions.SERVER;
-const socket = socketIOClient(SERVER, socketOptions);
+//const socket = socketIOClient(SERVER, socketOptions);
 
 const useChat = (roomId) => {
 
@@ -15,20 +15,16 @@ const useChat = (roomId) => {
 
     useEffect(() => {
 
-        // socketRef.current -> socket
-        const socket = socketIOClient(SERVER, {
+        socketRef.current = socketIOClient(SERVER, {
             ...socketOptions,
             query: { roomId },
         });
 
 
-        // socketRef.current -> socket
-        socket.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
-            console.log("FE received data from BE")
-
+        socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
             const incomingMessage = {
                 ...message,
-                ownedByCurrentUser: message.senderId === socket.id,
+                ownedByCurrentUser: message.senderId === socketRef.current.id,
             };
             setMessages((messages) => [...messages, incomingMessage]);
 
@@ -36,20 +32,17 @@ const useChat = (roomId) => {
 
         });
 
-        // Destroys the socket reference
-        // when the connection is closed
-        // socketRef.current -> socket
+
         return () => {
-            socket.disconnect();
+            socketRef.current.disconnect();
         };
     }, [roomId]);
 
 
-    // socketRef.current -> socket
     const sendMessage = (messageBody) => {
-        socket.emit(NEW_CHAT_MESSAGE_EVENT, {
+        socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
             body: messageBody,
-            senderId: socket.id,
+            senderId: socketRef.current.id,
         });
     };
 

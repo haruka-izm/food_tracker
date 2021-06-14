@@ -1,17 +1,20 @@
 import React from 'react';
 
 import Navbar from '../Navbar';
-import ChatBox from './ChatBox';
 import ChatRoom from './ChatRoom';
 
-const Chat = () => {
+import { withStyles } from "@material-ui/core/styles";
+import style from '../../styles/styleChat';
+
+const Chat = (props) => {
+    const { classes } = props;
     return (
         <div>
             <div id="navbar">
                 <Navbar />
             </div>
 
-            <div id="content">
+            <div className={classes.chat}>
                 <ChatRoom />
 
             </div>
@@ -20,4 +23,4 @@ const Chat = () => {
 }
 
 
-export default Chat;
+export default withStyles(style)(Chat);

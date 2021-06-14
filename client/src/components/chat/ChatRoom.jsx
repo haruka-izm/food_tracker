@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-
 import useChat from './useChat';
+
+import { withStyles } from "@material-ui/core/styles";
+import style from '../../styles/styleChatRoom';
 
 const ChatRoom = (props) => {
     const ROOM_ID = 1;
+
+    const { classes } = props;
+
     const { messages, sendMessage } = useChat(ROOM_ID);
 
     const [newMessage, setNewMessage] = useState('');
@@ -26,16 +31,15 @@ const ChatRoom = (props) => {
 
     return (
         <div>
-            <div className="chat-room-container">
-                <h1 className="room-name">Room: {ROOM_ID}</h1>
-                <div className="messages-container">
-                    <ol className="messages-list">
+            <div className={classes.chatRoomContainer}>
+                <h1 className={classes.roomName}>Room: {ROOM_ID}</h1>
+                <div className={classes.messagesContainer}>
+                    <ol className={classes.messagesList}>
 
                         {messages.map((message, i) => (
                             <li
                                 key={i}
-                                className={`message-item ${message.ownedByCurrentUser ? "my-message" : "received-message"
-                                    }`}
+                                className={`${message.ownedByCurrentUser ? classes.myMessage : classes.receivedMessage}`}
                             >
                                 {message.body}
                             </li>
@@ -46,11 +50,11 @@ const ChatRoom = (props) => {
                     value={newMessage}
                     onChange={handleNewMessageChange}
                     placeholder="Write message..."
-                    className="new-message-input-field"
+                    className={classes.newMessageInputField}
                 />
-                <button onClick={handleSendMessage} className="send-message-button">
+                <button onClick={handleSendMessage} className={classes.sendMessageButton}>
                     Send
-              </button>
+                </button>
             </div>
         </div>
 
@@ -59,4 +63,4 @@ const ChatRoom = (props) => {
 };
 
 
-export default ChatRoom;
+export default withStyles(style)(ChatRoom);

@@ -27,6 +27,7 @@ After successfully installing MySQL, follow the instructions below.
        email VARCHAR(50),
        username VARCHAR(50),
        password VARCHAR(200),
+       household_id INT,
        email_notification VARCHAR(5) DEFAULT 'false',
        PRIMARY KEY (id)
    );
@@ -38,8 +39,16 @@ After successfully installing MySQL, follow the instructions below.
        expiry_date VARCHAR(10), 
        category VARCHAR(30),
        user_id INT,
+       household_id INT,
        PRIMARY KEY (id)
    );
+  - CREATE TABLE food_tracker.households (
+      id INT NOT NULL AUTO_INCREMENT,
+      household_name VARCHAR(30),
+      household_code VARCHAR(40),
+      PRIMARY KEY (id)
+  );
+
   - If you want e-mail notifications to be sent:
     - open .env file in the server folder
     - set MAIL_SENDER's value to a valid email account name

@@ -1,7 +1,7 @@
 import { actionTypes } from '../constants';
 
 const initialValue = {
-    data: {},
+    tableData: {},
     isAuthenticated: null,
     displayName: "",
 }
@@ -11,7 +11,7 @@ function reducer(state = initialValue, action) {
         case (actionTypes.GET_ITEMS_SUCCESS):
             return {
                 ...state,
-                data: action.payload
+                tableData: action.payload
             };
 
         case (actionTypes.GET_ITEMS_FAILURE): {
@@ -23,7 +23,7 @@ function reducer(state = initialValue, action) {
         case (actionTypes.ADD_ITEM_SUCCESS):
             return {
                 ...state,
-                data: { ...state.data, ...action.payload }
+                tableData: { ...state.tableData, ...action.payload }
 
             };
 
@@ -35,7 +35,7 @@ function reducer(state = initialValue, action) {
         case (actionTypes.UPDATE_ITEM_SUCCESS):
             return {
                 ...state,
-                data: { ...state.data, ...action.payload }
+                tableData: { ...state.tableData, ...action.payload }
             };
 
         case (actionTypes.UPDATE_ITEM_FAILURE):
@@ -46,7 +46,7 @@ function reducer(state = initialValue, action) {
         case (actionTypes.DELETE_ITEM_SUCCESS):
             return {
                 ...state,
-                data: action.payload
+                tableData: action.payload
             };
 
         case (actionTypes.DELETE_ITEM_FAILURE):

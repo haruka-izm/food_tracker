@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const cron = require('node-cron');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
+const { v4: uuidv4 } = require('uuid');
+
 const dbConfig = require('./DB/db');
 const { env } = require('process');
 const con = mysql.createConnection(dbConfig);
@@ -327,7 +329,11 @@ const getUsersForEmailNotification = () => {
             return resolve(rows);
         });
     });
-}
+};
+
+const generateUuid = () => {
+    return uuidv4();
+};
 
 
 
@@ -352,5 +358,7 @@ module.exports = {
     updateItemData,
     updateUserPreferences,
     deleteItem,
+
+    generateUuid
 
 };

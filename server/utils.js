@@ -336,8 +336,8 @@ const generateUuid = () => {
 };
 
 const verifyHouseholdId = async id => {
-    const householdId = await findHouseholdId(id);
-    return householdId.found;
+    const householdInfo = await findHouseholdId(id);
+    return householdInfo;
 };
 
 const findHouseholdId = (id) => {
@@ -354,6 +354,10 @@ const findHouseholdId = (id) => {
             resolve({ found: false });
         });
     });
+
+};
+
+const getHouseholdName = () => {
 
 }
 
@@ -378,6 +382,7 @@ module.exports = {
     deleteItem,
 
     generateUuid,
-    verifyHouseholdId
+    verifyHouseholdId,
+    getHouseholdName
 
 };

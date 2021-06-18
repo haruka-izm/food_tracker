@@ -10,8 +10,9 @@ router.post("/", async (req, res) => {
         return res.status(400).send({ message: "Please provide required information." });
     };
 
-    const householdIdFound = await utils.verifyHouseholdId(householdId);
-    if (!householdIdFound) {
+    const householdInfo = await utils.verifyHouseholdId(householdId);
+    if (!householdInfo.found) {
+        console.log('not found called')
         return res.status(400).send({ message: "Please provide required information." });
     };
 
@@ -24,12 +25,12 @@ router.post("/", async (req, res) => {
     const token = await utils.generateToken(newUser.id);
     if (token == null) {
         return res.status(400).send({ message: "authentication failed." });
-    }
+    };
 
     const response = utils.setCookie(res, token);
     return response.status(201).send({
         message: `a new user: ${email} is created.`,
-        displayName: username
+        displayName: householdInfo.data[0].household_name
     });
 });
 

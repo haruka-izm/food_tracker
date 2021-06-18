@@ -94,15 +94,15 @@ const findUserByEmail = (email) => {
     });
 };
 
-const createNewUser = async (email, password, username) => {
-    const user = await findUserByEmail(email);
+const createNewUser = async ({ email, password, username, householdId }) => {
 
+    const user = await findUserByEmail(email);
     if (user.found) {
         return { result: 'FAILED' };
     }
 
     const encryptedPW = await bcrypt.hash(password, 10);
-    const sql = `INSERT INTO food_tracker.users (email, username, password) VALUES ("${email}", "${username}", "${encryptedPW}")`;
+    const sql = `INSERT INTO food_tracker.users (email, username, password, household_id) VALUES ("${email}", "${username}", "${encryptedPW}", "${householdId}")`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, row) {
@@ -335,9 +335,27 @@ const generateUuid = () => {
     return uuidv4();
 };
 
+const verifyHouseholdId = async id => {
+    const householdId = await findHouseholdId(id);
+    return householdId.found;
+};
 
+const findHouseholdId = (id) => {
+    const sql = `SELECT * FROM food_tracker.households WHERE household_code='${id}'`;
 
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                resolve({ found: null, data: error });
+            }
+            if (row.length > 0) {
+                resolve({ found: true, data: row });
+            }
+            resolve({ found: false });
+        });
+    });
 
+}
 
 
 module.exports = {
@@ -359,6 +377,7 @@ module.exports = {
     updateUserPreferences,
     deleteItem,
 
-    generateUuid
+    generateUuid,
+    verifyHouseholdId
 
 };

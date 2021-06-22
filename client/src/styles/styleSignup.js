@@ -26,5 +26,10 @@ export default () => ({
         marginTop: '10px',
         textAlign: 'center',
         width: '300px',
+    },
+    householdCode: {
+        padding: '8px 0',
+        width: '300px',
+        margin: 'auto'
     }
 });

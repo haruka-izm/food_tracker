@@ -73,7 +73,7 @@ const Signup = props => {
                             <MenuItem value='false'>No</MenuItem>
                         </Select>
                         {householdCode == "true"
-                            ? <TextField householdCode={householdCode} placeholder="test" variant="outlined"></TextField>
+                            ? <TextField type='text' placeholder="household code" variant="outlined" className={classes.householdCode}></TextField>
                             : ""}
 
                     </FormControl>

@@ -18,7 +18,7 @@ const Signup = props => {
     const confirmedPassword = useFormInput('');
     const [error, setError] = useState(null);
     //const [loading, setLoading] = useState(false);
-    const [hasHouseholdCode, setHasHouseholdCode] = useState("");
+    const [householdCode, setHouseholdCode] = useState('false');
     const { classes } = props;
 
 
@@ -49,7 +49,7 @@ const Signup = props => {
     };
 
     const handleSelectChange = (e) => {
-        setHasHouseholdCode(e.target.value);
+        setHouseholdCode(e.target.value);
     };
 
     return (
@@ -65,14 +65,17 @@ const Signup = props => {
                     <FormControl variant="outlined" className={classes.selectYesOrNo}>
                         <InputLabel id="select-household-code">Do you have a household code?</InputLabel>
                         <Select
-                            value={hasHouseholdCode}
+                            value={householdCode}
                             onChange={handleSelectChange}
 
                         >
-                            <MenuItem value="true">Yes</MenuItem>
-                            <MenuItem value="false">No</MenuItem>
-
+                            <MenuItem value='true'>Yes</MenuItem>
+                            <MenuItem value='false'>No</MenuItem>
                         </Select>
+                        {householdCode == "true"
+                            ? <TextField householdCode={householdCode} placeholder="test" variant="outlined"></TextField>
+                            : ""}
+
                     </FormControl>
 
 

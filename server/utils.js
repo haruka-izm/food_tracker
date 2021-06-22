@@ -331,17 +331,17 @@ const getUsersForEmailNotification = () => {
     });
 };
 
-const generateUuid = () => {
+const generateNewHouseholdCode = () => {
     return uuidv4();
 };
 
-const verifyHouseholdId = async id => {
-    const householdInfo = await findHouseholdId(id);
+const verifyHouseholdCode = async code => {
+    const householdInfo = await findHouseholdCode(code);
     return householdInfo;
 };
 
-const findHouseholdId = (id) => {
-    const sql = `SELECT * FROM food_tracker.households WHERE household_code='${id}'`;
+const findHouseholdCode = (code) => {
+    const sql = `SELECT * FROM food_tracker.households WHERE household_code='${code}'`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
@@ -357,6 +357,17 @@ const findHouseholdId = (id) => {
 
 };
 
+// todo
+const createNewHouseHold = () => {
+
+};
+
+// todo
+const getHouseholdId = () => {
+
+};
+
+// todo
 const getHouseholdName = () => {
 
 }
@@ -381,8 +392,10 @@ module.exports = {
     updateUserPreferences,
     deleteItem,
 
-    generateUuid,
-    verifyHouseholdId,
-    getHouseholdName
+    generateNewHouseholdCode,
+    verifyHouseholdCode,
+    getHouseholdName,
+    getHouseholdId,
+    createNewHouseHold
 
 };

@@ -18,7 +18,8 @@ const Signup = props => {
     const confirmedPassword = useFormInput('');
     const [error, setError] = useState(null);
     //const [loading, setLoading] = useState(false);
-    const [householdCode, setHouseholdCode] = useState('false');
+    const householdCode = useFormInput('');
+    const [hasHouseholdCode, setHasHouseholdCode] = useState('false');
     const { classes } = props;
 
 
@@ -31,8 +32,9 @@ const Signup = props => {
                 body: JSON.stringify({
                     email: email.value,
                     username: username.value,
-                    password: password.value
-
+                    password: password.value,
+                    hasCode: hasHouseholdCode,
+                    householdCode: householdCode.value
                 })
             };
             const res = await fetch(urlOptions.SIGNUP, { ...requestOptions.POST, ...postBody });
@@ -49,7 +51,7 @@ const Signup = props => {
     };
 
     const handleSelectChange = (e) => {
-        setHouseholdCode(e.target.value);
+        setHasHouseholdCode(e.target.value);
     };
 
     return (
@@ -65,20 +67,18 @@ const Signup = props => {
                     <FormControl variant="outlined" className={classes.selectYesOrNo}>
                         <InputLabel id="select-household-code">Do you have a household code?</InputLabel>
                         <Select
-                            value={householdCode}
+                            value={hasHouseholdCode}
                             onChange={handleSelectChange}
 
                         >
                             <MenuItem value='true'>Yes</MenuItem>
                             <MenuItem value='false'>No</MenuItem>
                         </Select>
-                        {householdCode == "true"
-                            ? <TextField type='text' placeholder="household code" variant="outlined" className={classes.householdCode}></TextField>
+                        {hasHouseholdCode == "true"
+                            ? <TextField type='text' {...householdCode} placeholder="household code" variant="outlined" className={classes.householdCode}></TextField>
                             : ""}
 
                     </FormControl>
-
-
 
                     <Typography className={classes.warning}>
                         {error}

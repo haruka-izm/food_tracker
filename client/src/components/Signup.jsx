@@ -19,7 +19,9 @@ const Signup = props => {
     const [error, setError] = useState(null);
     //const [loading, setLoading] = useState(false);
     const householdCode = useFormInput('');
-    const [hasHouseholdCode, setHasHouseholdCode] = useState('false');
+    const [hasHouseholdCode, setHasHouseholdCode] = useState(null);
+
+    const householdName = useFormInput('');
     const { classes } = props;
 
 
@@ -34,7 +36,8 @@ const Signup = props => {
                     username: username.value,
                     password: password.value,
                     hasCode: hasHouseholdCode,
-                    householdCode: householdCode.value
+                    householdCode: householdCode.value,
+                    householdName: householdName.value
                 })
             };
             const res = await fetch(urlOptions.SIGNUP, { ...requestOptions.POST, ...postBody });
@@ -74,9 +77,11 @@ const Signup = props => {
                             <MenuItem value='true'>Yes</MenuItem>
                             <MenuItem value='false'>No</MenuItem>
                         </Select>
-                        {hasHouseholdCode == "true"
-                            ? <TextField type='text' {...householdCode} placeholder="household code" variant="outlined" className={classes.householdCode}></TextField>
-                            : ""}
+                        {hasHouseholdCode == null
+                            ? ""
+                            : hasHouseholdCode == "true"
+                                ? <TextField type="text" {...householdCode} placeholder="household code" variant="outlined" className={classes.householdCode}></TextField>
+                                : <TextField type="text" {...householdName} placeholder="create a new household name" variant="outlined" className={classes.householdName}></TextField>}
 
                     </FormControl>
 

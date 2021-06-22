@@ -31,5 +31,11 @@ export default () => ({
         padding: '8px 0',
         width: '300px',
         margin: 'auto'
-    }
+    },
+    householdName: {
+        padding: '8px 0',
+        width: '300px',
+        margin: 'auto'
+    },
+
 });

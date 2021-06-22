@@ -21,5 +21,10 @@ export default () => ({
         padding: '7px',
         width: '300px',
         marginTop: '10px'
+    },
+    selectYesOrNo: {
+        marginTop: '10px',
+        textAlign: 'center',
+        width: '300px',
     }
 });

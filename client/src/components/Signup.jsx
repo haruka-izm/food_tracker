@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, Typography } from "@material-ui/core";
 import Paper from '@material-ui/core/Paper';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from 'react-redux';
 import style from '../styles/styleSignup';
@@ -15,6 +18,7 @@ const Signup = props => {
     const confirmedPassword = useFormInput('');
     const [error, setError] = useState(null);
     //const [loading, setLoading] = useState(false);
+    const [hasHouseholdCode, setHasHouseholdCode] = useState("");
     const { classes } = props;
 
 
@@ -44,16 +48,34 @@ const Signup = props => {
         };
     };
 
+    const handleSelectChange = (e) => {
+        setHasHouseholdCode(e.target.value);
+    };
+
     return (
         <Paper className={classes.container}>
             <div >
                 <div>
                     <FormControl >
-                        <TextField type="text" {...email} required placeholder="Email" variant="outlined" className={classes.emailAndPassword}></TextField>
+                        <TextField type="text" {...email} required placeholder="email" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type="text" {...username} required placeholder="user name" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type='password' {...password} required placeholder="password" variant="outlined" className={classes.emailAndPassword}></TextField>
                         <TextField type='password' {...confirmedPassword} required placeholder="re-enter password" variant="outlined" className={classes.emailAndPassword}></TextField>
                     </FormControl>
+                    <FormControl variant="outlined" className={classes.selectYesOrNo}>
+                        <InputLabel id="select-household-code">Do you have a household code?</InputLabel>
+                        <Select
+                            value={hasHouseholdCode}
+                            onChange={handleSelectChange}
+
+                        >
+                            <MenuItem value="true">Yes</MenuItem>
+                            <MenuItem value="false">No</MenuItem>
+
+                        </Select>
+                    </FormControl>
+
+
 
                     <Typography className={classes.warning}>
                         {error}

@@ -85,7 +85,7 @@ describe('Create a new user with NO code, NO name', () => {
                 "householdCode": ""
             })
         expect(res.statusCode).toBe(400)
-        //expect(res.body).toHaveProperty('post')
+        expect(res.body).toHaveProperty('message', "Please provide a household name.")
     })
 });
 

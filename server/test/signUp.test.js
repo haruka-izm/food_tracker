@@ -48,8 +48,8 @@ describe('Create a new user', () => {
 
 
 
-describe('Create a new user with code, but the user already exists', () => {
-    it('NOT create a new user', async () => {
+describe('NOT create a new user', () => {
+    it('because the user already exists', async () => {
         console.log('called')
         const res = await request(app)
             .post('/api/signup')
@@ -63,11 +63,9 @@ describe('Create a new user with code, but the user already exists', () => {
             })
         expect(res.statusCode).toBe(400)
         //expect(res.body).toHaveProperty()
-    })
-});
+    });
 
-describe("Create a new user with code, but it's wrong or doesn't exist", () => {
-    it('create a new user', async () => {
+    it("because the household code is wrong or doesn't exist", async () => {
         const res = await request(app)
             .post('/api/signup')
             .send({
@@ -80,12 +78,9 @@ describe("Create a new user with code, but it's wrong or doesn't exist", () => {
             })
         expect(res.statusCode).toBe(400)
         expect(res.body).toHaveProperty('message', "Provided code is wrong. Please try again.")
-    })
-});
+    });
 
-
-describe('Create a new user with NO code, NO name', () => {
-    it('NOT create a new user', async () => {
+    it('because neither household code nor household name are given', async () => {
         const res = await request(app)
             .post('/api/signup')
             .send({
@@ -100,4 +95,6 @@ describe('Create a new user with NO code, NO name', () => {
         expect(res.body).toHaveProperty('message', "Please provide a household name.")
     })
 });
+
+
 

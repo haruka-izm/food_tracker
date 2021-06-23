@@ -102,7 +102,7 @@ const createNewUser = async ({ email, password, username, householdId }) => {
     }
 
     const encryptedPW = await bcrypt.hash(password, 10);
-    const sql = `INSERT INTO food_tracker.users (email, username, password, household_id) VALUES ("${email}", "${username}", "${encryptedPW}", "${householdId}")`;
+    const sql = `INSERT INTO food_tracker.users (email, username, password, household_id) VALUES ("${email}", "${username}", "${encryptedPW}", ${householdId})`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, row) {

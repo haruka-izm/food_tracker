@@ -80,6 +80,7 @@ io.on('connection', socket => {
 });
 
 
+module.exports = app;
 //app.listen(port);
 
 

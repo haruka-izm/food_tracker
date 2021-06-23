@@ -6,8 +6,7 @@ const utils = require('../utils');
 router.post("/", async (req, res) => {
     const { email, password, username, hasCode, householdName = "" } = req.body;
     let { householdCode = "" } = req.body;
-    console.log("received code: ", householdCode)
-    console.log("hasCode: ", hasCode)
+
 
     if (email.length == 0 || password.length == 0 || username.length == 0) {
         return res.status(400).send({ message: "Please provide required information." });
@@ -28,13 +27,16 @@ router.post("/", async (req, res) => {
         return res.status(400).send({ message: "Please provide a household name." });
     };
 
+    // if a new user wants to create a new household
     if (hasCode == 'false' && householdCode.length == 0) {
         householdCode = utils.generateNewHouseholdCode();
         console.log('newly generated household code: ', householdCode)
 
         // todo
+        // make sure this user doesn't exist
         const newHousehold = await utils.createNewHousehold(householdCode, householdName);
 
+        console.log('created? ', newHousehold.created)
         // todo : get householdId
     };
 
@@ -58,7 +60,7 @@ router.post("/", async (req, res) => {
         message: `a new user: ${email} is created.`,
 
         // todo : displayName : <change this part>
-        displayName: householdInfo.data[0].household_name
+        displayName: "99999"
     });
 });
 

@@ -153,6 +153,7 @@ const addItem = (newItem, userId) => {
             if (error) {
                 return reject(error);
             }
+            // todo str -> 
             return resolve({ 'added': true, 'id': row.insertId });
         });
     });
@@ -358,9 +359,21 @@ const findHouseholdCode = (code) => {
 };
 
 // todo
-const createNewHouseHold = () => {
+const createNewHousehold = (householdCode, householdName) => {
+    const sql = `INSERT INTO food_tracker.households (household_name, household_code) VALUES ('${householdName}', '${householdCode}')`;
 
-};
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            console.log("row: ", row)
+            if (error) {
+                resolve({ created: false, data: error });
+            };
+
+            resolve({ created: true, id: row.insertId });
+        });
+
+    });
+}
 
 // todo
 const getHouseholdId = () => {
@@ -396,6 +409,6 @@ module.exports = {
     verifyHouseholdCode,
     getHouseholdName,
     getHouseholdId,
-    createNewHouseHold
+    createNewHousehold
 
 };

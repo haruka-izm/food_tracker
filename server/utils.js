@@ -79,7 +79,7 @@ const getUserId = (req) => {
 };
 
 const findUserByEmail = (email) => {
-    const sql = `SELECT * FROM food_tracker.users WHERE email="${email}"`;
+    const sql = `SELECT * FROM users WHERE email="${email}"`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
@@ -102,7 +102,7 @@ const createNewUser = async ({ email, password, username, householdId }) => {
     }
 
     const encryptedPW = await bcrypt.hash(password, 10);
-    const sql = `INSERT INTO food_tracker.users (email, username, password, household_id) VALUES ("${email}", "${username}", "${encryptedPW}", ${householdId})`;
+    const sql = `INSERT INTO users (email, username, password, household_id) VALUES ("${email}", "${username}", "${encryptedPW}", ${householdId})`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, function (err, row) {
@@ -115,7 +115,7 @@ const createNewUser = async ({ email, password, username, householdId }) => {
 };
 
 const findUserById = (id) => {
-    const sql = `SELECT * FROM food_tracker.users WHERE id=${id}`;
+    const sql = `SELECT * FROM users WHERE id=${id}`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (err, row) => {
@@ -129,7 +129,7 @@ const findUserById = (id) => {
 
 
 const findItemById = (itemId) => {
-    const sql = `SELECT * FROM food_tracker.items WHERE id=${itemId}`;
+    const sql = `SELECT * FROM items WHERE id=${itemId}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
@@ -147,7 +147,7 @@ const findItemById = (itemId) => {
 const addItem = (newItem, userId) => {
     const { name, quantity, purchased_date, expiry_date, category } = newItem;
     const num = parseInt(quantity);
-    const sql = `INSERT INTO food_tracker.items (name, quantity, purchased_date, expiry_date, category, user_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId})`;
+    const sql = `INSERT INTO items (name, quantity, purchased_date, expiry_date, category, user_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId})`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -163,7 +163,7 @@ const addItem = (newItem, userId) => {
 const updateItemData = (id, itemInfo) => {
     const { name, quantity, purchased_date, expiry_date, category } = itemInfo;
     const num = parseInt(quantity);
-    const sql = `UPDATE food_tracker.items SET name="${name}", quantity=${num}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
+    const sql = `UPDATE items SET name="${name}", quantity=${num}, purchased_date="${purchased_date}", expiry_date="${expiry_date}", category="${category}" WHERE id=${id}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -176,7 +176,7 @@ const updateItemData = (id, itemInfo) => {
 
 
 const deleteItem = (id) => {
-    const sql = `DELETE FROM food_tracker.items WHERE id=${id}`;
+    const sql = `DELETE FROM items WHERE id=${id}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -191,7 +191,7 @@ const deleteItem = (id) => {
 
 const getItems = (limit, offset, userId) => {
     const user_id = parseInt(userId);
-    const sql = `SELECT * FROM food_tracker.items WHERE user_id=${user_id} LIMIT ${limit} OFFSET ${offset}`;
+    const sql = `SELECT * FROM items WHERE user_id=${user_id} LIMIT ${limit} OFFSET ${offset}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
@@ -212,7 +212,7 @@ const getItems = (limit, offset, userId) => {
 
 const getNumOfAllItems = (userId) => {
 
-    const sql = `SELECT COUNT(*) as TotalCount from food_tracker.items WHERE user_id=${userId}`;
+    const sql = `SELECT COUNT(*) as TotalCount from items WHERE user_id=${userId}`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
@@ -230,7 +230,7 @@ const getNumOfAllItems = (userId) => {
 };
 
 const updateUserPreferences = (userId, preferences) => {
-    let sql = `UPDATE food_tracker.users `;
+    let sql = `UPDATE users `;
     let SET = `SET `;
     const WHERE = ` WHERE id=${userId}`;
     for (const [key, value] of Object.entries(preferences)) {
@@ -307,7 +307,7 @@ cron.schedule('* 23 * * *', async () => {
 
 
 const checkExpirationDateOfAllItems = (dateOfExpiration, userId) => {
-    const sql = `SELECT * FROM food_tracker.items WHERE expiry_date='${dateOfExpiration}' AND user_id=${userId}`;
+    const sql = `SELECT * FROM items WHERE expiry_date='${dateOfExpiration}' AND user_id=${userId}`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
@@ -320,7 +320,7 @@ const checkExpirationDateOfAllItems = (dateOfExpiration, userId) => {
 };
 
 const getUsersForEmailNotification = () => {
-    const sql = `SELECT * FROM food_tracker.users WHERE email_notification='true'`;
+    const sql = `SELECT * FROM users WHERE email_notification='true'`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
@@ -342,7 +342,7 @@ const verifyHouseholdCode = async code => {
 };
 
 const findHouseholdCode = (code) => {
-    const sql = `SELECT * FROM food_tracker.households WHERE household_code='${code}'`;
+    const sql = `SELECT * FROM households WHERE household_code='${code}'`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
@@ -360,7 +360,7 @@ const findHouseholdCode = (code) => {
 
 // todo
 const createNewHousehold = (householdCode, householdName) => {
-    const sql = `INSERT INTO food_tracker.households (household_name, household_code) VALUES ('${householdName}', '${householdCode}')`;
+    const sql = `INSERT INTO households (household_name, household_code) VALUES ('${householdName}', '${householdCode}')`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {

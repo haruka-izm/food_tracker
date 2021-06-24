@@ -52,7 +52,6 @@ describe('Create a new user', () => {
 
 describe('NOT create a new user', () => {
     it('because the user already exists', async () => {
-        console.log('called')
         const res = await request(app)
             .post('/api/signup')
             .send({

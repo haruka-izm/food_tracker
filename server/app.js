@@ -65,10 +65,7 @@ io.on('connection', socket => {
     console.log(`joined chat at ${roomId}`)
 
     socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-        console.log("BE received data: ", data)
-
         io.to(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-        console.log("data sent to FE")
     });
 
 

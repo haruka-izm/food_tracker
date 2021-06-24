@@ -17,14 +17,12 @@ router.post("/", async (req, res) => {
     let householdId;
 
     if (householdCode.length != 0) {
-        console.log("household code: ", householdCode)
         householdInfo = await utils.verifyHouseholdCode(householdCode);
-        console.log('result: ', householdInfo.found)
 
         if (!householdInfo.found) {
             return res.status(400).send({ message: "Provided code is wrong. Please try again." });
         };
-        console.log("house code found")
+
         householdId = householdInfo.data[0].id;
     };
 
@@ -55,7 +53,6 @@ router.post("/", async (req, res) => {
 
     const newUser = await utils.createNewUser(userData);
     if (!newUser.created) {
-        console.log("failed to create new user")
         return res.status(400).send({ message: `The user: ${email} already exists.` });
     };
 

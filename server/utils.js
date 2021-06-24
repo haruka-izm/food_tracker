@@ -364,7 +364,6 @@ const createNewHousehold = (householdCode, householdName) => {
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
-            console.log("row: ", row)
             if (error) {
                 resolve({ created: false, data: error });
             };

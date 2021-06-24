@@ -7,9 +7,15 @@ const mysql = require('mysql');
 const con = mysql.createConnection(dbConfig);
 
 beforeAll(async () => {
+    await con.query("INSERT INTO households (household_name, household_code) VALUES ('default', '1')");
     await con.query("INSERT INTO users (email, username, password, household_id) VALUES ('999', '999', '999', 1)");
+
 });
 
+afterAll(async () => {
+    await con.query("DELETE FROM users");
+    await con.query("DELETE FROM households WHERE household_code!='1'");
+});
 
 describe('Create a new user', () => {
     it('with a household code', async () => {
@@ -27,6 +33,7 @@ describe('Create a new user', () => {
         expect(res.body).toHaveProperty('message')
     });
 
+
     it('with NO code', async () => {
         const res = await request(app)
             .post('/api/signup')
@@ -35,17 +42,12 @@ describe('Create a new user', () => {
                 "password": "2",
                 "username": "2",
                 "hasCode": "false",
-                "householdName": "test-2",
+                "householdName": "new household",
                 "householdCode": ""
             })
-        expect(res.statusCode).toBe(201)
-        //expect(res.body).toHaveProperty('post')
+        expect(res.statusCode).toBe(201);
     });
-
-
 });
-
-
 
 
 describe('NOT create a new user', () => {

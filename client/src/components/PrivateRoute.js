@@ -12,6 +12,8 @@ function PrivateRoute({ component: Component, isAuthenticated, isLoggingOut, ...
     const res = await fetch(urlOptions.USER_QUERY, requestOptions.GET);
     if (res.status === 200) {
       const json = await res.json();
+      console.log("created json: ", json)
+      // todo: <error> res.dispatch is not a function
       rest.dispatch(actions.isValidUser(json));
 
     } else {

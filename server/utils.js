@@ -350,7 +350,7 @@ const findHouseholdCode = (code) => {
                 resolve({ found: null, data: error });
             }
             if (row.length > 0) {
-                resolve({ found: true, data: row });
+                resolve({ found: true, data: row[0] });
             }
             resolve({ found: false });
         });

@@ -8,6 +8,7 @@ import { requestOptions, urlOptions } from '../constants';
 
 
 function Dashboard(props) {
+    console.log('dashboar rendered')
     const [isLoaded, setIsLoaded] = useState(false);
     async function fetchData() {
         setIsLoaded(true);
@@ -32,11 +33,12 @@ function Dashboard(props) {
         const res = await fetch(urlOptions.ITEM_QUERY, requestOptions.GET);
 
         if (res.status === 200) {
+            console.log('data fetched')
             const json = await res.json();
             props.dispatch(actions.getItems(json));
 
         } else {
-
+            console.log('data failed to fetch')
             //let json = await res.json();
             // setError(json.message);
             //setError(error.res.data.message)

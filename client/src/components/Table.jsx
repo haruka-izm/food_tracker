@@ -20,6 +20,8 @@ const Table = (props) => {
     const { classes } = props;
     const info = props.items;
     //const displayName = props.displayName;
+
+    console.log("showing info: ", info)
     const data = Object.values(info);
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },
@@ -107,7 +109,7 @@ const Table = (props) => {
 
 
 export default withStyles(style)(connect((state) => {
-    console.log("state: ", state.displayName)
+    console.log("displayName: ", state.displayName)
     return {
         items: state.data,
         displayName: state.displayName

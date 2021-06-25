@@ -6,7 +6,7 @@ router.get('/me', async (req, res) => {
     const verified = await utils.verifyToken(req, res);
 
     if (!verified.result) {
-        return res.status(401).send({ message: "You need to log in" });
+        return res.status(401).send({ message: "You need to log in." });
     };
 
     const user = await utils.findUserById(verified.userId);

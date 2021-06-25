@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
     // if householdCode is provided, check if the code is valid
     let householdInfo;
     let householdId;
+    let displayHouseholdName;
 
     if (householdCode.length != 0) {
         householdInfo = await utils.verifyHouseholdCode(householdCode);
@@ -23,7 +24,8 @@ router.post("/", async (req, res) => {
             return res.status(400).send({ message: "Provided code is wrong. Please try again." });
         };
 
-        householdId = householdInfo.data[0].id;
+        householdId = householdInfo.data.id;
+        displayHouseholdName = householdInfo.data.household_name;
     };
 
     // if a new user doesn't have a household code, generate a new one and create a new household
@@ -42,6 +44,7 @@ router.post("/", async (req, res) => {
         };
 
         householdId = newHousehold.id;
+        displayHouseholdName = householdName;
     };
 
     const userData = {
@@ -64,9 +67,7 @@ router.post("/", async (req, res) => {
     const response = utils.setCookie(res, token);
     return response.status(201).send({
         message: `a new user: ${email} is created.`,
-
-        // todo : displayName : <change this part>
-        displayName: "99999"
+        displayName: displayHouseholdName
     });
 });
 

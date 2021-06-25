@@ -16,8 +16,10 @@ const Login = props => {
     const { classes } = props;
 
     const handleLogin = async (event) => {
-        props.dispatch(actions.isAuthenticating())
+        console.log("handleLogin called")
         event.preventDefault();
+        props.dispatch(actions.isAuthenticating())
+
         setError(null);
 
         // fetch vs axios
@@ -28,6 +30,7 @@ const Login = props => {
 
         const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
         if (res.status === 200) {
+            console.log('200 login')
             props.history.push('/dashboard');
 
         } else {

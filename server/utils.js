@@ -189,9 +189,30 @@ const deleteItem = (id) => {
 
 
 
-const getItems = (limit, offset, userId) => {
+const getItemsByUserId = (limit, offset, userId) => {
     const user_id = parseInt(userId);
     const sql = `SELECT * FROM items WHERE user_id=${user_id} LIMIT ${limit} OFFSET ${offset}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
+                return resolve(ITEM_NOT_FOUND_MSG);
+            }
+
+            rows.forEach(row => {
+                row.id = `http://localhost:8080/api/items/${row.id}`;
+            });
+
+            return resolve(rows);
+        });
+    });
+};
+
+const getItemsByHouseholdId = (limit, offset, householdId) => {
+    const household_id = parseInt(householdId);
+    const sql = `SELECT * FROM items WHERE household_id=${household_id} LIMIT ${limit} OFFSET ${offset}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {
             if (error) {
@@ -251,6 +272,22 @@ const updateUserPreferences = (userId, preferences) => {
     });
 
 };
+
+const getHouseholdIdByUserId = (userId) => {
+    const sql = `SELECT * FROM users WHERE id=${userId}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, rows) => {
+            if (error) {
+                return reject(error);
+            }
+            if (rows[0] == undefined) {
+                return resolve({ found: false, data: ITEM_NOT_FOUND_MSG });
+            }
+            return resolve({ found: true, data: rows[0] });
+        });
+    });
+};
+
 
 
 
@@ -410,7 +447,9 @@ module.exports = {
     findItemById,
     createNewUser,
     getUserId,
-    getItems,
+    getItemsByUserId,
+    getHouseholdIdByUserId,
+    getItemsByHouseholdId,
     getNumOfAllItems,
     addItem,
     updateItemData,

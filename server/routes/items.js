@@ -35,10 +35,13 @@ router.route("/query")
             return verified.response.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
-        const itemInfo = await utils.getItems(limit, offset, verified.userId);
+        const user = await utils.getHouseholdIdByUserId(verified.userId);
+        const householdId = user.data.household_id;
+
+        const itemInfo = await utils.getItemsByHouseholdId(limit, offset, householdId);
         let totalCount;
         if (offset == 0) {
-            totalCount = await utils.getNumOfAllItems(verified.userId);
+            totalCount = await utils.getNumOfAllItems(householdId);
         }
 
         if (typeof totalCount == "number") {

@@ -375,9 +375,12 @@ const createNewHousehold = (householdCode, householdName) => {
 
 // todo
 const getHouseholdInfo = (householdId) => {
+    console.log("typeof ", typeof householdId)
+    const id = parseInt(householdId);
     const sql = `SELECT * FROM households WHERE id=${householdId}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
+            console.log("error: ", error)
             if (error) {
                 resolve({ found: false, data: error });
             };

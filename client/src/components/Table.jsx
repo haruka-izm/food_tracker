@@ -96,7 +96,7 @@ const Table = (props) => {
     return (
         <div className={classes.table} >
             <MaterialTable
-                title={`${props.displayName}'s stock`}
+                title={`Household: ${props.displayName}'s stock`}
                 columns={columns}
                 data={data}
                 options={tableOptions}

@@ -98,10 +98,11 @@ function getErrorMessage(resStatus) {
 
 
 export function isValidUser(user) {
-    console.log("username: ", user)
+    console.log("username: ",)
+    const householdName = user.data.householdName;
     return {
         type: actionTypes.IS_AUTHENTICATED_SUCCESS,
-        payload: { authentication: true, ...user }
+        payload: { authentication: true, displayName: householdName, ...user }
     };
 };
 

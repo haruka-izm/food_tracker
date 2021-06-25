@@ -11,8 +11,11 @@ router.get('/me', async (req, res) => {
 
     const user = await utils.findUserById(verified.userId);
     if (user.found) {
-        let userInfo = { displayName: user.data.username };
-        return verified.response.status(200).send(userInfo);
+        const householdInfo = await utils.getHouseholdInfo(user.data.household_id);
+        if (householdInfo.found) {
+            let userInfo = { data: { householdName: householdInfo.data.household_name } };
+            return verified.response.status(200).send(userInfo);
+        }
     };
     return res.status(401).send({ message: "You need to log in." });
 });

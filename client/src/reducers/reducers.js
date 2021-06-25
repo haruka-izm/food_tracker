@@ -56,8 +56,6 @@ function reducer(state = initialValue, action) {
             };
 
         case (actionTypes.IS_AUTHENTICATED_SUCCESS):
-            console.log("dispath success")
-            console.log("received name: ", action.payload.displayName)
             return {
                 ...state,
                 isAuthenticated: action.payload.authentication,

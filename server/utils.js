@@ -370,19 +370,29 @@ const createNewHousehold = (householdCode, householdName) => {
 
             resolve({ created: true, id: row.insertId });
         });
-
     });
 }
 
 // todo
-const getHouseholdId = () => {
+const getHouseholdInfo = (householdId) => {
+    const sql = `SELECT * FROM households WHERE id=${householdId}`;
+    return new Promise((resolve, reject) => {
+        con.query(sql, (error, row) => {
+            if (error) {
+                resolve({ found: false, data: error });
+            };
+
+            console.log("found sql data: ", row[0])
+            resolve({ found: true, data: row[0] });
+        });
+
+    });
+
+
 
 };
 
-// todo
-const getHouseholdName = () => {
 
-}
 
 
 module.exports = {
@@ -406,8 +416,7 @@ module.exports = {
 
     generateNewHouseholdCode,
     verifyHouseholdCode,
-    getHouseholdName,
-    getHouseholdId,
+    getHouseholdInfo,
     createNewHousehold
 
 };

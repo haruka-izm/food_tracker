@@ -19,7 +19,7 @@ const generateToken = (id) => {
         return null;
     };
 
-    const data = { userID: id };
+    const data = { userId: id };
     const expiration = { expiresIn: process.env.JWT_EXPIRATION };
     const token = jwt.sign(data, process.env.JWT_SECRET, expiration);
     return token;
@@ -36,7 +36,7 @@ const verifyToken = async (req, res) => {
         if (error) {
             return { msg: false };
         };
-        return { msg: true, userId: decoded.userID };
+        return { msg: true, userId: decoded.userId };
     });
 
     if (!decoded.msg) {
@@ -75,7 +75,7 @@ const clearToken = (res) => {
 const getUserId = (req) => {
     const token = req.cookies['token'];
     const decoded = jwt.decode(token);
-    return decoded.userID;
+    return decoded.userId;
 };
 
 const findUserByEmail = (email) => {

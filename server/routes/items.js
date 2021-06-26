@@ -45,11 +45,13 @@ router.route("/query")
         }
 
         if (typeof totalCount == "number") {
+
             verified.response.status(200).send({
                 "message": itemInfo,
                 "totalCount": totalCount
             });
         } else {
+
             verified.response.status(200).send({ "message": itemInfo });
         };
     });

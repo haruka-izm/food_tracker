@@ -231,9 +231,9 @@ const getItemsByHouseholdId = (limit, offset, householdId) => {
     });
 };
 
-const getNumOfAllItems = (userId) => {
+const getNumOfAllItems = (householdId) => {
 
-    const sql = `SELECT COUNT(*) as TotalCount from items WHERE user_id=${userId}`;
+    const sql = `SELECT COUNT(*) as TotalCount from items WHERE household_id=${householdId}`;
 
     return new Promise((resolve, reject) => {
         con.query(sql, (error, rows) => {

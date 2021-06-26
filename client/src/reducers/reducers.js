@@ -9,6 +9,7 @@ const initialValue = {
 function reducer(state = initialValue, action) {
     switch (action.type) {
         case (actionTypes.GET_ITEMS_SUCCESS):
+
             return {
                 ...state,
                 tableData: action.payload

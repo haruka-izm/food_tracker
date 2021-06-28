@@ -145,9 +145,10 @@ const findItemById = (itemId) => {
 
 
 const addItem = (newItem, userId) => {
-    const { name, quantity, purchased_date, expiry_date, category } = newItem;
+    const { name, quantity, purchased_date, expiry_date, category, household_id } = newItem;
+    console.log("household_id: ", household_id)
     const num = parseInt(quantity);
-    const sql = `INSERT INTO items (name, quantity, purchased_date, expiry_date, category, user_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId})`;
+    const sql = `INSERT INTO items (name, quantity, purchased_date, expiry_date, category, user_id, household_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId}, ${household_id})`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -422,7 +423,6 @@ const getHouseholdInfo = (householdId) => {
                 resolve({ found: false, data: error });
             };
 
-            console.log("found sql data: ", row[0])
             resolve({ found: true, data: row[0] });
         });
 

@@ -21,14 +21,14 @@ const Table = (props) => {
     const info = props.items;
     //const displayName = props.displayName;
 
-    console.log("showing info: ", info)
     const data = Object.values(info);
+    console.log("showing data: ", data)
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },
         { title: 'Quantity', field: 'quantity' },
         { title: 'Purchased Date', field: 'purchased_date' },
         { title: 'Expiry Date', field: 'expiry_date' },
-        { title: 'Category', field: 'category' }
+        { title: 'Category', field: 'category' },
     ]);
 
     const tableOptions = {

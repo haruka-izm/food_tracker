@@ -21,6 +21,7 @@ export function getItems(itemsInfo) {
 };
 
 export async function addItem(newItem) {
+    console.log("sending body: ", newItem)
 
     const postBody = { body: JSON.stringify(newItem) }
     const postResponse = await fetch(urlOptions.POST_ITEM, { ...requestOptions.POST, ...postBody });

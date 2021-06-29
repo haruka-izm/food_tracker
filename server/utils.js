@@ -152,10 +152,10 @@ const addItem = (newItem, userId) => {
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
-                return reject(error);
+                return resolve({ added: false, data: error });
             }
             // todo str -> 
-            return resolve({ 'added': true, 'id': row.insertId });
+            return resolve({ added: true, id: row.insertId });
         });
     });
 };

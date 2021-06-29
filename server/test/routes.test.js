@@ -5,6 +5,7 @@ const app = require('../app');
 const dbConfig = require("../DB/db");
 const mysql = require('mysql');
 const con = mysql.createConnection(dbConfig);
+const utils = require('../utils');
 
 const testUser = {
     email: "test",
@@ -16,13 +17,8 @@ let testToken;
 beforeAll(async () => {
     await con.query("INSERT INTO households (household_name, household_code) VALUES ('default', '1')");
     await con.query("INSERT INTO users (email, username, password, household_id) VALUES ('test', 'test', 'test', 1)");
-    await con.query("INSERT INTO items (name, quantity, purchased_date, expiry_date, category, household_id) VALUES ('tune', 5, '2020-12-01', '2021-01-31', 'seafood',1)");
+    await con.query("INSERT INTO items (name, quantity, purchased_date, expiry_date, category, user_id, household_id) VALUES ('tune', 5, '2020-12-01', '2021-01-31', 'seafood',1,1)");
 
-    // create a token
-    await request.post('/api/login').send(testUser).end((err, response) => {
-        testToken = response.body.token;
-        console.log(testToken);
-    });
 })
 
 afterAll(async () => {
@@ -114,29 +110,22 @@ describe('POST /signUp Failure', () => {
 
 
 describe('POST /items Success', () => {
-
-    beforeAll(async () => {
-        // create a token
-        await request.post('/api/login').send(testUser).end((err, response) => {
-            testToken = response.body.token;
-            console.log(testToken);
-        });
-    });
-
+    const test_item = {
+        item: {
+            name: 'test',
+            quantity: 10,
+            purchased_date: '2020-12-01',
+            expiry_date: '2021-01-31',
+            category: 'fruit'
+        }
+        ,
+        householdId: 1
+    }
 
     it('Add a new item', async () => {
-        const res = await request(app)
-            .post('/api/items')
-            .send({
-                name: 'mikan',
-                quantity: 10,
-                purchased_date: '2020-12-01',
-                expiry_date: '2021-01-31',
-                category: 'fruit',
-                household_id: 1
-            })
-        expect(res.statusCode).toBe(201)
-        //expect(res.body).toHaveProperty()
+        const res = await utils.addItem(test_item, 1)
+        expect(res.added).toBe(true);
+
     });
 
 });
@@ -144,19 +133,21 @@ describe('POST /items Success', () => {
 
 
 
-describe('POST /items Failure', () => {
+describe.skip('POST /items Failure', () => {
+    const test_item = {
+        item: {
+            name: '',
+            quantity: 2,
+            purchased_date: '2020-12-01',
+            expiry_date: '2021-01-31',
+            category: ''
+        }
+        ,
+        householdId: 1
+    }
     it('Add: Item information is missing', async () => {
-        const res = await request(app)
-            .post('/api/items')
-            .send({
-                name: 'mikan',
-                quantity: '',
-                purchased_date: '2020-12-01',
-                expiry_date: '2021-01-31',
-                category: 'fruit',
-                household_id: 1
-            })
-        expect(res.statusCode).toBe(400)
+        const res = await utils.addItem(test_item, 1)
+        expect(res.added).toBe(false)
 
     });
 

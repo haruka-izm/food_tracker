@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import useChat from './useChat';
+import { connect } from 'react-redux';
 
 import { withStyles } from "@material-ui/core/styles";
 import style from '../../styles/styleChatRoom';
 
 const ChatRoom = (props) => {
-    const ROOM_ID = 1;
+    const ROOM_ID = props.householdId;
+    console.log("household id retrieved?: ", ROOM_ID)
 
     const { classes } = props;
 
@@ -63,4 +65,10 @@ const ChatRoom = (props) => {
 };
 
 
-export default withStyles(style)(ChatRoom);
+export default withStyles(style)(connect(state => {
+    console.log("household id: ", state.householdId)
+    return {
+        householdId: state.householdId
+    }
+}
+)(ChatRoom));

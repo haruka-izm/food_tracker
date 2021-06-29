@@ -17,6 +17,7 @@ import Grid from '@material-ui/core/Grid';
 const Navbar = props => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { classes } = props;
+    const householdId = props.householdId;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -46,7 +47,7 @@ const Navbar = props => {
     };
 
     const handleChat = () => {
-        props.history.push("/chat")
+        props.history.push(`/chat/${householdId}`)
     };
 
     return (
@@ -84,4 +85,8 @@ const Navbar = props => {
 }
 
 
-export default connect()(withRouter(withStyles(style)(Navbar)));
+export default connect(state => {
+    return {
+        householdId: state.householdId
+    }
+})(withRouter(withStyles(style)(Navbar)));

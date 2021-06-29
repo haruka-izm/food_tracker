@@ -7,14 +7,9 @@ import style from '../../styles/styleChatRoom';
 
 const ChatRoom = (props) => {
     const ROOM_ID = props.householdId;
-    console.log("household id retrieved?: ", ROOM_ID)
-
     const { classes } = props;
-
     const { messages, sendMessage } = useChat(ROOM_ID);
-
     const [newMessage, setNewMessage] = useState('');
-    console.log("messages: ", messages)
 
     const handleNewMessageChange = event => {
         setNewMessage(event.target.value);
@@ -24,10 +19,8 @@ const ChatRoom = (props) => {
     const handleSendMessage = (e) => {
         e.preventDefault();
 
-        console.log("newMessage before sending: ", newMessage)
         sendMessage(newMessage);
         setNewMessage('');
-
     };
 
 
@@ -59,14 +52,11 @@ const ChatRoom = (props) => {
                 </button>
             </div>
         </div>
-
     )
-
 };
 
 
 export default withStyles(style)(connect(state => {
-    console.log("household id: ", state.householdId)
     return {
         householdId: state.householdId
     }

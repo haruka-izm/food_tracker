@@ -16,7 +16,6 @@ const Login = props => {
     const { classes } = props;
 
     const handleLogin = async (event) => {
-        console.log("handleLogin called")
         event.preventDefault();
         props.dispatch(actions.isAuthenticating())
 
@@ -30,7 +29,6 @@ const Login = props => {
 
         const res = await fetch(urlOptions.LOGIN, { ...requestOptions.POST, ...postBody });
         if (res.status === 200) {
-            console.log('200 login')
             props.history.push('/dashboard');
 
         } else {

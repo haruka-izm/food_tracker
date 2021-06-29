@@ -21,12 +21,10 @@ export function getItems(itemsInfo) {
 };
 
 export async function addItem(newItem, householdId) {
-    console.log("sending householdId: ", householdId)
     const content = { item: newItem, householdId: householdId }
-
     const postBody = { body: JSON.stringify(content) }
-    console.log("postBody: ", postBody)
     const postResponse = await fetch(urlOptions.POST_ITEM, { ...requestOptions.POST, ...postBody });
+
     if (postResponse.status === 201) {
         const json = await postResponse.json();
         const itemInfo = json.message;
@@ -101,7 +99,6 @@ function getErrorMessage(resStatus) {
 
 
 export function isValidUser(user) {
-    console.log("username: ",)
     const householdName = user.data.householdName;
     return {
         type: actionTypes.IS_AUTHENTICATED_SUCCESS,

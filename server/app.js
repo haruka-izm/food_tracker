@@ -72,7 +72,6 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         socket.leave(roomId);
-        console.log(`chat is over at ${roomId}`)
     })
 });
 

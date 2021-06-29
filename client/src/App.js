@@ -31,12 +31,7 @@ function App() {
                 <PublicRoute path="/signup" component={Signup} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/myAccount" component={MyAccount} />
-                {/**
-                 * todo: change `Route` to `PrivateRoute` after
-                 * implementing chat
-                 * 
-                 */}
-                <Route path="/chat/:roomId" component={Chat} />
+                <PrivateRoute path="/chat/:roomId" component={Chat} />
               </Switch>
             </div>
           </div>

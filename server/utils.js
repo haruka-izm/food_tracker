@@ -145,10 +145,10 @@ const findItemById = (itemId) => {
 
 
 const addItem = (newItem, userId) => {
-    const { name, quantity, purchased_date, expiry_date, category, household_id } = newItem;
-    console.log("household_id: ", household_id)
+    const { name, quantity, purchased_date, expiry_date, category } = newItem.item;
+    const householdId = newItem.householdId;
     const num = parseInt(quantity);
-    const sql = `INSERT INTO items (name, quantity, purchased_date, expiry_date, category, user_id, household_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId}, ${household_id})`;
+    const sql = `INSERT INTO items (name, quantity, purchased_date, expiry_date, category, user_id, household_id) VALUES ('${name}', ${num}, '${purchased_date}', '${expiry_date}', '${category}', ${userId}, ${householdId})`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
             if (error) {
@@ -413,12 +413,12 @@ const createNewHousehold = (householdCode, householdName) => {
 
 // todo
 const getHouseholdInfo = (householdId) => {
-    console.log("typeof ", typeof householdId)
+
     const id = parseInt(householdId);
     const sql = `SELECT * FROM households WHERE id=${householdId}`;
     return new Promise((resolve, reject) => {
         con.query(sql, (error, row) => {
-            console.log("error: ", error)
+
             if (error) {
                 resolve({ found: false, data: error });
             };

@@ -4,6 +4,7 @@ const initialValue = {
     tableData: {},
     isAuthenticated: null,
     displayName: "",
+    householdId: ""
 }
 
 function reducer(state = initialValue, action) {
@@ -12,7 +13,8 @@ function reducer(state = initialValue, action) {
 
             return {
                 ...state,
-                tableData: action.payload
+                tableData: action.payload.data,
+                householdId: action.payload.householdId
             };
 
         case (actionTypes.GET_ITEMS_FAILURE): {

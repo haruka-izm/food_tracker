@@ -23,6 +23,7 @@ const Table = (props) => {
 
     const data = Object.values(info);
     console.log("showing data: ", data)
+    const householdId = props.householdId;
     const [columns, setColumns] = useState([
         { title: 'Name', field: 'name' },
         { title: 'Quantity', field: 'quantity' },
@@ -43,7 +44,7 @@ const Table = (props) => {
     const editable = {
         onRowAdd: newItem => new Promise((resolve, reject) => {
             setTimeout(async () => {
-                props.dispatch(await actions.addItem(newItem));
+                props.dispatch(await actions.addItem(newItem, householdId));
                 resolve();
             }, 1000);
         }),
@@ -112,6 +113,7 @@ export default withStyles(style)(connect((state) => {
     console.log("state: ", state)
     return {
         items: state.tableData,
-        displayName: state.displayName
+        displayName: state.displayName,
+        householdId: state.householdId
     }
 })(Table));

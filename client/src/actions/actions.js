@@ -16,14 +16,16 @@ export function getItems(itemsInfo) {
 
     return {
         type: actionTypes.GET_ITEMS_SUCCESS,
-        payload: data
+        payload: { data: data, householdId: itemsInfo.householdId }
     };
 };
 
-export async function addItem(newItem) {
-    console.log("sending body: ", newItem)
+export async function addItem(newItem, householdId) {
+    console.log("sending householdId: ", householdId)
+    const content = { item: newItem, householdId: householdId }
 
-    const postBody = { body: JSON.stringify(newItem) }
+    const postBody = { body: JSON.stringify(content) }
+    console.log("postBody: ", postBody)
     const postResponse = await fetch(urlOptions.POST_ITEM, { ...requestOptions.POST, ...postBody });
     if (postResponse.status === 201) {
         const json = await postResponse.json();

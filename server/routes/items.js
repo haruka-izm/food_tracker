@@ -10,7 +10,6 @@ router.route("/")
             return res.status(401).send({ message: 'Invalid token or you need to login again.' });
         };
 
-        console.log("received body: ", req.body)
         const newItem = await utils.addItem(req.body, verified.userId);
         if (newItem.added) {
             const item = await utils.findItemById(newItem.id);
@@ -49,7 +48,8 @@ router.route("/query")
 
             verified.response.status(200).send({
                 "message": itemInfo,
-                "totalCount": totalCount
+                "totalCount": totalCount,
+                householdId: householdId
             });
         } else {
 

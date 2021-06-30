@@ -9,7 +9,7 @@ const SERVER = urlOptions.SERVER;
 //const socket = socketIOClient(SERVER, socketOptions);
 
 const useChat = (roomId) => {
-
+    // array of objects [{body: , senderId: , ownedByCurrentUser: , }, {},...]
     const [messages, setMessages] = useState([]);
     const socketRef = useRef();
 
@@ -27,6 +27,7 @@ const useChat = (roomId) => {
                 ownedByCurrentUser: message.senderId === socketRef.current.id,
             };
             setMessages((messages) => [...messages, incomingMessage]);
+
         });
 
 
@@ -37,13 +38,13 @@ const useChat = (roomId) => {
 
 
     const sendMessage = (messageBody) => {
+
         socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
             body: messageBody,
+            // .current.id: built-in prop
             senderId: socketRef.current.id,
         });
     };
-
-
     return { messages, sendMessage };
 };
 

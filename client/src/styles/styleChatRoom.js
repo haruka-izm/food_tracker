@@ -8,6 +8,7 @@ export default (theme) => ({
         display: 'flex',
         flexDirection: 'column',
         margin: '16px',
+
     },
 
     roomName: {
@@ -16,6 +17,7 @@ export default (theme) => ({
     },
 
     messagesContainer: {
+        fontFamily: 'Arial',
         flex: '1',
         minHeight: '100px',
         overflow: 'auto',
@@ -29,6 +31,7 @@ export default (theme) => ({
     },
 
     newMessageInputField: {
+        fontFamily: 'Arial',
         height: '200px',
         maxHeight: '50%',
         fontSize: '20px',
@@ -37,6 +40,7 @@ export default (theme) => ({
     },
 
     messageItem: {
+        fontFamily: 'Arial',
         width: '55%',
         margin: '8px',
         padding: '12px 8px',
@@ -46,6 +50,7 @@ export default (theme) => ({
     },
 
     myMessage: {
+        fontFamily: 'Arial',
         backgroundColor: 'rgb(0, 132, 255)',
         marginLeft: 'auto',
 
@@ -58,6 +63,7 @@ export default (theme) => ({
     },
 
     receivedMessage: {
+        fontFamily: 'Arial',
         backgroundColor: '#3f4042',
         marginRight: 'auto',
 

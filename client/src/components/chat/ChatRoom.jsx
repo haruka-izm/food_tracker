@@ -27,7 +27,7 @@ const ChatRoom = (props) => {
     return (
         <div>
             <div className={classes.chatRoomContainer}>
-                <h1 className={classes.roomName}>Room: {ROOM_ID}</h1>
+
                 <div className={classes.messagesContainer}>
                     <ol className={classes.messagesList}>
 

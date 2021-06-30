@@ -4,6 +4,7 @@ Food Tracker is an application to save your food from going to waste.
 
 # Features
  - Create, modify, and delete items
+ - Chat to communicate with your household members
  - Get notifications by email when items are close to expiring
 
 # Contents
@@ -13,6 +14,7 @@ Food Tracker is an application to save your food from going to waste.
    - [Sign Up](##Signup)
    - [Add Items](##Add-items)
    - [Modify Items](##Modify-items)
+   - [Chat](##Chat)
 
 
 
@@ -81,3 +83,6 @@ After successfully installing MySQL, follow the instructions below.
 
 ## Modify items
 ![`modify items`](./img/modify_item.gif)
+
+## Chat
+![`chat demo`]()

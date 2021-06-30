@@ -68,8 +68,6 @@ io.on('connection', socket => {
         io.to(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
     });
 
-
-
     socket.on('disconnect', () => {
         socket.leave(roomId);
     })

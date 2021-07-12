@@ -6,7 +6,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
-import MyAccount from './components/myAccount';
+import MyAccount from './components/myAccount/myAccount';
 import Chat from './components/chat/Chat';
 
 import store from './store';

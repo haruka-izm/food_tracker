@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import Navbar from '../Navbar';
 import EmailNotification from './EmailNotification';
-import HouseholdId from './HouseholdId';
+import HouseholdCode from './HouseholdCode';
 
 import { withStyles } from "@material-ui/core/styles";
 import style from '../../styles/styleMyAccount';
@@ -17,7 +17,7 @@ const MyAccount = (props) => {
             </div>
             <div id="content">
                 <EmailNotification />
-                <HouseholdId />
+                <HouseholdCode />
             </div>
         </div>
     )

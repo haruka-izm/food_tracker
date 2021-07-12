@@ -48,8 +48,8 @@ router.route("/query")
         if (typeof totalCount == "number") {
 
             verified.response.status(200).send({
-                "message": itemInfo,
-                "totalCount": totalCount,
+                message: itemInfo,
+                totalCount: totalCount,
                 householdId: householdId
             });
         } else {

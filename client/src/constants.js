@@ -55,7 +55,7 @@ export const urlOptions = {
     ITEM_QUERY: 'http://localhost:8080/api/items/query',
 
     // api/users
-    PUT_PREFERENCES: 'http://localhost:8080/api/users/preferences',
+    PREFERENCES: 'http://localhost:8080/api/users/preferences',
     USER_QUERY: 'http://localhost:8080/api/users/me',
 
 };

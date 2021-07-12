@@ -427,9 +427,6 @@ const getHouseholdInfo = (householdId) => {
         });
 
     });
-
-
-
 };
 
 
@@ -459,6 +456,7 @@ module.exports = {
     generateNewHouseholdCode,
     verifyHouseholdCode,
     getHouseholdInfo,
-    createNewHousehold
+    createNewHousehold,
+
 
 };

@@ -10,6 +10,7 @@ const initialValue = {
 function reducer(state = initialValue, action) {
     switch (action.type) {
         case (actionTypes.GET_ITEMS_SUCCESS):
+            console.log("redux id: ", action.payload.householdId)
 
             return {
                 ...state,

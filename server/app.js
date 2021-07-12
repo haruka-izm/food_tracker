@@ -42,7 +42,7 @@ const login = require("./routes/logIn");
 const logout = require("./routes/logOut");
 const items = require("./routes/items");
 const users = require("./routes/users");
-const { Socket } = require('dgram');
+
 const corsOptions = { credentials: true, origin: 'http://localhost:3000' };
 
 app.use(json({ extended: false }));

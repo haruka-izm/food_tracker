@@ -412,7 +412,7 @@ const createNewHousehold = (householdCode, householdName) => {
 }
 
 // todo
-const getHouseholdInfo = (householdId) => {
+const getHouseholdInfo = (householdId = 0) => {
 
     const id = parseInt(householdId);
     const sql = `SELECT * FROM households WHERE id=${householdId}`;

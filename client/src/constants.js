@@ -18,7 +18,7 @@ export const actionTypes = keyMirror({
     LOGOUT_SUCCESS: null
 });
 
-
+// axios: {withCredentials:true}
 const HEADERS = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "http://localhost:3000" };
 export const requestOptions = {
     GET: {

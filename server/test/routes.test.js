@@ -154,4 +154,21 @@ describe.skip('POST /items Failure', () => {
 });
 
 
+describe.only('POST /preferences', () => {
+    const householdId = 1;
+
+    it('get household code', async () => {
+        const res = await utils.getHouseholdInfo(householdId)
+        //expect(res.statusCode).toBe(200)
+        expect(res.data.household_code).toBe(1)
+
+
+    });
+
+});
+
+
+
+
+
 

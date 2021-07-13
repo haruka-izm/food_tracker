@@ -16,6 +16,7 @@ const MyAccount = (props) => {
                 <Navbar />
             </div>
             <div id="content">
+
                 <EmailNotification />
                 <HouseholdCode />
             </div>

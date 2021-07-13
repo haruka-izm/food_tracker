@@ -22,6 +22,7 @@ const EmailNotification = (props) => {
 
         const val = event.target.checked;
         const putBody = { email_notification: val.toString() }
+
         const res = await axios.put(urlOptions.PREFERENCES, putBody, requestOptions.PUT);
         if (res.status === 200) {
             // todo: update UI
@@ -30,6 +31,7 @@ const EmailNotification = (props) => {
             // todo: update UI
 
         };
+
 
     };
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
 import { requestOptions, urlOptions } from "../../constants";
 
 import Card from '@material-ui/core/Card';
@@ -28,12 +27,12 @@ const HouseholdCode = (props) => {
     };
 
     const getHouseholdCode = async () => {
-        const body = { householdId: householdId };
-        const res = await axios.post(urlOptions.PREFERENCES, body, requestOptions.POST);
+        const postBody = { body: JSON.stringify({ householdId: householdId }) };
+        const res = await fetch(urlOptions.PREFERENCES, { ...postBody, ...requestOptions.POST });
         if (res.status === 200) {
-            console.log('success to fetch data')
-            const code = res.data.householdCode;
-            console.log("FE code? : ", code)
+            const json = await res.json();
+            const code = json.data.householdCode;
+
             setCode(code);
             setIsLoaded(true);
 
@@ -44,11 +43,10 @@ const HouseholdCode = (props) => {
     };
 
     useEffect(() => {
-        if (!isLoaded) {
-            console.log("calling getHC")
+        if (!isLoaded && householdId != "") {
             getHouseholdCode();
         }
-    })
+    }, [householdId])
 
     return (
 
@@ -67,7 +65,7 @@ const HouseholdCode = (props) => {
                             onCopy={handleCopy}>
 
                             <Tooltip title={copied ? 'Copied!' : 'Copy to clipboard'}>
-                                <div>**{ }**</div>
+                                <div>{code}</div>
                             </Tooltip>
 
                         </CopyToClipboard>

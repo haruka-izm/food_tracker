@@ -9,14 +9,13 @@ import { withStyles } from "@material-ui/core/styles";
 import style from '../../styles/styleMyAccount';
 
 const MyAccount = (props) => {
-
+    const { classes } = props;
     return (
         <div>
             <div id="navbar">
                 <Navbar />
             </div>
-            <div id="content">
-
+            <div id="content" className={classes.container}>
                 <EmailNotification />
                 <HouseholdCode />
             </div>

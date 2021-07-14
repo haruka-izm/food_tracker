@@ -1,13 +1,12 @@
 export default (theme) => ({
-    title: {
-        margin: '0px auto',
-        display: 'flex'
-
+    container: {
+        margin: '10px auto',
+        display: 'flex',
+        flexDirection: 'column'
 
     },
-    switch: {
-        display: 'flex',
-        margin: '0px '
+    card: {
+        margin: '10px',
     }
 
 });

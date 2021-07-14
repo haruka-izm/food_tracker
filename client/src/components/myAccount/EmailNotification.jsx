@@ -36,8 +36,7 @@ const EmailNotification = (props) => {
     };
 
     return (
-
-        <Card>
+        <Card className={classes.card}>
             <CardContent >
                 <Typography>
                     Email notification

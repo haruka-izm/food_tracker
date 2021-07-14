@@ -154,15 +154,13 @@ describe.skip('POST /items Failure', () => {
 });
 
 
-describe.only('POST /preferences', () => {
+describe.skip('POST /preferences', () => {
     const householdId = 1;
 
     it('get household code', async () => {
         const res = await utils.getHouseholdInfo(householdId)
-        //expect(res.statusCode).toBe(200)
+        console.log("res: ", res)
         expect(res.data.household_code).toBe(1)
-
-
     });
 
 });

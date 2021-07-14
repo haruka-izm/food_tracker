@@ -413,7 +413,6 @@ const createNewHousehold = (householdCode, householdName) => {
 
 // todo
 const getHouseholdInfo = (householdId = 0) => {
-
     const id = parseInt(householdId);
     const sql = `SELECT * FROM households WHERE id=${householdId}`;
     return new Promise((resolve, reject) => {
@@ -422,7 +421,6 @@ const getHouseholdInfo = (householdId = 0) => {
             if (error) {
                 resolve({ found: false, data: error });
             };
-
             resolve({ found: true, data: row[0] });
         });
 
